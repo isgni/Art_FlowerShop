@@ -12,8 +12,7 @@
             --text-main: #5d574f;
         }
 
-        body    
-        {
+        body {
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Quicksand', sans-serif;
@@ -117,12 +116,14 @@
     </style>
 </head>
 <body>
-<audio autoplay loop>
-<source src="A.mp3" type="audio/mpeg">
 
-</audio>
-    
-    
+    <audio id="bg-music" loop>
+        <source src="A.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="music-toggle" onclick="toggleMusic()">
+        <span id="music-icon">🔇</span>
+    </button>
 
     <div id="scene-start" class="scene active bg-white z-[200]">
         <h2 class="text-2xl font-light mb-6 italic text-center px-4">A surprise for someone truly special...</h2>
@@ -173,10 +174,6 @@
         <button class="mt-8 px-6 py-2 border rounded-full text-sm bg-white hover:bg-gray-50 transition-colors" onclick="goToPicker()">← Back to flowers</button>
     </div>
 
-    <audio id="bg-music" loop>
-        <source src="musicc.mp3" type="audio/mpeg">
-    </audio>
-
     <script>
         const music = document.getElementById('bg-music');
         let isPlaying = false;
@@ -197,8 +194,11 @@
             document.getElementById('scene-start').classList.remove('active');
             document.getElementById('scene-travel').classList.add('active');
             
-            // Try to play music
-            
+            // Start Music on click (Bypasses browser blocks)
+            music.play().then(() => {
+                isPlaying = true;
+                document.getElementById('music-icon').innerText = '🎵';
+            }).catch(e => console.log("Music play blocked - will wait for toggle."));
 
             setTimeout(() => {
                 document.getElementById('scene-travel').classList.remove('active');
@@ -242,7 +242,16 @@
             document.getElementById('scene-picker').classList.add('active');
         }
 
-        
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                document.getElementById('music-icon').innerText = '🔇';
+            } else {
+                music.play();
+                document.getElementById('music-icon').innerText = '🎵';
+            }
+            isPlaying = !isPlaying;
+        }
     </script>
 </body>
-</html>
+                    </html>
