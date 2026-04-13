@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Gift For You</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Indie+Flower&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fcfbf7;
+            --text-main: #5d574f;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Animations */
+        @keyframes wheel-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes bike-ride {
+            0% { transform: translateX(-120%) translateY(0); }
+            50% { transform: translateX(10%) translateY(-5px); }
+            100% { transform: translateX(10%) translateY(0); }
+        }
+
+        .spin { animation: wheel-spin 1s linear infinite; transform-origin: center; }
+        
+        .scene {
+            display: none;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease;
+        }
+
+        .active { display: flex; }
+
+        #bike-container {
+            width: 300px;
+            animation: bike-ride 3.5s cubic-bezier(0.45, 0, 0.55, 1) forwards;
+        }
+
+        .flower-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .flower-pot {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border: 1px solid #eee;
+        }
+
+        .flower-pot:hover { transform: translateY(-5px); background: white; }
+
+        .letter-card {
+            background-color: #fdfdf5;
+            padding: 40px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: relative;
+            transform: rotate(-1deg);
+            border: 1px solid #e8e4d8;
+        }
+
+        .letter-text {
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .letter-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        #music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: white;
+            border: 1px solid #ddd;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCENE 0: OVERLAY START -->
+    <div id="scene-start" class="scene active bg-white z-[200]">
+        <h2 class="text-2xl font-light mb-6 italic text-center px-4">A surprise for someone truly special...</h2>
+        <button onclick="startExperience()" class="bg-blue-50 hover:bg-blue-100 text-blue-700 px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 font-medium shadow-sm border border-blue-200">
+            Click to Start ❤️
+        </button>
+    </div>
+
+    <!-- SCENE 1: TRAVELING -->
+    <div id="scene-travel" class="scene">
+        <div id="bike-container">
+            <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
+                <g class="spin" style="transform-origin: 50px 145px;"><circle cx="50" cy="145" r="40" fill="none" stroke="#333" stroke-width="3"/></g>
+                <g class="spin" style="transform-origin: 190px 145px;"><circle cx="190" cy="145" r="40" fill="none" stroke="#333" stroke-width="3"/></g>
+                <path d="M50 145 L100 145 L140 80 L185 80 L190 145 M100 145 L85 75 M85 75 L70 75 M140 80 L130 50 M130 50 L150 50" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
+        <p class="mt-8 text-xl font-light italic">Pedaling towards you...</p>
+    </div>
+
+    <!-- SCENE 2: SHOP ARRIVAL -->
+    <div id="scene-shop" class="scene">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-light mb-2">The Flower Shop</h1>
+            <p class="italic text-gray-400">✨ tap the shop to enter ✨</p>
+        </div>
+        <div id="shop-trigger" class="cursor-pointer hover:scale-105 transition-transform duration-500">
+            <svg width="250" height="200" viewBox="0 0 200 160">
+                <rect x="30" y="60" width="140" height="80" fill="none" stroke="#333" stroke-width="2"/>
+                <path d="M20 60 L180 60 L190 40 L10 40 Z" fill="none" stroke="#333" stroke-width="2"/>
+                <text x="100" y="89" font-family="Dancing Script" font-size="12" text-anchor="middle">Lovely Flowers</text>
+                <circle cx="55" cy="120" r="5" fill="#4361ee" />
+                <circle cx="145" cy="120" r="5" fill="#f72585" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- SCENE 3: PICKER -->
+    <div id="scene-picker" class="scene">
+        <h1 class="text-2xl font-medium mb-1 italic">Pick a flower!</h1>
+        <p class="text-gray-400 mb-6 text-sm">choose the one that speaks to you</p>
+        <div class="flower-grid" id="flower-grid"></div>
+    </div>
+
+    <!-- SCENE 4: LETTER -->
+    <div id="scene-letter" class="scene">
+        <div class="letter-card">
+            <div class="letter-title">To my beloved,</div>
+            <div class="letter-text" id="letter-content"></div>
+            <div class="mt-8 text-right italic font-bold">Always yours ❤️</div>
+        </div>
+        <button class="mt-8 px-6 py-2 border rounded-full text-sm bg-white hover:bg-gray-50 transition-colors" onclick="goToPicker()">← Back to flowers</button>
+    </div>
+
+    <!-- Audio Element (Replace URL with your own) -->
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music Control -->
+    <div id="music-toggle" onclick="toggleMusic()">
+        <span id="music-icon">🎵</span>
+    </div>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        let isPlaying = false;
+
+        const flowers = [
+            { 
+                name: "Blue Hydrangea", 
+                color: "#4361ee", 
+                msg: "This blue flower represents the quality I admire most in you: your deep faith and devotion in serving and loving Jehovah God. Your spiritual strength and beautiful heart make me love you more every day. Seeing how you put Him first inspires me, and I am so grateful to have a partner who walks this path with such grace." 
+            },
+            { name: "Pink Roses", color: "#ff85a1", msg: "Pink roses signify grace and admiration. I admire every little thing about you—your smile, your kindness, and the way you handle the world with such elegance. You are truly my inspiration." },
+            { name: "Orange Tulips", color: "#fb8500", msg: "Orange tulips represent energy and desire. You fill my days with such vibrant energy that I can't imagine a morning without your light. Thank you for being the spark that keeps me going." },
+            { name: "Yellow Tulips", color: "#ffb703", msg: "Yellow is the color of sunshine. You are my ray of sunshine on even the cloudiest days. This bouquet is a small reminder of the joy you bring into my life every single day." },
+            { name: "Purple Peonies", color: "#7209b7", msg: "Peonies are a symbol of prosperity and a happy life. With you, I already feel like the luckiest person in the world. I look forward to building a lifetime of beautiful memories together." },
+            { name: "Blush Roses", color: "#ffc8dd", msg: "Soft and gentle, like the way you hold my hand. These blush roses represent our sweet romance that I promise to protect and cherish forever." },
+            { name: "Coral Tulips", color: "#ff7b54", msg: "Coral is a unique, warm color—just like your heart. You have a way of making everything feel special. I'm so grateful that I'm the one who gets to call you mine." },
+            { name: "Red Roses", color: "#9b2226", msg: "Deep red for a deep, profound love. My commitment to you goes beyond words. You are my soulmate, my partner, and my best friend for life." },
+            { name: "White Lilies", color: "#f8f9fa", msg: "White lilies represent purity and majesty. Your pure heart and honest soul are what make our relationship so strong. I am honored to stand by your side." }
+        ];
+
+        function startExperience() {
+            document.getElementById('scene-start').classList.remove('active');
+            document.getElementById('scene-travel').classList.add('active');
+            music.play().catch(e => console.log("Audio play failed:", e));
+            isPlaying = true;
+            document.getElementById('music-icon').innerText = '🎵';
+
+            setTimeout(() => {
+                document.getElementById('scene-travel').classList.remove('active');
+                document.getElementById('scene-shop').classList.add('active');
+            }, 3800);
+        }
+
+        document.getElementById('shop-trigger').onclick = () => {
+            document.getElementById('scene-shop').classList.remove('active');
+            document.getElementById('scene-picker').classList.add('active');
+            renderFlowers();
+        };
+
+        function renderFlowers() {
+            const grid = document.getElementById('flower-grid');
+            grid.innerHTML = '';
+            flowers.forEach((f, i) => {
+                const pot = document.createElement('div');
+                pot.className = 'flower-pot';
+                pot.onclick = () => showLetter(i);
+                pot.innerHTML = `
+                    <svg width="50" height="70" viewBox="0 0 60 80" class="mx-auto">
+                        <path d="M30 40 L30 70 M20 45 L30 70 M40 45 L30 70" stroke="#7fb069" stroke-width="2" fill="none"/>
+                        <circle cx="30" cy="35" r="12" fill="${f.color}" stroke="${f.color === '#f8f9fa' ? '#ddd' : 'none'}"/>
+                        <path d="M15 70 L45 70 L40 85 L20 85 Z" fill="#f1f1f1" stroke="#ddd" stroke-width="1"/>
+                    </svg>
+                    <div class="text-[10px] text-gray-400 mt-2">${f.name}</div>
+                `;
+                grid.appendChild(pot);
+            });
+        }
+
+        function showLetter(i) {
+            document.getElementById('letter-content').innerText = flowers[i].msg;
+            document.getElementById('scene-picker').classList.remove('active');
+            document.getElementById('scene-letter').classList.add('active');
+        }
+
+        function goToPicker() {
+            document.getElementById('scene-letter').classList.remove('active');
+            document.getElementById('scene-picker').classList.add('active');
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                document.getElementById('music-icon').innerText = '🔇';
+            } else {
+                music.play();
+                document.getElementById('music-icon').innerText = '🎵';
+            }
+            isPlaying = !isPlaying;
+        }
+    </script>
+</body>
+</html>
