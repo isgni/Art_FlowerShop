@@ -12,7 +12,16 @@
             --text-main: #5d574f;
         }
 
-        body {
+        body
+        <audio autoplay loop>
+<source src="musicc.mp3" type="audio/mpeg">
+
+     </audio>
+
+
+
+        
+        {
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Quicksand', sans-serif;
@@ -195,10 +204,7 @@
             document.getElementById('scene-travel').classList.add('active');
             
             // Try to play music
-            music.play().then(() => {
-                isPlaying = true;
-                document.getElementById('music-icon').innerText = '🎵';
-            }).catch(e => console.log("Audio play failed, needs user interaction."));
+            
 
             setTimeout(() => {
                 document.getElementById('scene-travel').classList.remove('active');
@@ -242,16 +248,7 @@
             document.getElementById('scene-picker').classList.add('active');
         }
 
-        function toggleMusic() {
-            if (isPlaying) {
-                music.pause();
-                document.getElementById('music-icon').innerText = '🔇';
-            } else {
-                music.play();
-                document.getElementById('music-icon').innerText = '🎵';
-            }
-            isPlaying = !isPlaying;
-        }
+        
     </script>
 </body>
 </html>
