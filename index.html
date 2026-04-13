@@ -117,7 +117,7 @@
 </head>
 <body>
 
-    <audio id="bg-music" loop>
+    <audio id="bg-music" loop preload="auto">
         <source src="A.mp3" type="audio/mpeg">
     </audio>
 
@@ -191,15 +191,18 @@
         ];
 
         function startExperience() {
-            document.getElementById('scene-start').classList.remove('active');
-            document.getElementById('scene-travel').classList.add('active');
-            
-            // Start Music on click (Bypasses browser blocks)
+            // 1. Play the music immediately on click
             music.play().then(() => {
                 isPlaying = true;
                 document.getElementById('music-icon').innerText = '🎵';
-            }).catch(e => console.log("Music play blocked - will wait for toggle."));
+            }).catch(error => {
+                console.log("Music play failed:", error);
+            });
 
+            // 2. Switch scenes
+            document.getElementById('scene-start').classList.remove('active');
+            document.getElementById('scene-travel').classList.add('active');
+            
             setTimeout(() => {
                 document.getElementById('scene-travel').classList.remove('active');
                 document.getElementById('scene-shop').classList.add('active');
@@ -254,4 +257,4 @@
         }
     </script>
 </body>
-                    </html>
+</html>
