@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Rides For You</title>
+    <title>A Ride For You</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Indie+Flower&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
@@ -12,11 +12,7 @@
             --text-main: #5d574f;
         }
 
-        body 
-        
-        
-        
-        {
+        body {
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Quicksand', sans-serif;
@@ -34,8 +30,7 @@
 
         @keyframes bike-ride {
             0% { transform: translateX(-120%) translateY(0); }
-            50% { transform: translateX(10%) translateY(-5px); }
-            100% { transform: translateX(10%) translateY(0); }
+            100% { transform: translateX(0%) translateY(0); }
         }
 
         .spin { animation: wheel-spin 1s linear infinite; transform-origin: center; }
@@ -109,8 +104,8 @@
             z-index: 100;
             background: white;
             border: 1px solid #ddd;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -122,7 +117,10 @@
 </head>
 <body>
 
-    <!-- SCENE 0: OVERLAY START -->
+    <button id="music-toggle" onclick="toggleMusic()">
+        <span id="music-icon">🔇</span>
+    </button>
+
     <div id="scene-start" class="scene active bg-white z-[200]">
         <h2 class="text-2xl font-light mb-6 italic text-center px-4">A surprise for someone truly special...</h2>
         <button onclick="startExperience()" class="bg-blue-50 hover:bg-blue-100 text-blue-700 px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 font-medium shadow-sm border border-blue-200">
@@ -130,7 +128,6 @@
         </button>
     </div>
 
-    <!-- SCENE 1: TRAVELING -->
     <div id="scene-travel" class="scene">
         <div id="bike-container">
             <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
@@ -142,7 +139,6 @@
         <p class="mt-8 text-xl font-light italic">Pedaling towards you...</p>
     </div>
 
-    <!-- SCENE 2: SHOP ARRIVAL -->
     <div id="scene-shop" class="scene">
         <div class="text-center mb-8">
             <h1 class="text-3xl font-light mb-2">Art Flower Shop</h1>
@@ -159,14 +155,12 @@
         </div>
     </div>
 
-    <!-- SCENE 3: PICKER -->
     <div id="scene-picker" class="scene">
         <h1 class="text-2xl font-medium mb-1 italic">Pick a flower!</h1>
         <p class="text-gray-400 mb-6 text-sm">choose the one that speaks to you</p>
         <div class="flower-grid" id="flower-grid"></div>
     </div>
 
-    <!-- SCENE 4: LETTER -->
     <div id="scene-letter" class="scene">
         <div class="letter-card">
             <div class="letter-title">To my beloved,</div>
@@ -176,38 +170,35 @@
         <button class="mt-8 px-6 py-2 border rounded-full text-sm bg-white hover:bg-gray-50 transition-colors" onclick="goToPicker()">← Back to flowers</button>
     </div>
 
-    <!-- Audio Element (Replace URL with your own) -->
-    <audio autoplay loop>
-  <source src="musicc.mp3" type="audio/mpeg">
-</audio>
-    </div>
+    <audio id="bg-music" loop>
+        <source src="musicc.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         const music = document.getElementById('bg-music');
         let isPlaying = false;
 
         const flowers = [
-            { 
-                name: "Blue Hydrangea", 
-                color: "#4361ee", 
-                msg: "This blue flower represents the quality I admire most in you: your deep faith and devotion in serving and loving Jehovah God. Your spiritual strength and beautiful heart make me love you more every day. Seeing how you put Him first inspires me, and I am so grateful to have a partner who walks this path with such grace." 
-            },
-            { name: "Pink Roses", color: "#ff85a1", msg: "Pink roses signify grace and admiration. I admire every little thing about you—your smile, your kyuttie miming eyes, your kindness, and the way you handle the world with such elegance. You are truly my inspiration." },
-            { name: "Orange Tulips", color: "#fb8500", msg: "Orange tulips represent energy and desire. You fill my days with such vibrant energy that I can't imagine a morning without your light. Thank you for being the spark that keeps me smiling." },
-            { name: "Yellow Tulips", color: "#ffb703", msg: "Yellow is the color of sunshine. You are my ray of sunshine on even the cloudiest days. This bouquet is a small reminder of the joy you bring into my life every single day." },
-            { name: "Purple Peonies", color: "#7209b7", msg: "Peonies are a symbol of prosperity and a happy life. If I'm With you I already feel like the happiest person in the world. I look forward to building a lifetime of beautiful memories together." },
-            { name: "Blush Roses", color: "#ffc8dd", msg: "You always take care of everyone else, but I want to make sure you’re taking care of you, too. If you ever feel overwhelmed and just need to vent, I’m always here to listen." },
-            { name: "Coral Tulips", color: "#ff7b54", msg: "Coral is a unique, warm color—just like your heart. You have a way of making everything feel special. I'm so grateful if I'm the one who gets to call you mine." },
-            { name: "Red Roses", color: "#9b2226", msg: "Deep red for a deep, profound love. My commitment to you goes beyond words. You are my soulmate, my partner, and my best friend for life." },
-            { name: "White Lilies", color: "#f8f9fa", msg: "White lilies represent purity and loyalty. Your pure heart and honest soul are what make our relationship so strong. I am honored to stand by your side." }
+            { name: "Blue Hydrangea", color: "#4361ee", msg: "This blue flower represents the quality I admire most in you: your deep faith and devotion in serving and loving Jehovah God. Your spiritual strength and beautiful heart make me love you more every day." },
+            { name: "Pink Roses", color: "#ff85a1", msg: "Pink roses signify grace and admiration. I admire every little thing about you—your smile, your kind eyes, and the way you handle the world with such elegance." },
+            { name: "Orange Tulips", color: "#fb8500", msg: "Orange tulips represent energy and desire. You fill my days with such vibrant energy that I can't imagine a morning without your light." },
+            { name: "Yellow Tulips", color: "#ffb703", msg: "Yellow is the color of sunshine. You are my ray of sunshine on even the cloudiest days. This bouquet is a small reminder of the joy you bring into my life." },
+            { name: "Purple Peonies", color: "#7209b7", msg: "Peonies are a symbol of prosperity and a happy life. With you, I already feel like the happiest person in the world." },
+            { name: "Blush Roses", color: "#ffc8dd", msg: "You always take care of everyone else, but I want to make sure you’re taking care of you, too. I’m always here to listen." },
+            { name: "Coral Tulips", color: "#ff7b54", msg: "Coral is a unique, warm color—just like your heart. You have a way of making everything feel special." },
+            { name: "Red Roses", color: "#9b2226", msg: "Deep red for a deep, profound love. My commitment to you goes beyond words. You are my soulmate and my best friend." },
+            { name: "White Lilies", color: "#f8f9fa", msg: "White lilies represent purity and loyalty. Your pure heart and honest soul are what make our relationship so strong." }
         ];
 
         function startExperience() {
             document.getElementById('scene-start').classList.remove('active');
             document.getElementById('scene-travel').classList.add('active');
-            music.play().catch(e => console.log("Audio play failed:", e));
-            isPlaying = true;
-            document.getElementById('music-icon').innerText = '🎵';
+            
+            // Try to play music
+            music.play().then(() => {
+                isPlaying = true;
+                document.getElementById('music-icon').innerText = '🎵';
+            }).catch(e => console.log("Audio play failed, needs user interaction."));
 
             setTimeout(() => {
                 document.getElementById('scene-travel').classList.remove('active');
