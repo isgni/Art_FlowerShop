@@ -3,258 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Ride For You</title>
+    <title>Our Journey</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Indie+Flower&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #fcfbf7;
-            --text-main: #5d574f;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Quicksand', sans-serif;
-            margin: 0;
-            overflow: hidden;
-            height: 100vh;
-            width: 100vw;
-        }
-
-        /* Animations */
-        @keyframes wheel-spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes bike-ride {
-            0% { transform: translateX(-120%) translateY(0); }
-            100% { transform: translateX(0%) translateY(0); }
-        }
-
-        .spin { animation: wheel-spin 1s linear infinite; transform-origin: center; }
+        :root { --bg-color: #fcfbf7; --text-main: #5d574f; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Quicksand', sans-serif; margin: 0; overflow-x: hidden; height: 100vh; width: 100vw; }
         
-        .scene {
-            display: none;
-            height: 100%;
-            width: 100%;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease;
-        }
-
+        @keyframes wheel-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes bike-ride { 0% { transform: translateX(-120%); } 100% { transform: translateX(0%); } }
+        .spin { animation: wheel-spin 1s linear infinite; transform-origin: center; }
+        .scene { display: none; height: 100%; width: 100%; flex-direction: column; align-items: center; justify-content: center; position: absolute; }
         .active { display: flex; }
-
-        #bike-container {
-            width: 300px;
-            animation: bike-ride 3.5s cubic-bezier(0.45, 0, 0.55, 1) forwards;
-        }
-
-        .flower-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            max-width: 600px;
-            padding: 20px;
-        }
-
-        .flower-pot {
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 12px;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            border: 1px solid #eee;
-        }
-
-        .flower-pot:hover { transform: translateY(-5px); background: white; }
-
-        .letter-card {
-            background-color: #fdfdf5;
-            padding: 40px;
-            width: 90%;
-            max-width: 450px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            position: relative;
-            transform: rotate(-1deg);
-            border: 1px solid #e8e4d8;
-        }
-
-        .letter-text {
-            font-family: 'Indie Flower', cursive;
-            font-size: 1.15rem;
-            line-height: 1.6;
-            color: #444;
-        }
-
-        .letter-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        #music-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-            background: white;
-            border: 1px solid #ddd;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+        #bike-container { width: 300px; animation: bike-ride 3.5s cubic-bezier(0.45, 0, 0.55, 1) forwards; }
+        .flower-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .card { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; border: 1px solid #f0f0f0; }
+        .card:hover { transform: translateY(-5px); }
+        .letter-card { background-color: #fdfdf5; padding: 40px; width: 90%; max-width: 450px; transform: rotate(-1deg); border: 1px solid #e8e4d8; font-family: 'Indie Flower', cursive; }
     </style>
 </head>
 <body>
 
-    <audio id="bg-music" loop preload="auto">
-        <source src="A.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bg-music" loop><source id="music-source" src="A.mp3" type="audio/mpeg"></audio>
 
-    <button id="music-toggle" onclick="toggleMusic()">
-        <span id="music-icon">🔇</span>
-    </button>
-
-    <div id="scene-start" class="scene active bg-white z-[200]">
-        <h2 class="text-2xl font-light mb-6 italic text-center px-4">A surprise for someone truly special...</h2>
-        <button onclick="startExperience()" class="bg-blue-50 hover:bg-blue-100 text-blue-700 px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 font-medium shadow-sm border border-blue-200">
-            Click to Start ❤️
-        </button>
+    <div id="scene-start" class="scene active">
+        <h2 class="text-2xl italic mb-6">A journey made just for you...</h2>
+        <button onclick="startExperience()" class="bg-blue-500 text-white px-8 py-3 rounded-full shadow-lg">Begin ❤️</button>
     </div>
 
     <div id="scene-travel" class="scene">
         <div id="bike-container">
-            <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
-                <g class="spin" style="transform-origin: 50px 145px;"><circle cx="50" cy="145" r="40" fill="none" stroke="#333" stroke-width="3"/></g>
-                <g class="spin" style="transform-origin: 190px 145px;"><circle cx="190" cy="145" r="40" fill="none" stroke="#333" stroke-width="3"/></g>
-                <path d="M50 145 L100 145 L140 80 L185 80 L190 145 M100 145 L85 75 M85 75 L70 75 M140 80 L130 50 M130 50 L150 50" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round"/>
-            </svg>
+            <svg viewBox="0 0 240 200"><g class="spin" style="transform-origin: 50px 145px;"><circle cx="50" cy="145" r="40" fill="none" stroke="#333" stroke-width="3"/></g><g class="spin" style="transform-origin: 190px 145px;"><circle cx="190" cy="145" r="40" fill="none" stroke="#333" stroke-width="3"/></g><path d="M50 145 L100 145 L140 80 L185 80 L190 145 M100 145 L85 75 M85 75 L70 75 M140 80 L130 50 M130 50 L150 50" fill="none" stroke="#333" stroke-width="3"/></svg>
         </div>
-        <p class="mt-8 text-xl font-light italic">Pedaling towards you...</p>
+        <p id="travel-text" class="mt-8 text-xl italic font-light"></p>
     </div>
 
     <div id="scene-shop" class="scene">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-light mb-2">Art Flower Shop</h1>
-            <p class="italic text-gray-400">✨ tap the shop to enter ✨</p>
-        </div>
-        <div id="shop-trigger" class="cursor-pointer hover:scale-105 transition-transform duration-500">
-            <svg width="250" height="200" viewBox="0 0 200 160">
-                <rect x="30" y="60" width="140" height="80" fill="none" stroke="#333" stroke-width="2"/>
-                <path d="M20 60 L180 60 L190 40 L10 40 Z" fill="none" stroke="#333" stroke-width="2"/>
-                <text x="100" y="89" font-family="Dancing Script" font-size="12" text-anchor="middle">Lovely Flowers</text>
-                <circle cx="55" cy="120" r="5" fill="#4361ee" />
-                <circle cx="145" cy="120" r="5" fill="#f72585" />
-            </svg>
-        </div>
-    </div>
-
-    <div id="scene-picker" class="scene">
-        <h1 class="text-2xl font-medium mb-1 italic">Pick a flower!</h1>
-        <p class="text-gray-400 mb-6 text-sm">choose the one that speaks to you</p>
+        <h1 class="text-3xl font-light mb-8">Art Flower Shop</h1>
         <div class="flower-grid" id="flower-grid"></div>
     </div>
 
     <div id="scene-letter" class="scene">
         <div class="letter-card">
-            <div class="letter-title">To my beloved,</div>
-            <div class="letter-text" id="letter-content"></div>
-            <div class="mt-8 text-right italic font-bold">Always yours ❤️</div>
+            <p id="letter-content" class="text-lg"></p>
+            <p class="text-right mt-4 font-bold">- Your favorite person</p>
         </div>
-        <button class="mt-8 px-6 py-2 border rounded-full text-sm bg-white hover:bg-gray-50 transition-colors" onclick="goToPicker()">← Back to flowers</button>
+        <button onclick="goToMarket()" class="mt-8 bg-pink-100 text-pink-700 px-6 py-2 rounded-full">Continue Ride 🧺</button>
+    </div>
+
+    <div id="scene-market" class="scene">
+        <h1 class="text-3xl font-light mb-8">The Market</h1>
+        <div class="grid grid-cols-3 gap-4">
+            <div onclick="nextRide('animals', 'C.mp3')" class="card text-center"> <span class="text-4xl">🥩</span><p>Meat</p> </div>
+            <div onclick="nextRide('animals', 'C.mp3')" class="card text-center"> <span class="text-4xl">🐟</span><p>Fish</p> </div>
+            <div onclick="nextRide('animals', 'C.mp3')" class="card text-center"> <span class="text-4xl">🥦</span><p>Veg</p> </div>
+        </div>
+    </div>
+
+    <div id="scene-animals" class="scene">
+        <h1 class="text-3xl font-light mb-4">Friendly Visitors</h1>
+        <p class="italic mb-8">Look who came to say hello!</p>
+        <div class="grid grid-cols-3 gap-4">
+            <div onclick="nextRide('home', 'D.mp3')" class="card text-center"> <span class="text-5xl">🐱</span><p>Cat</p> </div>
+            <div onclick="nextRide('home', 'D.mp3')" class="card text-center"> <span class="text-5xl">🐶</span><p>Dog</p> </div>
+            <div onclick="nextRide('home', 'D.mp3')" class="card text-center"> <span class="text-5xl">🐦</span><p>Bird</p> </div>
+        </div>
+    </div>
+
+    <div id="scene-home" class="scene">
+        <div class="text-center">
+            <span class="text-6xl">🏡</span>
+            <h1 class="text-4xl font-bold mt-6">Welcome Home</h1>
+            <p class="mt-4 text-gray-500 italic">The best part of any journey is coming back to you.</p>
+            <button onclick="location.reload()" class="mt-10 text-sm underline text-gray-400">Restart Journey</button>
+        </div>
     </div>
 
     <script>
-        const music = document.getElementById('bg-music');
-        let isPlaying = false;
+        const audio = document.getElementById('bg-music');
+        let currentScene = 'scene-start';
 
-        const flowers = [
-            { name: "Blue Hydrangea", color: "#4361ee", msg: "This blue flower represents the quality I admire most in you: your deep faith and devotion in serving and loving Jehovah God. Your spiritual strength and beautiful heart make me love you more every day." },
-            { name: "Pink Roses", color: "#ff85a1", msg: "Pink roses signify grace and admiration. I admire every little thing about you—your smile, your kind eyes, and the way you handle the world with such elegance." },
-            { name: "Orange Tulips", color: "#fb8500", msg: "Orange tulips represent energy and desire. You fill my days with such vibrant energy that I can't imagine a morning without your light." },
-            { name: "Yellow Tulips", color: "#ffb703", msg: "Yellow is the color of sunshine. You are my ray of sunshine on even the cloudiest days. This bouquet is a small reminder of the joy you bring into my life." },
-            { name: "Purple Peonies", color: "#7209b7", msg: "Peonies are a symbol of prosperity and a happy life. With you, I already feel like the happiest person in the world." },
-            { name: "Blush Roses", color: "#ffc8dd", msg: "You always take care of everyone else, but I want to make sure you’re taking care of you, too. I’m always here to listen." },
-            { name: "Coral Tulips", color: "#ff7b54", msg: "Coral is a unique, warm color—just like your heart. You have a way of making everything feel special." },
-            { name: "Red Roses", color: "#9b2226", msg: "Deep red for a deep, profound love. My commitment to you goes beyond words. You are my soulmate and my best friend." },
-            { name: "White Lilies", color: "#f8f9fa", msg: "White lilies represent purity and loyalty. Your pure heart and honest soul are what make our relationship so strong." }
-        ];
+        function changeMusic(file) {
+            audio.src = file;
+            audio.play();
+        }
+
+        function switchScene(nextId) {
+            document.getElementById(currentScene).classList.remove('active');
+            document.getElementById(nextId).classList.add('active');
+            currentScene = nextId;
+        }
 
         function startExperience() {
-            // 1. Play the music immediately on click
-            music.play().then(() => {
-                isPlaying = true;
-                document.getElementById('music-icon').innerText = '🎵';
-            }).catch(error => {
-                console.log("Music play failed:", error);
-            });
+            changeMusic('A.mp3');
+            rideTo("Heading to the Flower Shop...", 'scene-shop');
+        }
 
-            // 2. Switch scenes
-            document.getElementById('scene-start').classList.remove('active');
-            document.getElementById('scene-travel').classList.add('active');
+        function rideTo(text, nextScene) {
+            document.getElementById('travel-text').innerText = text;
+            switchScene('scene-travel');
             
-            setTimeout(() => {
-                document.getElementById('scene-travel').classList.remove('active');
-                document.getElementById('scene-shop').classList.add('active');
-            }, 3800);
+            // Reset bike animation
+            const container = document.getElementById('bike-container');
+            container.style.animation = 'none';
+            container.offsetHeight; 
+            container.style.animation = null;
+
+            setTimeout(() => switchScene(nextScene), 3500);
         }
 
-        document.getElementById('shop-trigger').onclick = () => {
-            document.getElementById('scene-shop').classList.remove('active');
-            document.getElementById('scene-picker').classList.add('active');
-            renderFlowers();
-        };
-
-        function renderFlowers() {
-            const grid = document.getElementById('flower-grid');
-            grid.innerHTML = '';
-            flowers.forEach((f, i) => {
-                const pot = document.createElement('div');
-                pot.className = 'flower-pot';
-                pot.onclick = () => showLetter(i);
-                pot.innerHTML = `
-                    <svg width="50" height="70" viewBox="0 0 60 80" class="mx-auto">
-                        <path d="M30 40 L30 70 M20 45 L30 70 M40 45 L30 70" stroke="#7fb069" stroke-width="2" fill="none"/>
-                        <circle cx="30" cy="35" r="12" fill="${f.color}" stroke="${f.color === '#f8f9fa' ? '#ddd' : 'none'}"/>
-                        <path d="M15 70 L45 70 L40 85 L20 85 Z" fill="#f1f1f1" stroke="#ddd" stroke-width="1"/>
-                    </svg>
-                    <div class="text-[10px] text-gray-400 mt-2">${f.name}</div>
-                `;
-                grid.appendChild(pot);
-            });
+        function goToMarket() {
+            changeMusic('B.mp3');
+            rideTo("Let's grab some food at the market...", 'scene-market');
         }
 
-        function showLetter(i) {
-            document.getElementById('letter-content').innerText = flowers[i].msg;
-            document.getElementById('scene-picker').classList.remove('active');
-            document.getElementById('scene-letter').classList.add('active');
+        function nextRide(target, musicFile) {
+            changeMusic(musicFile);
+            const msg = target === 'animals' ? "Wait, look at the animals! 🐾" : "Sun is setting, time to head home... 🌅";
+            rideTo(msg, 'scene-' + target);
         }
 
-        function goToPicker() {
-            document.getElementById('scene-letter').classList.remove('active');
-            document.getElementById('scene-picker').classList.add('active');
-        }
+        // Initialize Flowers
+        const flowerData = [
+            { n: "Rose", c: "#ff4d6d", m: "You are as beautiful as a rose." },
+            { n: "Lily", c: "#ffffff", m: "Your soul is pure and bright." },
+            { n: "Tulip", c: "#ffb703", m: "You bring color to my life." }
+        ];
 
-        function toggleMusic() {
-            if (isPlaying) {
-                music.pause();
-                document.getElementById('music-icon').innerText = '🔇';
-            } else {
-                music.play();
-                document.getElementById('music-icon').innerText = '🎵';
-            }
-            isPlaying = !isPlaying;
-        }
+        const grid = document.getElementById('flower-grid');
+        flowerData.forEach(f => {
+            const div = document.createElement('div');
+            div.className = "card text-center";
+            div.innerHTML = `<div style="width:20px;height:20px;background:${f.c};margin:0 auto;border-radius:50%"></div><p>${f.n}</p>`;
+            div.onclick = () => {
+                document.getElementById('letter-content').innerText = f.m;
+                switchScene('scene-letter');
+            };
+            grid.appendChild(div);
+        });
     </script>
 </body>
-</html>
+                </html>
