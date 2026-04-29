@@ -10,18 +10,27 @@
         :root { --bg-default: #fdfdfa; --text-main: #4a453e; }
         body { background-color: var(--bg-default); color: var(--text-main); font-family: 'Quicksand', sans-serif; margin: 0; overflow: hidden; height: 100vh; width: 100vw; transition: background-color 1.2s ease; }
         
+        /* Animation: Smooth pedaling bounce */
+        @keyframes bike-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
         @keyframes wheel-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes bike-ride { 0% { transform: translateX(-120%); } 100% { transform: translateX(0%); } }
         @keyframes animal-float { 0% { transform: translateX(120vw); } 100% { transform: translateX(-20vw); } }
-        @keyframes building-in { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
-        .spin { animation: wheel-spin 1s linear infinite; transform-origin: center; }
+        .spin { animation: wheel-spin 0.8s linear infinite; transform-origin: center; }
         .scene { display: none; height: 100%; width: 100%; flex-direction: column; align-items: center; justify-content: center; position: absolute; }
         .active { display: flex; }
         
-        #bike-container { width: 280px; animation: bike-ride 3.5s cubic-bezier(0.45, 0, 0.55, 1) forwards; z-index: 10; }
-        .animal-runner { position: absolute; font-size: 3rem; bottom: 20%; animation: animal-float 4s linear infinite; display: none; }
+        #bike-container { 
+            width: 320px; 
+            animation: bike-ride 3.5s cubic-bezier(0.45, 0, 0.55, 1) forwards; 
+            z-index: 10; 
+        }
+        .bike-body { animation: bike-bounce 0.4s ease-in-out infinite; }
 
+        .animal-runner { position: absolute; font-size: 3rem; bottom: 20%; animation: animal-float 4s linear infinite; display: none; }
         .flower-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 600px; }
         .flower-pot { background: rgba(255,255,255,0.7); border-radius: 12px; padding: 10px; text-align: center; cursor: pointer; transition: 0.3s; border: 1px solid #eee; }
         .flower-pot:hover { transform: translateY(-5px); background: white; }
@@ -30,12 +39,11 @@
         .letter-text { font-family: 'Indie Flower', cursive; font-size: 1.1rem; line-height: 1.6; color: #444; }
         .letter-title { font-family: 'Dancing Script', cursive; font-size: 1.8rem; font-weight: bold; margin-bottom: 12px; }
 
-        .building-container { animation: building-in 1s ease forwards; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+        .building-container { cursor: pointer; display: flex; flex-direction: column; align-items: center; }
         .building-graphic { transition: transform 0.4s ease; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.08)); }
         .building-container:hover .building-graphic { transform: translateY(-10px) scale(1.02); }
 
         .item-card { background: white; padding: 20px; border-radius: 20px; text-align: center; cursor: pointer; transition: 0.3s; border: 1px solid #f0f0f0; min-width: 110px; }
-        .item-card:hover { transform: translateY(-3px); }
     </style>
 </head>
 <body>
@@ -43,7 +51,7 @@
     <audio id="bg-music" loop><source src="A.mp3" type="audio/mpeg"></audio>
 
     <div id="scene-start" class="scene active bg-white">
-        <h2 class="text-2xl font-light mb-8 italic text-center">A surprise journey for you...</h2>
+        <h2 class="text-2xl font-light mb-8 italic text-center px-4">A surprise journey for you...</h2>
         <button onclick="startExperience()" class="bg-stone-800 text-white px-10 py-3 rounded-full hover:bg-stone-700 shadow-md">Start the Ride ❤️</button>
     </div>
 
@@ -51,29 +59,48 @@
         <div id="animal-cat" class="animal-runner">🐱</div>
         <div id="animal-dog" class="animal-runner" style="animation-delay: 1.5s;">🐶</div>
         <div id="animal-bird" class="animal-runner" style="animation-delay: 0.8s; bottom: 55%;">🐦</div>
+        
         <div id="bike-container">
-            <svg viewBox="0 0 240 200"><g class="spin" style="transform-origin: 50px 145px;"><circle cx="50" cy="145" r="40" fill="none" stroke="#333" stroke-width="3"/></g><g class="spin" style="transform-origin: 190px 145px;"><circle cx="190" cy="145" r="40" fill="none" stroke="#333" stroke-width="3"/></g><path d="M50 145 L100 145 L140 80 L185 80 L190 145 M100 145 L85 75 M85 75 L70 75 M140 80 L130 50 M130 50 L150 50" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round"/></svg>
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <g class="spin" style="transform-origin: 70px 150px;">
+                    <circle cx="70" cy="150" r="42" stroke="#333" stroke-width="4" fill="none"/>
+                    <circle cx="70" cy="150" r="38" stroke="#ccc" stroke-width="1" fill="none"/>
+                    <line x1="70" y1="108" x2="70" y2="192" stroke="#999" stroke-width="1"/>
+                    <line x1="28" y1="150" x2="112" y2="150" stroke="#999" stroke-width="1"/>
+                    <line x1="40" y1="120" x2="100" y2="180" stroke="#999" stroke-width="1"/>
+                    <line x1="40" y1="180" x2="100" y2="120" stroke="#999" stroke-width="1"/>
+                </g>
+                <g class="spin" style="transform-origin: 230px 150px;">
+                    <circle cx="230" cy="150" r="42" stroke="#333" stroke-width="4" fill="none"/>
+                    <circle cx="230" cy="150" r="38" stroke="#ccc" stroke-width="1" fill="none"/>
+                    <line x1="230" y1="108" x2="230" y2="192" stroke="#999" stroke-width="1"/>
+                    <line x1="188" y1="150" x2="272" y2="150" stroke="#999" stroke-width="1"/>
+                    <line x1="200" y1="120" x2="260" y2="180" stroke="#999" stroke-width="1"/>
+                    <line x1="200" y1="180" x2="260" y2="120" stroke="#999" stroke-width="1"/>
+                </g>
+                <g class="bike-body">
+                    <path d="M70 150 L130 150 L180 80 L230 150 M130 150 L115 75 M180 80 L170 50" fill="none" stroke="#52796f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M100 75 L135 75 Q140 75 135 80 L110 80 Z" fill="#8b5a2b"/>
+                    <path d="M160 55 L185 55 Q195 55 195 65" fill="none" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+                    <rect x="185" y="60" width="15" height="6" rx="2" fill="#8b5a2b"/> <rect x="195" y="70" width="35" height="25" rx="2" fill="#d2b48c"/>
+                    <path d="M195 75 H230 M195 85 H230 M205 70 V95 M220 70 V95" stroke="#bc9a6c" stroke-width="1"/>
+                    <circle cx="212" cy="65" r="5" fill="#ff85a1"/>
+                    <circle cx="212" cy="65" r="2" fill="#fff"/>
+                </g>
+            </svg>
         </div>
         <p id="travel-text" class="mt-8 text-xl font-light italic text-stone-500"></p>
     </div>
 
     <div id="scene-shop-ext" class="scene">
         <div class="building-container" onclick="enterBuilding('scene-shop-int', '#f4f7f4')">
-            <svg class="building-graphic" width="280" height="220" viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg">
+            <svg class="building-graphic" width="280" height="220" viewBox="0 0 280 220">
                 <rect x="40" y="60" width="200" height="130" rx="4" fill="#7a967a"/> 
                 <rect x="55" y="75" width="170" height="115" rx="2" fill="#93ac93"/>
                 <path d="M30 60 L250 60 L240 25 L40 25 Z" fill="#d4a3a3"/>
-                <rect x="30" y="55" width="220" height="5" fill="#c69595"/>
                 <rect x="65" y="85" width="70" height="65" rx="1" fill="#fdfdfa"/>
-                <path d="M100 85 V150 M65 117 H135" stroke="#e0e0e0" stroke-width="0.5"/>
-                <circle cx="85" cy="135" r="5" fill="#f4acb7" opacity="0.6"/><circle cx="115" cy="135" r="5" fill="#4361ee" opacity="0.6"/>
                 <rect x="160" y="85" width="45" height="105" rx="1" fill="#fdfdfa"/>
-                <path d="M182 85 V190" stroke="#eee" stroke-width="1"/>
-                <circle cx="195" cy="140" r="3" fill="#4a453e"/>
-                <line x1="150" y1="65" x2="150" y2="85" stroke="#d4a3a3"/><circle cx="150" cy="85" r="5" fill="#ffcad4"/>
-                <line x1="220" y1="65" x2="220" y2="85" stroke="#d4a3a3"/><circle cx="220" cy="85" r="5" fill="#7fb069"/>
                 <text x="140" y="50" font-family="Dancing Script" font-size="28" font-weight="bold" fill="#4a453e" text-anchor="middle">Art Flowers</text>
-                <text x="140" y="210" font-family="Quicksand" font-size="10" fill="#aaaaaa" text-anchor="middle" tracking="wide">✨ CLICK TO ENTER ✨</text>
             </svg>
         </div>
     </div>
@@ -85,23 +112,11 @@
 
     <div id="scene-market-ext" class="scene">
         <div class="building-container" onclick="enterBuilding('scene-market-int', '#f9f5f2')">
-            <svg class="building-graphic" width="280" height="220" viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg">
+            <svg class="building-graphic" width="280" height="220" viewBox="0 0 280 220">
                 <rect x="40" y="50" width="200" height="140" rx="3" fill="#c67e6d"/> 
-                <rect x="50" y="60" width="180" height="10" rx="1" fill="#b96a58"/>
-                <rect x="50" y="75" width="180" height="10" rx="1" fill="#b96a58"/>
                 <path d="M25 50 L255 50 L235 15 L45 15 Z" fill="#6d8ba0"/>
-                <rect x="25" y="45" width="230" height="5" fill="#5c7b90"/>
                 <rect x="110" y="110" width="60" height="80" rx="2" fill="#fdfdfa"/>
-                <path d="M140 110 V190" stroke="#eee" stroke-width="1.5"/>
-                <rect x="60" y="100" width="30" height="60" rx="1" fill="#fdfdfa"/>
-                <rect x="190" y="100" width="30" height="60" rx="1" fill="#fdfdfa"/>
-                <path d="M60 130 H90 M190 130 H220" stroke="#eee" stroke-width="1"/>
-                <circle cx="140" cy="80" r="15" fill="#fdfdfa"/>
-                <line x1="140" y1="80" x2="140" y2="70" stroke="#4a453e" stroke-width="2"/>
-                <line x1="140" y1="80" x2="150" y2="80" stroke="#4a453e" stroke-width="1"/>
-                <rect x="40" y="180" width="200" height="10" rx="1" fill="#a56556"/>
                 <text x="140" y="40" font-family="Dancing Script" font-size="26" font-weight="bold" fill="#4a453e" text-anchor="middle">Local Market</text>
-                <text x="140" y="210" font-family="Quicksand" font-size="10" fill="#aaaaaa" text-anchor="middle" tracking="wide">✨ CLICK TO ENTER ✨</text>
             </svg>
         </div>
     </div>
@@ -138,22 +153,10 @@
 
     <div id="scene-home-ext" class="scene">
         <div class="building-container" onclick="enterHome()">
-            <svg class="building-graphic" width="280" height="220" viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg">
+            <svg class="building-graphic" width="280" height="220" viewBox="0 0 280 220">
                 <rect x="50" y="70" width="180" height="110" rx="3" fill="#d4a017"/> 
                 <path d="M40 70 L240 70 L140 25 Z" fill="#3e5a47"/>
-                <rect x="35" y="65" width="210" height="5" rx="1" fill="#2d4536"/>
-                <rect x="180" y="30" width="20" height="40" fill="#a07c13"/>
-                <path d="M185 30 Q190 10 195 30 T205 30" stroke="#e0e0e0" stroke-width="2" fill="none" opacity="0.6"/>
                 <rect x="120" y="115" width="40" height="65" rx="2" fill="#008080"/>
-                <circle cx="150" cy="147" r="3" fill="#d4a017"/>
-                <rect x="75" y="90" width="30" height="35" rx="1" fill="#fdfdfa" opacity="0.8"/>
-                <path d="M90 90 V125 M75 107 H105" stroke="#ccc" stroke-width="0.5"/>
-                <rect x="175" y="90" width="30" height="35" rx="1" fill="#fdfdfa" opacity="0.8"/>
-                <path d="M190 90 V125 M175 107 H205" stroke="#ccc" stroke-width="0.5"/>
-                <rect x="75" y="140" width="30" height="35" rx="1" fill="#fdfdfa" opacity="0.8"/>
-                <rect x="175" y="140" width="30" height="35" rx="1" fill="#fdfdfa" opacity="0.8"/>
-                <circle cx="140" cy="55" r="8" fill="#fdfdfa"/>
-                <rect x="50" y="170" width="180" height="10" fill="#a07c13"/>
                 <text x="140" y="200" font-family="Dancing Script" font-size="24" font-weight="bold" fill="#4a453e" text-anchor="middle">Welcome Home ❤️</text>
             </svg>
         </div>
@@ -245,7 +248,7 @@
             switchScene('scene-letter');
         }
 
-        function showMarketLetter(item) { typeof showLetter === 'function' && showLetter('market', marketMsgs[item]); }
+        function showMarketLetter(item) { showLetter('market', marketMsgs[item]); }
 
         function setAnimal(type) {
             adopted = animalData[type];
@@ -261,4 +264,4 @@
         }
     </script>
 </body>
-                    </html>
+                        </html>
