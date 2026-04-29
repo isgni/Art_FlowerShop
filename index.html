@@ -3,132 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Message for Lovelyn</title>
+    <title>Our Journey Together</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Indie+Flower&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* Base Styling */
-        body {
-            background-color: #f4f1ea;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Georgia', serif;
-            color: #333;
-            overflow-x: hidden;
-        }
+        :root { --bg-default: #fdfdfa; --text-main: #4a453e; }
+        body { background-color: var(--bg-default); color: var(--text-main); font-family: 'Quicksand', sans-serif; margin: 0; overflow: hidden; height: 100vh; width: 100vw; transition: background-color 1.2s ease; }
+        
+        @keyframes wheel-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes bike-ride { 0% { transform: translateX(-120%); } 100% { transform: translateX(0%); } }
+        @keyframes animal-float { 0% { transform: translateX(120vw); } 100% { transform: translateX(-20vw); } }
 
-        /* Anti-Copy Measures */
-        * {
-            -webkit-user-select: none; /* Safari */
-            -ms-user-select: none;     /* IE 10 and older */
-            user-select: none;         /* Standard syntax */
-        }
+        .spin { animation: wheel-spin 1s linear infinite; transform-origin: center; }
+        .scene { display: none; height: 100%; width: 100%; flex-direction: column; align-items: center; justify-content: center; position: absolute; }
+        .active { display: flex; }
+        
+        #bike-container { width: 280px; animation: bike-ride 3.5s cubic-bezier(0.45, 0, 0.55, 1) forwards; z-index: 10; }
+        .animal-runner { position: absolute; font-size: 3rem; bottom: 20%; animation: animal-float 4s linear infinite; display: none; }
 
-        /* The Letter Container */
-        .letter-container {
-            max-width: 600px;
-            width: 90%;
-            background: #fff;
-            padding: 60px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border-radius: 2px;
-            line-height: 1.8;
-            position: relative;
-            animation: fadeIn 3s ease-in;
-            border: 1px solid #e0dbd0;
-        }
+        .flower-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 600px; }
+        .flower-pot { background: rgba(255,255,255,0.7); border-radius: 12px; padding: 10px; text-align: center; cursor: pointer; transition: 0.3s; border: 1px solid #eee; }
+        .flower-pot:hover { transform: translateY(-5px); background: white; }
+        
+        .letter-card { background-color: #fdfdf5; padding: 35px; width: 90%; max-width: 450px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); transform: rotate(-0.5deg); border: 1px solid #e8e4d8; }
+        .letter-text { font-family: 'Indie Flower', cursive; font-size: 1.1rem; line-height: 1.6; color: #444; }
+        .letter-title { font-family: 'Dancing Script', cursive; font-size: 1.8rem; font-weight: bold; margin-bottom: 12px; }
 
-        /* Decorative Elements */
-        .letter-container::before {
-            content: "";
-            position: absolute;
-            top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border: 1px solid #f0ede5;
-            pointer-events: none;
-        }
+        .building-trigger { cursor: pointer; transition: transform 0.4s ease; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.05)); }
+        .building-trigger:hover { transform: translateY(-5px) scale(1.02); }
 
-        h2 {
-            font-weight: normal;
-            font-style: italic;
-            color: #555;
-            margin-bottom: 30px;
-        }
-
-        .date {
-            text-align: right;
-            font-size: 0.9em;
-            color: #888;
-            margin-bottom: 40px;
-        }
-
-        .content {
-            white-space: pre-line;
-            text-align: justify;
-        }
-
-        .closing {
-            margin-top: 50px;
-            font-style: italic;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 600px) {
-            .letter-container { padding: 30px; }
-        }
+        .item-card { background: white; padding: 20px; border-radius: 20px; text-align: center; cursor: pointer; transition: 0.3s; border: 1px solid #f0f0f0; min-width: 110px; }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body>
 
-    <div class="letter-container">
-        <div class="date">April 27, 2026</div>
-        
-        <h2>Hello, Lovelyn,</h2>
+    <audio id="bg-music" loop><source src="A.mp3" type="audio/mpeg"></audio>
 
-        <div class="content">
-            This message comes from a quiet place in my heart—the part that still remembers every word I once said to you, and every promise I wish I had been ready to keep.
+    <div id="scene-start" class="scene active bg-white">
+        <h2 class="text-2xl font-light mb-8 italic text-center">A surprise journey for you...</h2>
+        <button onclick="startExperience()" class="bg-stone-800 text-white px-10 py-3 rounded-full hover:bg-stone-700 shadow-md">Start the Ride ❤️</button>
+    </div>
 
-            I owe you an apology, not only for the words I failed to honor, but for the hopes I may have raised without being fully prepared to carry them through. I wrote you poems, spoke of commitment, assurance, and loyalty—words that were true in feeling, yet unfinished in action. And for that, I am deeply sorry.
-
-            Please understand, it was never because my feelings were shallow. If anything, they were too real—so real that I began to see how serious loving you truly is. The kind of love I dream of giving you is not temporary, not uncertain, and never half-hearted. It is a love that is steady, prepared, and whole—a love that is ready not only in emotion, but in life, responsibility, and faith.
-
-            And I am not there yet.
-
-            So I chose to step back, not to lose you, but to avoid loving you the wrong way at the wrong time. Because you deserve something complete, not something still learning how to stand.
-
-            Still… if time is kind, and if life allows our paths to meet again when we are both ready, I quietly hold on to the hope that it could still be you. That one day, what once faded because of timing might return—stronger, deeper, and finally certain.
-
-            Until then, you will remain in my prayers. I pray that your dreams unfold beautifully, especially your spiritual journey. I admire your love for Jehovah—it is one of the reasons I respect you so deeply, and why I believe you will go far in life.
-
-            And please, never think you are alone. You are cared for more than you know… and yes, I am still one of those who cares for you, silently and sincerely.
-
-            As for me, I will continue walking forward, placing Jehovah at the center of every plan, every decision, and every step. And if, in His perfect time, He allows our paths to come together again… I would receive that blessing with a grateful heart.
-
-            Until then, I will leave this with you—unfinished, yet still full of hope.
+    <div id="scene-travel" class="scene">
+        <div id="animal-cat" class="animal-runner">🐱</div>
+        <div id="animal-dog" class="animal-runner" style="animation-delay: 1.5s;">🐶</div>
+        <div id="animal-bird" class="animal-runner" style="animation-delay: 0.8s; bottom: 55%;">🐦</div>
+        <div id="bike-container">
+            <svg viewBox="0 0 240 200"><g class="spin" style="transform-origin: 50px 145px;"><circle cx="50" cy="145" r="40" fill="none" stroke="#333" stroke-width="3"/></g><g class="spin" style="transform-origin: 190px 145px;"><circle cx="190" cy="145" r="40" fill="none" stroke="#333" stroke-width="3"/></g><path d="M50 145 L100 145 L140 80 L185 80 L190 145 M100 145 L85 75 M85 75 L70 75 M140 80 L130 50 M130 50 L150 50" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round"/></svg>
         </div>
+        <p id="travel-text" class="mt-8 text-xl font-light italic text-stone-500"></p>
+    </div>
 
-        <div class="closing">
-            Take care, always.
+    <div id="scene-shop-ext" class="scene">
+        <div class="building-trigger" onclick="enterBuilding('scene-shop-int', '#f4f7f4')">
+            <svg width="220" height="180" viewBox="0 0 220 180">
+                <rect x="30" y="60" width="160" height="90" rx="2" fill="#7a967a"/> 
+                <path d="M20 60 L200 60 L190 30 L30 30 Z" fill="#d4a3a3"/>
+                <text x="110" y="50" font-family="Dancing Script" font-size="22" fill="#4a453e" text-anchor="middle">Art Flowers</text>
+            </svg>
         </div>
     </div>
 
-    <script>
-        // Disable keyboard shortcuts for copying
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p')) {
-                e.preventDefault();
-                return false;
-            }
-        });
+    <div id="scene-shop-int" class="scene">
+        <h1 class="text-2xl font-light mb-8 italic">Pick a flower...</h1>
+        <div class="flower-grid" id="flower-grid"></div>
+    </div>
 
-        // Optional: Alert the user if they try to right-click
-        document.addEventListener('contextmenu', event => event.preventDefault());
+    <div id="scene-market-ext" class="scene">
+        <div class="building-trigger" onclick="enterBuilding('scene-market-int', '#f9f5f2')">
+            <svg width="220" height="180" viewBox="0 0 220 180">
+                <rect x="30" y="50" width="160" height="100" rx="2" fill="#c67e6d"/> 
+                <path d="M15 50 L205 50 L185 20 L35 20 Z" fill="#6d8ba0"/>
+                <text x="110" y="45" font-family="Dancing Script" font-size="22" fill="#4a453e" text-anchor="middle">Local Market</text>
+            </svg>
+        </div>
+    </div>
+
+    <div id="scene-market-int" class="scene">
+        <h1 class="text-2xl font-light mb-8 italic">Choose something healthy...</h1>
+        <div class="flex gap-4">
+            <div onclick="showMarketLetter('meat')" class="item-card"><span class="text-4xl">🥩</span><p class="mt-2 font-bold text-sm">Meat</p></div>
+            <div onclick="showMarketLetter('fish')" class="item-card"><span class="text-4xl">🐟</span><p class="mt-2 font-bold text-sm">Fish</p></div>
+            <div onclick="showMarketLetter('veg')" class="item-card"><span class="text-4xl">🥦</span><p class="mt-2 font-bold text-sm">Veg</p></div>
+        </div>
+    </div>
+
+    <div id="scene-letter" class="scene">
+        <div class="letter-card">
+            <div id="letter-title" class="letter-title">To my beloved,</div>
+            <div id="letter-content" class="letter-text"></div>
+            <div class="mt-6 text-right italic font-bold">With love ❤️</div>
+        </div>
+        <div class="flex gap-4 mt-10">
+            <button id="btn-back" class="px-6 py-2 border rounded-full text-sm bg-white"></button>
+            <button id="btn-next" class="px-6 py-2 rounded-full text-sm font-bold shadow-sm"></button>
+        </div>
+    </div>
+
+    <div id="scene-animals" class="scene">
+        <h1 class="text-2xl font-light mb-10">Who should come home with us?</h1>
+        <div class="flex gap-6">
+            <div onclick="setAnimal('cat')" class="item-card text-5xl p-6">🐱</div>
+            <div onclick="setAnimal('dog')" class="item-card text-5xl p-6">🐶</div>
+            <div onclick="setAnimal('bird')" class="item-card text-5xl p-6">🐦</div>
+        </div>
+    </div>
+
+    <div id="scene-home-ext" class="scene">
+        <div class="building-trigger" onclick="enterHome()">
+            <svg width="220" height="180" viewBox="0 0 220 180">
+                <rect x="40" y="70" width="140" height="80" rx="2" fill="#d4a017"/> 
+                <path d="M30 70 L190 70 L110 30 Z" fill="#3e5a47"/>
+                <text x="110" y="165" font-family="Dancing Script" font-size="20" fill="#4a453e" text-anchor="middle">Welcome Home</text>
+            </svg>
+        </div>
+    </div>
+
+    <div id="scene-home-int" class="scene">
+        <div id="final-animal" class="text-7xl mb-6"></div>
+        <div class="letter-card mx-auto mb-8">
+            <div id="animal-title" class="letter-title"></div>
+            <div id="animal-thank-you" class="letter-text italic"></div>
+        </div>
+        <h1 class="text-2xl font-light">We've arrived. ❤️</h1>
+        <button onclick="location.reload()" class="mt-8 bg-stone-800 text-white px-8 py-2 rounded-full text-sm">Ride Again 🚲</button>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bg-music');
+        let currentScene = 'scene-start';
+        let adopted = {};
+
+        const flowers = [
+            { name: "Blue Hydrangea", color: "#4361ee", msg: "This blue flower represents the quality I admire most in you: your deep faith and devotion in serving and loving Jehovah God. Your spiritual strength and beautiful heart make me love you more every day." },
+            { name: "Pink Roses", color: "#ff85a1", msg: "Pink roses signify grace and admiration. I admire every little thing about you—your smile, your kind eyes, and the way you handle the world with such elegance." },
+            { name: "Orange Tulips", color: "#fb8500", msg: "Orange tulips represent energy and desire. You fill my days with such vibrant energy that I can't imagine a morning without your light." },
+            { name: "Yellow Tulips", color: "#ffb703", msg: "Yellow is the color of sunshine. You are my ray of sunshine on even the cloudiest days. This bouquet is a small reminder of the joy you bring into my life." },
+            { name: "Purple Peonies", color: "#7209b7", msg: "Peonies are a symbol of prosperity and a happy life. With you, I already feel like the happiest person in the world." },
+            { name: "Blush Roses", color: "#ffc8dd", msg: "You always take care of everyone else, but I want to make sure you’re taking care of you, too. I’m always here to listen." },
+            { name: "Coral Tulips", color: "#ff7b54", msg: "Coral is a unique, warm color—just like your heart. You have a way of making everything feel special." },
+            { name: "Red Roses", color: "#9b2226", msg: "Deep red for a deep, profound love. My commitment to you goes beyond words. You are my soulmate and my best friend." },
+            { name: "White Lilies", color: "#f8f9fa", msg: "White lilies represent purity and loyalty. Your pure heart and honest soul are what make our relationship so strong." }
+        ];
+
+        const animalData = {
+            cat: { icon: '🐱', title: 'A Purr-fect Friend', msg: "Meow! Thank you for noticing me and bringing me to your lovely home. I'll keep your lap warm and remind you how special you are every single day! Purrr..." },
+            dog: { icon: '🐶', title: 'Your New Guardian', msg: "Woof woof! I was so hoping you'd pick me! Thank you for adopting me. I'll protect this home and wag my tail every time I see your beautiful smile!" },
+            bird: { icon: '🐦', title: 'A Song for You', msg: "Chirp chirp! Thank you for rescuing me. I'll sing the most beautiful songs every morning to make sure you wake up feeling loved!" }
+        };
+
+        const marketMsgs = {
+            meat: "Protein for your strength! Please stay healthy so we can go on many more adventures together. Eat well for me!",
+            fish: "Fish is great for your bright mind. Take care of your health because you are my whole world.",
+            veg: "Vitamins for my favorite person! Your health is my priority because I want to see you happy for a long time."
+        };
+
+        function changeMusic(file) { audio.src = file; audio.play().catch(e => {}); }
+        function switchScene(newId) { document.getElementById(currentScene).classList.remove('active'); document.getElementById(newId).classList.add('active'); currentScene = newId; }
+
+        function rideAnimation(text, nextScene, bg, showAnimals = false) {
+            document.getElementById('travel-text').innerText = text;
+            document.body.style.backgroundColor = 'var(--bg-default)';
+            const animals = [document.getElementById('animal-cat'), document.getElementById('animal-dog'), document.getElementById('animal-bird')];
+            animals.forEach(a => a.style.display = showAnimals ? 'block' : 'none');
+            switchScene('scene-travel');
+            setTimeout(() => { switchScene(nextScene); document.body.style.backgroundColor = bg; }, 3800);
+        }
+
+        function enterBuilding(scene, bg) { switchScene(scene); document.body.style.backgroundColor = bg; }
+
+        function startExperience() {
+            changeMusic('A.mp3');
+            rideAnimation("Pedaling to the flower shop...", 'scene-shop-ext', '#f7faf7');
+            renderFlowers();
+        }
+
+        function renderFlowers() {
+            const grid = document.getElementById('flower-grid'); grid.innerHTML = '';
+            flowers.forEach((f) => {
+                const pot = document.createElement('div'); pot.className = 'flower-pot';
+                pot.onclick = () => showLetter('flower', f);
+                pot.innerHTML = `<svg width="50" height="70" viewBox="0 0 60 80" class="mx-auto"><path d="M30 40 L30 70 M20 45 L30 70 M40 45 L30 70" stroke="#7fb069" stroke-width="2" fill="none"/><circle cx="30" cy="35" r="12" fill="${f.color}" stroke="${f.color === '#f8f9fa' ? '#ddd' : 'none'}"/><path d="M15 70 L45 70 L40 85 L20 85 Z" fill="#f1f1f1" stroke="#ddd" stroke-width="1"/></svg><div class="text-[10px] text-gray-400 mt-2">${f.name}</div>`;
+                grid.appendChild(pot);
+            });
+        }
+
+        function showLetter(type, data) {
+            const t = document.getElementById('letter-title'); const c = document.getElementById('letter-content');
+            const b = document.getElementById('btn-back'); const n = document.getElementById('btn-next');
+            if(type === 'flower') {
+                t.innerText = "To my beloved,"; c.innerText = data.msg;
+                b.innerText = "Pick Another 🌸"; b.onclick = () => enterBuilding('scene-shop-int', '#f4f7f4');
+                n.innerText = "Market 🧺"; n.className = "px-6 py-2 rounded-full text-sm font-bold bg-pink-100 text-pink-700";
+                n.onclick = () => { changeMusic('B.mp3'); rideAnimation("Off to the market!", 'scene-market-ext', '#fcf9f7'); };
+            } else {
+                t.innerText = "A healthy note..."; c.innerText = data;
+                b.innerText = "Pick More Food 🥦"; b.onclick = () => enterBuilding('scene-market-int', '#f9f5f2');
+                n.innerText = "Animals 🐾"; n.className = "px-6 py-2 rounded-full text-sm font-bold bg-blue-100 text-blue-700";
+                n.onclick = () => { changeMusic('C.mp3'); rideAnimation("Look at the animals!", 'scene-animals', null, true); };
+            }
+            switchScene('scene-letter');
+        }
+
+        function showMarketLetter(item) { showMarketLetter && showLetter('market', marketMsgs[item]); }
+
+        function setAnimal(type) {
+            adopted = animalData[type];
+            changeMusic('D.mp3');
+            rideAnimation("Heading home with my friend.", 'scene-home-ext', '#fdfbf5', true);
+        }
+
+        function enterHome() {
+            enterBuilding('scene-home-int', '#fffef9');
+            document.getElementById('final-animal').innerText = adopted.icon;
+            document.getElementById('animal-title').innerText = adopted.title;
+            document.getElementById('animal-thank-you').innerText = adopted.msg;
+        }
     </script>
 </body>
 </html>
