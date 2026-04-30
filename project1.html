@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Message for Lovelyn</title>
+    <style>
+        /* Base Styling */
+        body {
+            background-color: #f4f1ea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Georgia', serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Anti-Copy Measures */
+        * {
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .letter-container {
+            max-width: 600px;
+            width: 90%;
+            background: #fff;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 2px;
+            line-height: 1.8;
+            position: relative;
+            animation: fadeIn 4s ease-in; /* Slightly slower for a dramatic reveal */
+            border: 1px solid #e0dbd0;
+        }
+
+        .letter-container::before {
+            content: "";
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid #f0ede5;
+            pointer-events: none;
+        }
+
+        h2 { font-weight: normal; font-style: italic; color: #555; margin-bottom: 30px; }
+        .date { text-align: right; font-size: 0.9em; color: #888; margin-bottom: 40px; }
+        .content { white-space: pre-line; text-align: justify; }
+        .closing { margin-top: 50px; font-style: italic; }
+
+        /* Subtle Audio Toggle in corner */
+        #mute-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.7);
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) { .letter-container { padding: 30px; } }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div class="letter-container">
+        <div class="date">April 27, 2026</div>
+        <h2>Hello, Lovelyn,</h2>
+        <div class="content">
+            This message comes from a quiet place in my heart—the part that still remembers every word I once said to you, and every promise I wish I had been ready to keep.
+
+            I owe you an apology, not only for the words I failed to honor, but for the hopes I may have raised without being fully prepared to carry them through. I wrote you poems, spoke of commitment, assurance, and loyalty—words that were true in feeling, yet unfinished in action. And for that, I am deeply sorry.
+
+            Please understand, it was never because my feelings were shallow. If anything, they were too real—so real that I began to see how serious loving you truly is. The kind of love I dream of giving you is not temporary, not uncertain, and never half-hearted. It is a love that is steady, prepared, and whole—a love that is ready not only in emotion, but in life, responsibility, and faith.
+
+            And I am not there yet.
+
+            So I chose to step back, not to lose you, but to avoid loving you the wrong way at the wrong time. Because you deserve something complete, not something still learning how to stand.
+
+            Still… if time is kind, and if life allows our paths to meet again when we are both ready, I quietly hold on to the hope that it could still be you. That one day, what once faded because of timing might return—stronger, deeper, and finally certain.
+
+            Until then, you will remain in my prayers. I pray that your dreams unfold beautifully, especially your spiritual journey. I admire your love for Jehovah—it is one of the reasons I respect you so deeply, and why I believe you will go far in life.
+
+            And please, never think you are alone. You are cared for more than you know… and yes, I am still one of those who cares for you, silently and sincerely.
+
+            As for me, I will continue walking forward, placing Jehovah at the center of every plan, every decision, and every step. And if, in His perfect time, He allows our paths to come together again… I would receive that blessing with a grateful heart.
+
+            Until then, I will leave this with you—unfinished, yet still full of hope.
+        </div>
+        <div class="closing">Take care, always.</div>
+    </div>
+
+    <!-- Replace with your music file URL -->
+    <audio id="bg-music" loop autoplay>
+        <source src="bg.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="mute-toggle">🔊</button>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        const muteBtn = document.getElementById('mute-toggle');
+
+        // Set low volume for background atmosphere
+        music.volume = 0.4;
+
+        // Autoplay attempt
+        window.addEventListener('load', () => {
+            music.play().catch(error => {
+                console.log("Autoplay blocked. Waiting for first click.");
+                // If blocked, play on the first click anywhere on the page
+                document.body.addEventListener('click', () => {
+                    music.play();
+                }, { once: true });
+            });
+        });
+
+        // Mute/Unmute Toggle
+        muteBtn.addEventListener('click', () => {
+            if (music.muted) {
+                music.muted = false;
+                muteBtn.textContent = "🔊";
+            } else {
+                music.muted = true;
+                muteBtn.textContent = "🔇";
+            }
+        });
+
+        // Anti-Copy Logic
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
