@@ -3,301 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Journey Together</title>
+    <title>For Lovelyn</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Indie+Flower&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-default: #fdfdfa; --text-main: #4a453e; }
-        body { background-color: var(--bg-default); color: var(--text-main); font-family: 'Quicksand', sans-serif; margin: 0; overflow: hidden; height: 100vh; width: 100vw; transition: background-color 1.2s ease; }
-        
-        /* Animations */
-        @keyframes wheel-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes bike-ride { 0% { transform: translateX(-120%); } 100% { transform: translateX(0%); } }
-        @keyframes animal-float { 0% { transform: translateX(120vw); } 100% { transform: translateX(-20vw); } }
-        @keyframes building-in { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        
-        /* Background scenery animations */
-        @keyframes tree-move { 
-            0% { transform: translateX(100vw); } 
-            100% { transform: translateX(-20vw); } 
-        }
-        @keyframes wind-drift {
-            0% { transform: translateX(100vw) translateY(0px); opacity: 0; }
-            50% { opacity: 0.5; }
-            100% { transform: translateX(-20vw) translateY(20px); opacity: 0; }
+        :root {
+            --primary: #6d5959;
+            --accent: #d4a017;
         }
 
-        .spin { animation: wheel-spin 0.8s linear infinite; transform-origin: center; }
-        .scene { display: none; height: 100%; width: 100%; flex-direction: column; align-items: center; justify-content: center; position: absolute; overflow: hidden; }
-        .active { display: flex; }
-        
-        #bike-container { width: 320px; animation: bike-ride 3.5s cubic-bezier(0.45, 0, 0.55, 1) forwards; z-index: 50; }
-        
-        /* Scenery Elements */
-        .tree { position: absolute; bottom: 15%; animation: tree-move 4s linear infinite; z-index: 5; }
-        .wind-line { position: absolute; height: 2px; background: rgba(0,0,0,0.05); border-radius: 2px; animation: wind-drift 2s linear infinite; z-index: 2; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Georgia', serif;
+            background: #fdfdfa;
+        }
 
-        .animal-runner { position: absolute; font-size: 3rem; bottom: 18%; animation: animal-float 4s linear infinite; display: none; z-index: 60; }
+        /* Animated Gradient Background */
+        .main-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            z-index: -1;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-        .flower-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 600px; }
-        .flower-pot { background: rgba(255,255,255,0.7); border-radius: 12px; padding: 10px; text-align: center; cursor: pointer; transition: 0.3s; border: 1px solid #eee; }
-        .flower-pot:hover { transform: translateY(-5px); background: white; }
-        
-        .letter-card { background-color: #fdfdf5; padding: 35px; width: 90%; max-width: 450px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); transform: rotate(-0.5deg); border: 1px solid #e8e4d8; z-index: 100; }
-        .letter-text { font-family: 'Indie Flower', cursive; font-size: 1.1rem; line-height: 1.6; color: #444; }
-        .letter-title { font-family: 'Dancing Script', cursive; font-size: 1.8rem; font-weight: bold; margin-bottom: 12px; }
+        .hub-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            gap: 2rem;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
 
-        .building-container { animation: building-in 1s ease forwards; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
-        .building-graphic { transition: transform 0.4s ease; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.08)); }
-        .building-container:hover .building-graphic { transform: translateY(-10px) scale(1.02); }
+        /* Advanced Button Styling */
+        .choice-card {
+            position: relative;
+            width: 300px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
 
-        .item-card { background: white; padding: 20px; border-radius: 20px; text-align: center; cursor: pointer; transition: 0.3s; border: 1px solid #f0f0f0; min-width: 110px; }
-        .item-card:hover { transform: translateY(-3px); }
+        .choice-card:hover {
+            transform: scale(1.05) translateY(-10px);
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+
+        .choice-card i {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .choice-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .choice-card p {
+            font-size: 0.9rem;
+            color: #777;
+            font-style: italic;
+        }
+
+        /* Reveal Animation for Projects */
+        .project-frame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+            z-index: 100;
+            background: white;
+            animation: slideUp 1s forwards;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .back-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border-radius: 20px;
+            display: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Floating particles effect */
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.3;
+            pointer-events: none;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
+        }
     </style>
 </head>
 <body>
 
-    <audio id="bg-music" loop><source src="A.mp3" type="audio/mpeg"></audio>
+    <div class="main-bg"></div>
 
-    <div id="scene-start" class="scene active bg-white">
-        <h2 class="text-2xl font-light mb-8 italic text-center">A surprise journey for you Lovelyn</h2>
-        <button onclick="startExperience()" class="bg-stone-800 text-white px-10 py-3 rounded-full hover:bg-stone-700 shadow-md transition-all">Start the Ride ❤️</button>
-    </div>
-
-    <div id="scene-travel" class="scene">
-        <div class="wind-line w-16" style="top: 20%; animation-delay: 0.2s;"></div>
-        <div class="wind-line w-24" style="top: 40%; animation-delay: 0.8s;"></div>
-        <div class="wind-line w-20" style="top: 60%; animation-delay: 0.5s;"></div>
+    <div id="hub" class="hub-container">
+        <h1 class="text-4xl font-light mb-4 text-stone-700 italic">For Lovelyn</h1>
+        <p class="text-stone-500 mb-8">Choose a path to begin...</p>
         
-        <div class="tree text-6xl" style="animation-delay: 0s;">🌳</div>
-        <div class="tree text-5xl" style="animation-delay: 2s;">🌲</div>
-        
-        <div id="animal-cat" class="animal-runner">🐱</div>
-        <div id="animal-dog" class="animal-runner" style="animation-delay: 1.5s;">🐶</div>
-        <div id="animal-bird" class="animal-runner" style="animation-delay: 0.8s; bottom: 55%;">🐦</div>
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Choice 1: The Letter -->
+            <div class="choice-card" onclick="openProject('letter')">
+                <div class="text-5xl mb-4">✉️</div>
+                <h3>A Message Letter</h3>
+                <p>A quiet place for words from the heart.</p>
+            </div>
 
-        <div id="bike-container">
-            <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
-                <path d="M70 140 L110 140 L145 85 L190 85 L195 140" fill="none" stroke="#4a453e" stroke-width="4" stroke-linecap="round"/>
-                <path d="M110 140 L95 70 L75 70" fill="none" stroke="#4a453e" stroke-width="4" stroke-linecap="round"/>
-                <path d="M145 85 L135 45 L155 45" fill="none" stroke="#4a453e" stroke-width="4" stroke-linecap="round"/>
-                <rect x="180" y="65" width="30" height="20" rx="2" fill="#d2b48c" stroke="#bc9a6c" stroke-width="1"/>
-                <line x1="180" y1="75" x2="210" y2="75" stroke="#bc9a6c" stroke-width="1"/>
-                <g class="spin" style="transform-origin: 65px 140px;">
-                    <circle cx="65" cy="140" r="35" fill="none" stroke="#333" stroke-width="3"/>
-                    <circle cx="65" cy="140" r="32" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="4 2"/>
-                </g>
-                <g class="spin" style="transform-origin: 195px 140px;">
-                    <circle cx="195" cy="140" r="35" fill="none" stroke="#333" stroke-width="3"/>
-                    <circle cx="195" cy="140" r="32" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="4 2"/>
-                </g>
-                <path d="M85 70 Q95 60 105 70" fill="#4a453e"/>
-            </svg>
-        </div>
-        <p id="travel-text" class="mt-8 text-xl font-light italic text-stone-500 relative z-50"></p>
-    </div>
-
-    <div id="scene-shop-ext" class="scene">
-        <div class="building-container" onclick="enterBuilding('scene-shop-int', '#f4f7f4')">
-            <svg class="building-graphic" width="280" height="220" viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg">
-                <rect x="40" y="60" width="200" height="130" rx="4" fill="#7a967a"/> 
-                <rect x="55" y="75" width="170" height="115" rx="2" fill="#93ac93"/>
-                <path d="M30 60 L250 60 L240 25 L40 25 Z" fill="#d4a3a3"/>
-                <rect x="30" y="55" width="220" height="5" fill="#c69595"/>
-                <rect x="65" y="85" width="70" height="65" rx="1" fill="#fdfdfa"/>
-                <path d="M100 85 V150 M65 117 H135" stroke="#e0e0e0" stroke-width="0.5"/>
-                <circle cx="85" cy="135" r="5" fill="#f4acb7" opacity="0.6"/><circle cx="115" cy="135" r="5" fill="#4361ee" opacity="0.6"/>
-                <rect x="160" y="85" width="45" height="105" rx="1" fill="#fdfdfa"/>
-                <path d="M182 85 V190" stroke="#eee" stroke-width="1"/>
-                <circle cx="195" cy="140" r="3" fill="#4a453e"/>
-                <line x1="150" y1="65" x2="150" y2="85" stroke="#d4a3a3"/><circle cx="150" cy="85" r="5" fill="#ffcad4"/>
-                <line x1="220" y1="65" x2="220" y2="85" stroke="#d4a3a3"/><circle cx="220" cy="85" r="5" fill="#7fb069"/>
-                <text x="140" y="50" font-family="Dancing Script" font-size="28" font-weight="bold" fill="#4a453e" text-anchor="middle">Art Flowers</text>
-                <text x="140" y="210" font-family="Quicksand" font-size="10" fill="#aaaaaa" text-anchor="middle" tracking="wide">✨ CLICK TO ENTER ✨</text>
-            </svg>
+            <!-- Choice 2: The Journey -->
+            <div class="choice-card" onclick="openProject('journey')">
+                <div class="text-5xl mb-4">🚲</div>
+                <h3>A Journey Ride</h3>
+                <p>for Doraming before</p>
+            </div>
         </div>
     </div>
 
-    <div id="scene-shop-int" class="scene">
-        <h1 class="text-2xl font-light mb-8 italic">Pick a flower...</h1>
-        <div class="flower-grid" id="flower-grid"></div>
+    <!-- Container for Project 1 (Letter) -->
+    <div id="container-letter" class="project-frame">
+        <!-- Iframe will point to your Project 1 file -->
+        <iframe src="project1.html" width="100%" height="100%"></iframe>
     </div>
 
-    <div id="scene-market-ext" class="scene">
-        <div class="building-container" onclick="enterBuilding('scene-market-int', '#f9f5f2')">
-            <svg class="building-graphic" width="280" height="220" viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg">
-                <rect x="40" y="50" width="200" height="140" rx="3" fill="#c67e6d"/> 
-                <rect x="50" y="60" width="180" height="10" rx="1" fill="#b96a58"/>
-                <rect x="50" y="75" width="180" height="10" rx="1" fill="#b96a58"/>
-                <path d="M25 50 L255 50 L235 15 L45 15 Z" fill="#6d8ba0"/>
-                <rect x="25" y="45" width="230" height="5" fill="#5c7b90"/>
-                <rect x="110" y="110" width="60" height="80" rx="2" fill="#fdfdfa"/>
-                <path d="M140 110 V190" stroke="#eee" stroke-width="1.5"/>
-                <rect x="60" y="100" width="30" height="60" rx="1" fill="#fdfdfa"/>
-                <rect x="190" y="100" width="30" height="60" rx="1" fill="#fdfdfa"/>
-                <path d="M60 130 H90 M190 130 H220" stroke="#eee" stroke-width="1"/>
-                <circle cx="140" cy="80" r="15" fill="#fdfdfa"/>
-                <line x1="140" y1="80" x2="140" y2="70" stroke="#4a453e" stroke-width="2"/>
-                <line x1="140" y1="80" x2="150" y2="80" stroke="#4a453e" stroke-width="1"/>
-                <rect x="40" y="180" width="200" height="10" rx="1" fill="#a56556"/>
-                <text x="140" y="40" font-family="Dancing Script" font-size="26" font-weight="bold" fill="#4a453e" text-anchor="middle">Local Market</text>
-                <text x="140" y="210" font-family="Quicksand" font-size="10" fill="#aaaaaa" text-anchor="middle" tracking="wide">✨ CLICK TO ENTER ✨</text>
-            </svg>
-        </div>
+    <!-- Container for Project 2 (Journey) -->
+    <div id="container-journey" class="project-frame">
+        <!-- Iframe will point to your Project 2 file -->
+        <iframe src="project2.html" width="100%" height="100%"></iframe>
     </div>
 
-    <div id="scene-market-int" class="scene">
-        <h1 class="text-2xl font-light mb-8 italic">Choose something healthy...</h1>
-        <div class="flex gap-4">
-            <div onclick="showMarketLetter('meat')" class="item-card"><span class="text-4xl">🥩</span><p class="mt-2 font-bold text-sm">Meat</p></div>
-            <div onclick="showMarketLetter('fish')" class="item-card"><span class="text-4xl">🐟</span><p class="mt-2 font-bold text-sm">Fish</p></div>
-            <div onclick="showMarketLetter('veg')" class="item-card"><span class="text-4xl">🥦</span><p class="mt-2 font-bold text-sm">Veg</p></div>
-        </div>
-    </div>
-
-    <div id="scene-letter" class="scene">
-        <div class="letter-card">
-            <div id="letter-title" class="letter-title">To my beloved,</div>
-            <div id="letter-content" class="letter-text"></div>
-            <div class="mt-6 text-right italic font-bold">With love ❤️</div>
-        </div>
-        <div class="flex gap-4 mt-10">
-            <button id="btn-back" class="px-6 py-2 border rounded-full text-sm bg-white"></button>
-            <button id="btn-next" class="px-6 py-2 rounded-full text-sm font-bold shadow-sm"></button>
-        </div>
-    </div>
-
-    <div id="scene-animals" class="scene">
-        <h1 class="text-2xl font-light mb-10">Who should come home with us?</h1>
-        <div class="flex gap-6">
-            <div onclick="setAnimal('cat')" class="item-card text-5xl p-6">🐱</div>
-            <div onclick="setAnimal('dog')" class="item-card text-5xl p-6">🐶</div>
-            <div onclick="setAnimal('bird')" class="item-card text-5xl p-6">🐦</div>
-        </div>
-    </div>
-
-    <div id="scene-home-ext" class="scene">
-        <div class="building-container" onclick="enterHome()">
-            <svg class="building-graphic" width="280" height="220" viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg">
-                <rect x="50" y="70" width="180" height="110" rx="3" fill="#d4a017"/> 
-                <path d="M40 70 L240 70 L140 25 Z" fill="#3e5a47"/>
-                <rect x="35" y="65" width="210" height="5" rx="1" fill="#2d4536"/>
-                <rect x="180" y="30" width="20" height="40" fill="#a07c13"/>
-                <path d="M185 30 Q190 10 195 30 T205 30" stroke="#e0e0e0" stroke-width="2" fill="none" opacity="0.6"/>
-                <rect x="120" y="115" width="40" height="65" rx="2" fill="#008080"/>
-                <circle cx="150" cy="147" r="3" fill="#d4a017"/>
-                <rect x="75" y="90" width="30" height="35" rx="1" fill="#fdfdfa" opacity="0.8"/>
-                <path d="M90 90 V125 M75 107 H105" stroke="#ccc" stroke-width="0.5"/>
-                <rect x="175" y="90" width="30" height="35" rx="1" fill="#fdfdfa" opacity="0.8"/>
-                <path d="M190 90 V125 M175 107 H205" stroke="#ccc" stroke-width="0.5"/>
-                <rect x="75" y="140" width="30" height="35" rx="1" fill="#fdfdfa" opacity="0.8"/>
-                <rect x="175" y="140" width="30" height="35" rx="1" fill="#fdfdfa" opacity="0.8"/>
-                <circle cx="140" cy="55" r="8" fill="#fdfdfa"/>
-                <rect x="50" y="170" width="180" height="10" fill="#a07c13"/>
-                <text x="140" y="200" font-family="Dancing Script" font-size="24" font-weight="bold" fill="#4a453e" text-anchor="middle">Welcome Home ❤️</text>
-            </svg>
-        </div>
-    </div>
-
-    <div id="scene-home-int" class="scene">
-        <div id="final-animal" class="text-7xl mb-6"></div>
-        <div class="letter-card mx-auto mb-8">
-            <div id="animal-title" class="letter-title"></div>
-            <div id="animal-thank-you" class="letter-text italic"></div>
-        </div>
-        <h1 class="text-2xl font-light">We've arrived. ❤️</h1>
-        <button onclick="location.reload()" class="mt-8 bg-stone-800 text-white px-8 py-2 rounded-full text-sm">Ride Again 🚲</button>
-    </div>
+    <button id="back-btn" class="back-btn" onclick="closeProject()">← Return to Selection</button>
 
     <script>
-        const audio = document.getElementById('bg-music');
-        let currentScene = 'scene-start';
-        let adopted = {};
-
-        const flowers = [
-            { name: "Blue Hydrangea", color: "#4361ee", msg: "This blue flower represents the quality I admire most in you: your deep faith and devotion in serving and loving Jehovah God. Your spiritual strength and beautiful heart make me love you more every day." },
-            { name: "Pink Roses", color: "#ff85a1", msg: "Pink roses signify grace and admiration. I admire every little thing about you—your smile, your kind eyes, and the way you handle the world with such elegance." },
-            { name: "Orange Tulips", color: "#fb8500", msg: "Orange tulips represent energy and desire. You fill my days with such vibrant energy that I can't imagine a morning without your light." },
-            { name: "Yellow Tulips", color: "#ffb703", msg: "Yellow is the color of sunshine. You are my ray of sunshine on even the cloudiest days. This bouquet is a small reminder of the joy you bring into my life." },
-            { name: "Purple Peonies", color: "#7209b7", msg: "Peonies are a symbol of prosperity and a happy life. With you, I already feel like the happiest person in the world." },
-            { name: "Blush Roses", color: "#ffc8dd", msg: "You always take care of everyone else, but I want to make sure you’re taking care of you, too. I’m always here to listen." },
-            { name: "Coral Tulips", color: "#ff7b54", msg: "Coral is a unique, warm color—just like your heart. You have a way of making everything feel special." },
-            { name: "Red Roses", color: "#9b2226", msg: "Deep red for a deep, profound love. My commitment to you goes beyond words. You are my soulmate and my best friend." },
-            { name: "White Lilies", color: "#f8f9fa", msg: "White lilies represent purity and loyalty. Your pure heart and honest soul are what make our relationship so strong." }
-        ];
-
-        const animalData = {
-            cat: { icon: '🐱', title: 'A Purr-fect Friend', msg: "Meow! Thank you for noticing me and bringing me to your lovely home. I'll keep your lap warm and remind you how special you are every single day! Purrr..." },
-            dog: { icon: '🐶', title: 'Your New Guardian', msg: "Woof woof! I was so hoping you'd pick me! Thank you for adopting me. I'll protect this home and wag my tail every time I see your beautiful smile!" },
-            bird: { icon: '🐦', title: 'A Song for You', msg: "Chirp chirp! Thank you for rescuing me. I'll sing the most beautiful songs every morning to make sure you wake up feeling loved!" }
-        };
-
-        const marketMsgs = {
-            meat: "Protein for your strength! Please stay healthy so we can go on many more adventures together. Eat well for me!",
-            fish: "Fish is great for your bright mind. Take care of your health because you are my whole world.",
-            veg: "Vitamins for my favorite person! Your health is my priority because I want to see you happy for a long time."
-        };
-
-        function changeMusic(file) { audio.src = file; audio.play().catch(e => {}); }
-        function switchScene(newId) { document.getElementById(currentScene).classList.remove('active'); document.getElementById(newId).classList.add('active'); currentScene = newId; }
-
-        function rideAnimation(text, nextScene, bg, showAnimals = false) {
-            document.getElementById('travel-text').innerText = text;
-            document.body.style.backgroundColor = '#f7f7f0'; // Slight road color
-            const animals = [document.getElementById('animal-cat'), document.getElementById('animal-dog'), document.getElementById('animal-bird')];
-            animals.forEach(a => a.style.display = showAnimals ? 'block' : 'none');
-            switchScene('scene-travel');
-            setTimeout(() => { switchScene(nextScene); document.body.style.backgroundColor = bg; }, 3800);
+        function openProject(type) {
+            document.getElementById('hub').style.opacity = '0';
+            document.getElementById('hub').style.transform = 'scale(0.9)';
+            
+            setTimeout(() => {
+                document.getElementById('container-' + type).style.display = 'block';
+                document.getElementById('back-btn').style.display = 'block';
+            }, 500);
         }
 
-        function enterBuilding(scene, bg) { switchScene(scene); document.body.style.backgroundColor = bg; }
-
-        function startExperience() {
-            changeMusic('A.mp3');
-            rideAnimation("Pedaling to the flower shop...", 'scene-shop-ext', '#f7faf7');
-            renderFlowers();
+        function closeProject() {
+            document.querySelectorAll('.project-frame').forEach(f => f.style.display = 'none');
+            document.getElementById('back-btn').style.display = 'none';
+            document.getElementById('hub').style.opacity = '1';
+            document.getElementById('hub').style.transform = 'scale(1)';
         }
 
-        function renderFlowers() {
-            const grid = document.getElementById('flower-grid'); grid.innerHTML = '';
-            flowers.forEach((f) => {
-                const pot = document.createElement('div'); pot.className = 'flower-pot';
-                pot.onclick = () => showLetter('flower', f);
-                pot.innerHTML = `<svg width="50" height="70" viewBox="0 0 60 80" class="mx-auto"><path d="M30 40 L30 70 M20 45 L30 70 M40 45 L30 70" stroke="#7fb069" stroke-width="2" fill="none"/><circle cx="30" cy="35" r="12" fill="${f.color}" stroke="${f.color === '#f8f9fa' ? '#ddd' : 'none'}"/><path d="M15 70 L45 70 L40 85 L20 85 Z" fill="#f1f1f1" stroke="#ddd" stroke-width="1"/></svg><div class="text-[10px] text-gray-400 mt-2">${f.name}</div>`;
-                grid.appendChild(pot);
-            });
-        }
-
-        function showLetter(type, data) {
-            const t = document.getElementById('letter-title'); const c = document.getElementById('letter-content');
-            const b = document.getElementById('btn-back'); const n = document.getElementById('btn-next');
-            if(type === 'flower') {
-                t.innerText = "To my beloved,"; c.innerText = data.msg;
-                b.innerText = "Pick Another 🌸"; b.onclick = () => enterBuilding('scene-shop-int', '#f4f7f4');
-                n.innerText = "Market 🧺"; n.className = "px-6 py-2 rounded-full text-sm font-bold bg-pink-100 text-pink-700";
-                n.onclick = () => { changeMusic('B.mp3'); rideAnimation("Off to the market!", 'scene-market-ext', '#fcf9f7'); };
-            } else {
-                t.innerText = "A healthy note..."; c.innerText = data;
-                b.innerText = "Pick More Food 🥦"; b.onclick = () => enterBuilding('scene-market-int', '#f9f5f2');
-                n.innerText = "Animals 🐾"; n.className = "px-6 py-2 rounded-full text-sm font-bold bg-blue-100 text-blue-700";
-                n.onclick = () => { changeMusic('C.mp3'); rideAnimation("Look at the animals!", 'scene-animals', null, true); };
-            }
-            switchScene('scene-letter');
-        }
-
-        function showMarketLetter(item) { typeof showLetter === 'function' && showLetter('market', marketMsgs[item]); }
-
-        function setAnimal(type) {
-            adopted = animalData[type];
-            changeMusic('D.mp3');
-            rideAnimation("Heading home with my friend.", 'scene-home-ext', '#fdfbf5', true);
-        }
-
-        function enterHome() {
-            enterBuilding('scene-home-int', '#fffef9');
-            document.getElementById('final-animal').innerText = adopted.icon;
-            document.getElementById('animal-title').innerText = adopted.title;
-            document.getElementById('animal-thank-you').innerText = adopted.msg;
+        // Generate floating particles
+        for(let i=0; i<20; i++) {
+            let p = document.createElement('div');
+            p.className = 'particle';
+            let size = Math.random() * 5 + 2;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            p.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(p);
         }
     </script>
 </body>
