@@ -1,148 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Lovelyn</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        :root {
-            --primary: #6d5959;
-            --accent: #d4a017;
-        }
-
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            font-family: 'Georgia', serif;
-            background: #fdfdfa;
-        }
-
-        /* Animated Gradient Background */
-        .main-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            z-index: -1;
-            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .hub-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            gap: 2rem;
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        /* Advanced Button Styling */
-        .choice-card {
-            position: relative;
-            width: 300px;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        .choice-card:hover {
-            transform: scale(1.05) translateY(-10px);
-            background: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            border-color: var(--accent);
-        }
-
-        .choice-card i {
-            font-size: 3rem;
-            display: block;
-            margin-bottom: 1rem;
-        }
-
-        .choice-card h3 {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            font-weight: 400;
-        }
-
-        .choice-card p {
-            font-size: 0.9rem;
-            color: #777;
-            font-style: italic;
-        }
-
-        /* Reveal Animation for Projects */
-        .project-frame {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: none;
-            z-index: 100;
-            background: white;
-            animation: slideUp 1s forwards;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-
-        .back-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            padding: 10px 20px;
-            background: rgba(0,0,0,0.6);
-            color: white;
-            border-radius: 20px;
-            display: none;
-            cursor: pointer;
-            font-size: 0.8rem;
-            backdrop-filter: blur(5px);
-        }
-
-        /* Floating particles effect */
-        .particle {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.3;
-            pointer-events: none;
-            animation: float 15s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-10vh) rotate(360deg); }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="main-bg"></div>
-
-    <div id="hub" class="hub-container">
+<div id="hub" class="hub-container">
         <h1 class="text-4xl font-light mb-4 text-stone-700 italic">For Lovelyn</h1>
         <p class="text-stone-500 mb-8">Choose a website </p>
         
-        <div class="flex flex-col md:flex-row gap-8">
+        <!-- Updated to allow wrapping if you add more -->
+        <div class="flex flex-wrap justify-center gap-8 px-4">
+            <div class="choice-card" onclick="openProject('letter2')">
+                <div class="text-5xl mb-4">💌</div>
+                <h3>Another Letter</h3>
+                <p>A different kind of surprise.</p>
+            </div>
+            
             <!-- Choice 1: The Letter -->
             <div class="choice-card" onclick="openProject('letter')">
                 <div class="text-5xl mb-4">✉️</div>
@@ -156,53 +23,22 @@
                 <h3>A Journey Ride</h3>
                 <p>for Doraming before</p>
             </div>
+
+            <!-- Choice 3: The New Letter -->
+            
         </div>
     </div>
 
-    <!-- Container for Project 1 (Letter) -->
+    <!-- Project Containers -->
     <div id="container-letter" class="project-frame">
-        <!-- Iframe will point to your Project 1 file -->
         <iframe src="project1.html" width="100%" height="100%"></iframe>
     </div>
 
-    <!-- Container for Project 2 (Journey) -->
     <div id="container-journey" class="project-frame">
-        <!-- Iframe will point to your Project 2 file -->
         <iframe src="project2.html" width="100%" height="100%"></iframe>
     </div>
 
-    <button id="back-btn" class="back-btn" onclick="closeProject()">↩️</button>
-
-    <script>
-        function openProject(type) {
-            document.getElementById('hub').style.opacity = '0';
-            document.getElementById('hub').style.transform = 'scale(0.9)';
-            
-            setTimeout(() => {
-                document.getElementById('container-' + type).style.display = 'block';
-                document.getElementById('back-btn').style.display = 'block';
-            }, 500);
-        }
-
-        function closeProject() {
-            document.querySelectorAll('.project-frame').forEach(f => f.style.display = 'none');
-            document.getElementById('back-btn').style.display = 'none';
-            document.getElementById('hub').style.opacity = '1';
-            document.getElementById('hub').style.transform = 'scale(1)';
-        }
-
-        // Generate floating particles
-        for(let i=0; i<20; i++) {
-            let p = document.createElement('div');
-            p.className = 'particle';
-            let size = Math.random() * 5 + 2;
-            p.style.width = size + 'px';
-            p.style.height = size + 'px';
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.animationDuration = (Math.random() * 10 + 10) + 's';
-            p.style.animationDelay = Math.random() * 5 + 's';
-            document.body.appendChild(p);
-        }
-    </script>
-</body>
-</html>
+    <!-- Added Container for Project 3 -->
+    <div id="container-letter2" class="project-frame">
+        <iframe src="project3.html" width="100%" height="100%"></iframe>
+    </div>
