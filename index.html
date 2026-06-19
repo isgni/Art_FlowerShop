@@ -1,50 +1,107 @@
-<div id="hub" class="hub-container">
-        <h1 class="text-4xl font-light mb-4 text-stone-700 italic">For Lovelyn</h1>
-        <p class="text-stone-500 mb-8">Choose a website </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Lovelyn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Anti-Copy Protection */
+        body { user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
         
-        <!-- Updated to allow wrapping if you add more -->
+        .hidden { display: none !important; }
+        
+        .project-frame {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: #fdf6f6;
+            z-index: 100;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .back-btn {
+            padding: 10px 20px; background: #ddd; border: none; cursor: pointer;
+            border-radius: 8px; margin-bottom: 20px;
+        }
+
+        .choice-card {
+            cursor: pointer;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            transition: transform 0.2s;
+            background: white;
+            width: 250px;
+            text-align: center;
+        }
+        .choice-card:hover { transform: scale(1.05); border-color: #d68080; }
+    </style>
+</head>
+<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
+
+    <div id="hub" class="hub-container text-center mt-20">
+        <h1 class="text-4xl font-light mb-4 text-stone-700 italic">For Lovelyn</h1>
+        <p class="text-stone-500 mb-8">Choose a letter/page</p>
+        
         <div class="flex flex-wrap justify-center gap-8 px-4">
-            <!-- Choice 1: The Letter -->
-
-
-          <div class="choice-card" onclick="openProject('letter2')">
+            <div class="choice-card" onclick="openProject('container-letter2')">
                 <div class="text-5xl mb-4">💌</div>
-                <h3> Favor Letter</h3>
-                <p> challenging request letter huhu</p>
-                </div>
-
-                
-            <div class="choice-card" onclick="openProject('letter')">
+                <h3>Favor Letter</h3>
+            </div>
+            <div class="choice-card" onclick="openProject('container-letter')">
                 <div class="text-5xl mb-4">✉️</div>
-                <h3>A Message Letter</h3>
-                <p>A quiet place for words from the heart.</p>
+                <h3>Message Letter</h3>
             </div>
-
-            <!-- Choice 2: The Journey -->
-            <div class="choice-card" onclick="openProject('journey')">
+            <div class="choice-card" onclick="openProject('container-journey')">
                 <div class="text-5xl mb-4">🚲</div>
-                <h3>A Journey Ride</h3>
-                <p>for Doraming before</p>
+                <h3>Journey Ride</h3>
             </div>
-
-            <!-- Choice 3: The New Letter -->
-            
         </div>
     </div>
 
-    <!-- Project Containers -->
-
-    <div id="container-letter2" class="project-frame">
-        <iframe src="project3.html" width="100%" height="100%"></iframe>
+    <div id="container-letter2" class="project-frame hidden">
+        <button onclick="closeProject('container-letter2')" class="back-btn">← Back</button>
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-2xl font-bold mb-4">A Small Favor</h2>
+            <p>Dear Miming, I have a small favor to ask you huhu...</p>
+            </div>
     </div>
 
-    <div id="container-letter" class="project-frame">
-        <iframe src="project1.html" width="100%" height="100%"></iframe>
+    <div id="container-letter" class="project-frame hidden">
+        <button onclick="closeProject('container-letter')" class="back-btn">← Back</button>
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-2xl font-bold mb-4">A Message Letter</h2>
+            <p>Your message content goes here...</p>
+        </div>
     </div>
 
-    <div id="container-journey" class="project-frame">
-        <iframe src="project2.html" width="100%" height="100%"></iframe>
+    <div id="container-journey" class="project-frame hidden">
+        <button onclick="closeProject('container-journey')" class="back-btn">← Back</button>
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-2xl font-bold mb-4">A Journey Ride</h2>
+            <p>Your journey details go here...</p>
+        </div>
     </div>
 
-    <!-- Added Container for Project 3 -->
-    
+    <script>
+        function openProject(id) {
+            document.getElementById('hub').classList.add('hidden');
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeProject(id) {
+            document.getElementById('hub').classList.remove('hidden');
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        // Block copy shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
