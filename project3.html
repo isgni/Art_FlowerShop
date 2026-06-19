@@ -3,66 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Message for You</title>
+    <title>A Letter for You</title>
     <style>
-        /* This prevents text selection */
+        /* This prevents text from being selected or copied */
         body {
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #fdf6f6;
-            color: #4a4a4a;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none;     /* IE 10 and IE 11 */
+            user-select: none;         /* Standard syntax */
+            
+            background-color: #fcfcfc;
+            color: #333;
+            font-family: 'Georgia', serif;
             display: flex;
             justify-content: center;
-            padding: 20px;
+            padding: 40px 20px;
             line-height: 1.6;
         }
 
         .container {
             max-width: 600px;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        h2 { color: #d68080; }
-        
-        blockquote {
+        p {
+            margin-bottom: 20px;
+        }
+
+        .song-quote {
             font-style: italic;
-            border-left: 3px solid #d68080;
+            color: #555;
             padding-left: 15px;
-            margin: 20px 0;
-            color: #777;
+            border-left: 2px solid #ccc;
         }
     </style>
 </head>
-<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
+<body>
 
     <div class="container">
-        <h2>Dear Miming,</h2>
-        <p>I have a small favor to ask you huhu.</p>
-        <p>If possible, please don't block, restrict or something hiding me on Facebook, Instagram, or wherever socmed account.</p>
-        <p>I know it might sound like a funny request, but the truth is that a small part of me finds comfort in seeing how you're doing because maybe one day I'll see a picture of you accomplishing something you've worked hard for. Maybe I'll see you volunteering, traveling somewhere beautiful, trying something new, or simply smiling in a photo. Those little glimpses somehow make my day better hehe.</p>
+        <p>Dear Miming,</p>
+
+        <p>I have a small favor to ask you ming huhu.</p>
+
+        <p>If possible, please don't block, restrict or something hiding me on Facebook, Instagram, or wherever socmed account. I know it might sound like a funny request, but the truth is that a small part of me finds comfort in seeing how you're doing because maybe one day I'll see a picture of you accomplishing something you've worked hard for. Maybe I'll see you volunteering, traveling somewhere beautiful congregation, trying something new, or simply smiling in a photo. Those little glimpses somehow make my day better hehe.</p>
+        
         <p>Of course, I can't deny that there is another reason. You are someone I genuinely like.</p>
-        <p>That's why I sometimes find myself wondering about you. Are you doing well? Are you happy? Is someone already making you smile the way I wish I could? Has someone finally gathered the courage to court you? Are you going on dates? Or will I one day open Facebook and suddenly discover that you've gotten married while I was still trying to figure out what caption to put on my profile picture?</p>
-        
-        <blockquote>
-            "Loving can hurt, loving can hurt sometimes but it's the only thing that I know... when it gets hard, you know it can get hard sometimes. It is the only thing makes us feel alive. We keep this love in a photograph. We made these memories for ourselves where our eyes are never closing, hearts are never broken, and time's forever frozen still. So you can keep me inside the pocket of your ripped jeans holding me closer 'til our eyes meet. You won't ever be alone, wait for me to come home."
-        </blockquote>
-        
-        <p>I hope your consideration.</p>
+
+        <p>That's why I sometimes find myself wondering about you. Are you doing well? Are you happy? Is someone already making you smile the way I wish I could? Has someone finally gathered the courage to court you? Are you going on dates? Or will I one day open Facebook and suddenly discover that you've gotten married while I was still trying to figure out what caption to put on my profile picture? like:</p>
+
+        <div class="song-quote">
+            "Loving can hurt, loving can hurt sometimes but it's the only thing that I know. When it gets hard, you know it can get hard sometimes. It is the only thing makes us feel alive. We keep this love in a photograph. We made these memories for ourselves where our eyes are never closing, hearts are never broken, and time's forever frozen still. So you can keep me inside the pocket of your ripped jeans, holding me closer 'til our eyes meet. You won't ever be alone, wait for me to come home." — Ed Sheeran
+        </div>
+
+        <p style="margin-top: 20px;">Hoping your consideration ming.</p>
     </div>
 
-    <script>
-        // Disable keyboard shortcuts for copying (Ctrl+C, Ctrl+U, etc.)
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's')) {
-                e.preventDefault();
-            }
-        });
-    </script>
 </body>
 </html>
