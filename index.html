@@ -7,100 +7,68 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Anti-Copy Protection */
-        body { user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
-        
-        .hidden { display: none !important; }
-        
-        .project-frame {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
+        body { 
+            user-select: none; 
+            -webkit-user-select: none; 
             background: #fdf6f6;
-            z-index: 100;
-            padding: 40px;
-            overflow-y: auto;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        .back-btn {
-            padding: 10px 20px; background: #ddd; border: none; cursor: pointer;
-            border-radius: 8px; margin-bottom: 20px;
-        }
-
+        /* Animation & Design */
         .choice-card {
             cursor: pointer;
-            padding: 30px;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            transition: transform 0.2s;
+            padding: 40px;
             background: white;
-            width: 250px;
+            border-radius: 20px;
+            width: 260px;
             text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .choice-card:hover { transform: scale(1.05); border-color: #d68080; }
+
+        .choice-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 20px 30px rgba(214, 128, 128, 0.2);
+        }
+
+        .icon { transition: transform 0.4s ease; display: inline-block; }
+        .choice-card:hover .icon { transform: rotate(10deg) scale(1.2); }
     </style>
 </head>
 <body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
 
-    <div id="hub" class="hub-container text-center mt-20">
+    <div id="hub" class="text-center">
         <h1 class="text-4xl font-light mb-4 text-stone-700 italic">For Lovelyn</h1>
-        <p class="text-stone-500 mb-8">Choose a letter/page</p>
+        <p class="text-stone-500 mb-8">Choose a path</p>
         
         <div class="flex flex-wrap justify-center gap-8 px-4">
-            <div class="choice-card" onclick="openProject('container-letter2')">
-                <div class="text-5xl mb-4">💌</div>
-                <h3>Favor Letter</h3>
+            <div class="choice-card" onclick="window.location.href='project3.html'">
+                <div class="text-5xl mb-4 icon">💌</div>
+                <h3 class="text-lg font-semibold text-stone-700">Favor Letter</h3>
             </div>
-            <div class="choice-card" onclick="openProject('container-letter')">
-                <div class="text-5xl mb-4">✉️</div>
-                <h3>Message Letter</h3>
-            </div>
-            <div class="choice-card" onclick="openProject('container-journey')">
-                <div class="text-5xl mb-4">🚲</div>
-                <h3>Journey Ride</h3>
-            </div>
-        </div>
-    </div>
 
-    <div id="container-letter2" class="project-frame hidden">
-        <button onclick="closeProject('container-letter2')" class="back-btn">← Back</button>
-        <div class="max-w-2xl mx-auto">
-            <h2 class="text-2xl font-bold mb-4">A Small Favor</h2>
-            <p>Dear Miming, I have a small favor to ask you huhu...</p>
+            <div class="choice-card" onclick="window.location.href='project1.html'">
+                <div class="text-5xl mb-4 icon">✉️</div>
+                <h3 class="text-lg font-semibold text-stone-700">Message Letter</h3>
             </div>
-    </div>
 
-    <div id="container-letter" class="project-frame hidden">
-        <button onclick="closeProject('container-letter')" class="back-btn">← Back</button>
-        <div class="max-w-2xl mx-auto">
-            <h2 class="text-2xl font-bold mb-4">A Message Letter</h2>
-            <p>Your message content goes here...</p>
-        </div>
-    </div>
-
-    <div id="container-journey" class="project-frame hidden">
-        <button onclick="closeProject('container-journey')" class="back-btn">← Back</button>
-        <div class="max-w-2xl mx-auto">
-            <h2 class="text-2xl font-bold mb-4">A Journey Ride</h2>
-            <p>Your journey details go here...</p>
+            <div class="choice-card" onclick="window.location.href='project2.html'">
+                <div class="text-5xl mb-4 icon">🚲</div>
+                <h3 class="text-lg font-semibold text-stone-700">Journey Ride</h3>
+            </div>
         </div>
     </div>
 
     <script>
-        function openProject(id) {
-            document.getElementById('hub').classList.add('hidden');
-            document.getElementById(id).classList.remove('hidden');
-        }
-
-        function closeProject(id) {
-            document.getElementById('hub').classList.remove('hidden');
-            document.getElementById(id).classList.add('hidden');
-        }
-
-        // Block copy shortcuts
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's')) {
-                e.preventDefault();
-            }
+        // Prevent keyboard shortcuts for copying
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's')) e.preventDefault();
         });
     </script>
 </body>
