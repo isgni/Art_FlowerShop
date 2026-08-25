@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Agreement of Art & Lovey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fcfbf9;
+            --container-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #4a5568;
+            --accent-art: #2b4c7e;
+            --accent-lovey: #8c3f5d;
+            --gold: #c5a880;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            background: linear-gradient(135deg, #2b4c7e 0%, #4a6fa5 50%, #8c3f5d 100%);
+            color: white;
+            text-align: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+
+        header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        header .subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+            font-size: 0.95rem;
+            opacity: 0.85;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 20px;
+        }
+
+        .content {
+            padding: 50px;
+        }
+
+        .intro-section {
+            background: #f7f9fc;
+            border-left: 4px solid var(--accent-art);
+            padding: 25px 30px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin-bottom: 40px;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--accent-art);
+            margin: 40px 0 25px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #edf2f7;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title.lovey {
+            color: var(--accent-lovey);
+        }
+
+        .agreement-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .agreement-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .agreement-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .agreement-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent-art);
+        }
+
+        .bible-verse {
+            background: #fffaf0;
+            border: 1px solid #feebc8;
+            color: #744210;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .agreement-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .commitment-box {
+            background: #f8fafc;
+            border-left: 3px solid #cbd5e0;
+            padding: 12px 18px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .lovey-section .commitment-box {
+            border-left-color: #e2b4c7;
+            background: #fdf8fb;
+        }
+
+        .commitment-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .personal-commitment {
+            background: linear-gradient(135deg, #fdfbf7 0%, #f4eee1 100%);
+            border: 1px solid #e9dfcb;
+            border-radius: var(--radius);
+            padding: 35px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .personal-commitment h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: #5c4033;
+            margin-bottom: 20px;
+        }
+
+        .personal-commitment p {
+            font-size: 1.05rem;
+            color: #5c4033;
+            margin-bottom: 15px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .signatures {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .signature-line {
+            text-align: center;
+        }
+
+        .signature-line .name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .signature-line .title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 40px 20px; }
+            header h1 { font-size: 2.2rem; }
+            .content { padding: 25px; }
+            .signatures { flex-direction: column; gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Terms and Agreement</h1>
+            <div class="subtitle">Art & Lovey’s Principles, Boundaries, and Shared Commitments</div>
+            <div class="meta-info">
+                <span><strong>Between:</strong> Art Pimentel & Lovely Jaime</span>
+                <span><strong>Date:</strong> August 23, 2026</span>
+            </div>
+        </header>
+
+        <div class="content">
+            
+            <!-- ART'S SECTION -->
+            <div class="intro-section">
+                <p>We, the two of us, with affection and respect for one another, have decided to make this Condition and terms or Agreement. We are making this not as a legal contract or a forced commitment, but as a sincere expression of our principles, boundaries, and commitment while we continue getting to know each other and prepare for a possible serious relationship in the future. We want to base this agreement on Bible principles and strive to make Jehovah God the center of our decisions and the way we treat each other.</p>
+            </div>
+
+            <h2 class="section-title"><span>💙</span> Art Pimentel's Terms & Agreement</h2>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">1. Faithfulness and Loyalty</div>
+                    <div class="bible-verse">1 Cor. 13:4-7</div>
+                </div>
+                <div class="agreement-desc">We will not entertain romantic intentions from other people while our relationship continues. “Love continues to trust, hope, and endure.”</div>
+                <div class="commitment-box">
+                    <span class="commitment-label">Commitment</span>
+                    I will strive to remain faithful and avoid doing anything that could damage your trust in me.
+                </div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">2. Honesty</div>
+                    <div class="bible-verse">Eph. 4:25</div>
+                </div>
+                <div class="agreement-desc">We will not hide important matters that could affect our understanding of each other even if it's difficult. “Speak truth with one another.”</div>
+                <div class="commitment-box">
+                    <span class="commitment-label">Commitment</span>
+                    I will choose honest and sincere communication rather than pretending.
+                </div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">3. Clear Relationship Status</div>
+                    <div class="bible-verse">Matt. 5:37</div>
+                </div>
+                <div class="agreement-desc">We recognize that we have mutual feelings and intentions toward each other, but formal courtship will begin only when brother ready to do through action. “Let your word Yes mean yes, and your No mean no.”</div>
+                <div class="commitment-box">
+                    <span class="commitment-label">Commitment</span>
+                    I will remain clear and honest about my intentions toward you and will not give you false expectations or mix signals.
+                </div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">4. Personal Priorities</div>
+                    <div class="bible-verse">Phil. 2:4</div>
+                </div>
+                <div class="agreement-desc">We will respect each other's work, family, spiritual studies, spiritual responsibilities, and personal goals. “Look out not only for your own interests but also for the interests of others.”</div>
+                <div class="commitment-box">
+                    <span class="commitment-label">Commitment</span>
+                    I will support your responsibilities and will not try to control your time or priorities.
+                </div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">5. No Pressure</div>
+                    <div class="bible-verse">1 Cor. 13:4</div>
+                </div>
+                <div class="agreement-desc">We will not pressure each other to make decisions before we are fully ready. Love and waiting should come from free and sincere willingness. “Love is patient and enduring.”</div>
+                <div class="commitment-box">
+                    <span class="commitment-label">Commitment</span>
+                    I will not pressure you to do something you are not yet ready to do.
+                </div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">6. Respect for Boundaries</div>
+                    <div class="bible-verse">1 Pet. 2:17</div>
+                </div>
+                <div class="agreement-desc">We will respect each other's personal space, privacy, time, family, decisions, and personal boundaries. “Honor people of all sorts.”</div>
+                <div class="commitment-box">
+                    <span class="commitment-label">Commitment</span>
+                    I will respect you as a person who has your own decisions and boundaries.
+                </div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">7. Good Communication</div>
+                    <div class="bible-verse">James 1:19</div>
+                </div>
+                <div class="agreement-desc">We will strive to communicate and check on each other regularly, while also understanding when one of us is busy. When there is a problem, we will not make it worse through anger or unnecessary withdrawal.</div>
+                <div class="commitment-box">
+                    <span class="commitment-label">Commitment</span>
+                    I will listen to you before responding, and I will try to express my feelings in a calm and respectful way.
+                </div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">8. Resolving Misunderstandings</div>
+                    <div class="bible-verse">Col. 3:13</div>
+                </div>
+                <div class="agreement-desc">When we have a problem or disagreement, we will look for a calm and respectful way to resolve it. We will not insult, threaten, manipulate, or use withdrawal as punishment. “Continue putting up with one another and forgiving one another.”</div>
+                <div class="commitment-box">
+                    <span class="commitment-label">Commitment</span>
+                    When we have a problem, I will choose communication and resolve the problem rather than making the problem worse.
+                </div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">9. Do Not Judge Too Quickly</div>
+                    <div class="bible-verse">Prov. 18:13</div>
+                </div>
+                <div class="agreement-desc">If we see or hear something that causes suspicion, we will ask each other and listen to the explanation before making a conclusion. It is not good to answer a matter before hearing it and understanding it.</div>
+                <div class="commitment-box">
+                    <span class="commitment-label">Commitment</span>
+                    I will not immediately make conclusions based only on what I see or hear. I will listen to you first.
+                </div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">10. Preparing for the Future</div>
+                    <div class="bible-verse">Prov. 16:3</div>
+                </div>
+                <div class="agreement-desc">Our plan to be together in the future and possibly get married is a sincere intention, not a guarantee or obligation. Our goal is to serve Jehovah together while growing. For brother, he will strive to become responsible and prepared when the time comes for me to begin courting you.</div>
+                <div class="commitment-box">
+                    <span class="commitment-label">Commitment</span>
+                    I will strive to become responsible in my life, work, spirituality, and finances while praying for the right direction for our future.
+                </div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">11. Freedom to Express Feelings</div>
+                    <div class="bible-verse">Eph. 4:15</div>
+                </div>
+                <div class="agreement-desc">If either of us develops different feelings, that person has the freedom to honestly and respectfully express them. We will not pressure, threaten, or blame each other because of it. “Speak the truth with love.”</div>
+                <div class="commitment-box">
+                    <span class="commitment-label">Commitment</span>
+                    I will give you the freedom to be honest about your feelings, even if what you say is not what I want to hear.
+                </div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">12. Growing Together</div>
+                    <div class="bible-verse">1 Thess. 5:11</div>
+                </div>
+                <div class="agreement-desc">We will help each other become better people—in spirituality, character, responsibility, work, studies, and the way we treat others. “Keep encouraging and building one another up.”</div>
+                <div class="commitment-box">
+                    <span class="commitment-label">Commitment</span>
+                    I do not want our closeness to become a burden to your growth. I want to be a positive influence in your life.
+                </div>
+            </div>
+
+            <div class="personal-commitment">
+                <h3>Our Personal Commitment</h3>
+                <p>We are not making this agreement as a forced obligation, but as an expression of our respect, trust, faithfulness, and sincere intentions. While we wait for the time when we are ready for a more serious relationship, we will strive to follow Bible principles, respect each other's boundaries, and give each other enough freedom and opportunity to fulfill our individual responsibilities and continue growing.</p>
+                <p><strong>"We will trust in Jehovah with all our heart and seek his guidance in our path." — Proverbs 3:5, 6</strong></p>
+            </div>
+
+
+            <!-- LOVEY'S SECTION -->
+            <h2 class="section-title lovey" style="margin-top: 60px;"><span>🌷</span> Lovely Jaime's Terms & Agreement</h2>
+
+            <div class="intro-section" style="border-left-color: var(--accent-lovey); background: #fdf8fb;">
+                <p>I, Lovey, am making these terms and agreements because I value you, our connection, and the possibility of our future together. We have chosen to wait until we are both truly ready. I respect that decision, and I want our time of waiting to be meaningful—not a period where either of us is confused, deceived, or taken for granted. Mahalaga sa akin ang trust and assurance.</p>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">1. Our Spiritual Goals</div>
+                </div>
+                <div class="agreement-desc">I want us to continue working toward our spiritual goals and becoming better people individually and together. I want us to encourage each other, support each other's growth, and never use our spiritual goals as a reason to manipulate, pressure, or control one another.</div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">2. We Give Each Other Time</div>
+                </div>
+                <div class="agreement-desc">I understand na kailangan din natin ng time for ourselves. I will respect your personal space, and I expect the same from you.</div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">3. Keep Our Commitment to Each Other</div>
+                </div>
+                <div class="agreement-desc">While we are waiting for the right time, I ask that you keep your heart and intentions clear toward me. As much as possible do not give another girl romantic attention or lead someone else to believe that you are interested in them.</div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">4. Assurance</div>
+                </div>
+                <div class="agreement-desc">Hindi ko hinihingi na lagi mong patunayan yung feelings mo sa akin. I just want your words and actions to match.</div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">5. Loyalty</div>
+                </div>
+                <div class="agreement-desc">For me, loyalty means being transparent, protecting our trust, and not secretly doing something na alam mong makakasakit sa akin o against sa commitment natin.</div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">6. Respect</div>
+                </div>
+                <div class="agreement-desc">I want our connection to always have respect. Respect my feelings, boundaries, personal space, opinions, friendships, family, and decisions. I will respect yours too. Hindi tayo dapat nag-iinsult, nanghihiya, nagma-manipulate, nananakot, or intentionally nananakit sa isa't isa.</div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">7. Clear & Honest Communication</div>
+                </div>
+                <div class="agreement-desc">
+                    <ul style="margin-left: 20px; list-style-type: disc;">
+                        <li>If something bothers you, tell me.</li>
+                        <li>If something changes, tell me.</li>
+                        <li>If your feelings change, tell me.</li>
+                        <li>If you're confused about us, tell me.</li>
+                    </ul>
+                    <p style="margin-top: 10px;">I would rather hear an uncomfortable truth from you than a beautiful lie.</p>
+                </div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">8. Please Answer My Questions Honestly</div>
+                </div>
+                <div class="agreement-desc">Sometimes I overthink because of the things I've experienced before. Kapag may tinatanong ako because I'm genuinely worried or uncertain, please answer me honestly and patiently. Hindi ko hinihingi na ibigay mo lahat ng privacy mo or constantly prove yourself to me. I just want to know na kapag may genuine concern ako, I can trust your answer.</div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">9. No False Promises</div>
+                </div>
+                <div class="agreement-desc">Please don't promise me a future just to make me stay. If you truly want a future with me, let your actions show it.</div>
+            </div>
+
+            <div class="agreement-card">
+                <div class="agreement-header">
+                    <div class="agreement-number">10. If We Make a Mistake</div>
+                </div>
+                <div class="agreement-desc">We're both human, and mistakes can happen. If either of us breaks an important part of this agreement, we should talk about it honestly instead of hiding it.</div>
+            </div>
+
+            <div class="personal-commitment" style="background: linear-gradient(135deg, #fdf8fb 0%, #faeef4 100%); border-color: #f1d4e2;">
+                <h3 style="color: var(--accent-lovey);">Bible Principles I’ve Learned & Want Us to Apply</h3>
+                <p style="color: var(--text-muted);">
+                    📖 Colossians 3:9, 10 &nbsp;&bull;&nbsp; 
+                    📖 Proverbs 11:9 &nbsp;&bull;&nbsp; 
+                    📖 1 Timothy 4:15 &nbsp;&bull;&nbsp; 
+                    📖 Proverbs 1:4; 14:15; 18:24 &nbsp;&bull;&nbsp; 
+                    📖 Galatians 5:22, 23 &nbsp;&bull;&nbsp; 
+                    📖 Jeremiah 17:9
+                </p>
+            </div>
+
+            <!-- SIGNATURES -->
+            <div class="signatures">
+                <div class="signature-line">
+                    <div class="name">ART PIMENTEL</div>
+                    <div class="title">The Author / Brother</div>
+                </div>
+                <div class="signature-line">
+                    <div class="name">LOVELYN JAIME</div>
+                    <div class="title">The Author / Sister</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
