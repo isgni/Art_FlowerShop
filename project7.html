@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magical Blossoming Bouquet</title>
+    <!-- FontAwesome Icons for controls and aesthetic UI -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #070a14;
+            --bg-gradient: radial-gradient(circle at 50% 60%, #1a1738 0%, #0c0f24 50%, #050711 100%);
+            
+            /* Pastel flower petal gradients */
+            --pink-petal: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #feada6 100%);
+            --rose-petal: linear-gradient(135deg, #ff85a2 0%, #ffacb7 100%);
+            --lavender-petal: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            --blue-petal: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+            --yellow-petal: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%);
+            --peach-petal: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            --white-petal: linear-gradient(135deg, #ffffff 0%, #e2ebf0 100%);
+            --purple-petal: linear-gradient(135deg, #c471ed 0%, #f64f59 100%);
+
+            /* Glows */
+            --glow-pink: 0 0 20px rgba(255, 154, 158, 0.6);
+            --glow-blue: 0 0 20px rgba(102, 166, 255, 0.6);
+            --glow-purple: 0 0 20px rgba(196, 113, 237, 0.6);
+            --glow-yellow: 0 0 20px rgba(253, 219, 146, 0.6);
+            --glow-white: 0 0 25px rgba(255, 255, 255, 0.8);
+
+            /* Stems & Leaves */
+            --stem-green: linear-gradient(to top, #1e4620, #388e3c, #4caf50);
+            --wrapper-paper: linear-gradient(135deg, #2a1b3d, #44318d, #1a102f);
+            --ribbon-pink: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background: var(--bg-dark);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            position: relative;
+        }
+
+        .night-sky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-gradient);
+            z-index: 1;
+        }
+
+        .ambient-glow {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85vmin;
+            height: 85vmin;
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.22) 0%, rgba(139, 92, 246, 0.15) 40%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(40px);
+            z-index: 2;
+            pointer-events: none;
+            animation: pulseAura 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseAura {
+            0% { transform: translateX(-50%) scale(0.9); opacity: 0.6; }
+            100% { transform: translateX(-50%) scale(1.15); opacity: 0.9; }
+        }
+
+        #firefliesCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .start-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(7, 10, 20, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .start-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .start-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 42px 36px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(244, 114, 182, 0.25);
+            max-width: 460px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            animation: floatCard 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatCard {
+            0% { transform: translateY(0); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 25px rgba(244, 114, 182, 0.2); }
+            100% { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(168, 85, 247, 0.4); }
+        }
+
+        .start-title {
+            color: #ffffff;
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #f472b6, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+        }
+
+        .start-subtitle {
+            color: #94a3b8;
+            font-size: 0.98rem;
+            line-height: 1.6;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #ff758c, #ff7eb3, #a18cd1);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            color: white;
+            border: none;
+            padding: 16px 42px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 117, 140, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .start-btn:hover {
+            transform: scale(1.06);
+            box-shadow: 0 15px 35px rgba(255, 117, 140, 0.6), 0 0 25px rgba(255, 255, 255, 0.5);
+        }
+
+        .controls-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 50;
+            display: flex;
+            gap: 14px;
+        }
+
+        .control-btn {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+            font-size: 1.15rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .audio-modal {
+            position: fixed;
+            top: 84px;
+            right: 24px;
+            z-index: 50;
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 18px;
+            border-radius: 18px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            width: 290px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .audio-modal.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .audio-modal label {
+            color: #e2ebf0;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .audio-modal input {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 12px;
+            border-radius: 10px;
+            color: white;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .audio-modal button {
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .bouquet-container {
+            position: relative;
+            z-index: 5;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            pointer-events: none;
+        }
+
+        /* Wrap paper & cute silk ribbon base */
+        .bouquet-wrapper-paper {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            width: 320px;
+            height: 280px;
+            z-index: 20;
+            pointer-events: auto;
+            opacity: 0;
+            transition: opacity 1.5s ease 0.2s, transform 1.5s ease 0.2s;
+        }
+
+        body.bloomed .bouquet-wrapper-paper {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        .paper-left, .paper-right {
+            position: absolute;
+            bottom: 0;
+            width: 170px;
+            height: 260px;
+            background: var(--wrapper-paper);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .paper-left {
+            left: 0;
+            border-radius: 20px 100px 30px 60px;
+            transform: rotate(-16deg);
+            transform-origin: bottom right;
+        }
+
+        .paper-right {
+            right: 0;
+            border-radius: 100px 20px 60px 30px;
+            transform: rotate(16deg);
+            transform-origin: bottom left;
+        }
+
+        /* Silk Ribbon Bow */
+        .ribbon-bow {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.85);
+            z-index: 25;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            filter: drop-shadow(0 6px 12px rgba(255, 117, 140, 0.5));
+        }
+
+        .ribbon-center {
+            width: 28px;
+            height: 28px;
+            background: var(--ribbon-pink);
+            border-radius: 50%;
+            z-index: 3;
+            box-shadow: inset 0 0 8px rgba(255,255,255,0.6);
+        }
+
+        .ribbon-loop-left, .ribbon-loop-right {
+            width: 55px;
+            height: 40px;
+            background: var(--ribbon-pink);
+            border-radius: 50% 50% 10% 50%;
+            position: absolute;
+            top: -6px;
+        }
+
+        .ribbon-loop-left {
+            left: -48px;
+            transform: rotate(-20deg);
+        }
+
+        .ribbon-loop-right {
+            right: -48px;
+            transform: scaleX(-1) rotate(-20deg);
+        }
+
+        .ribbon-tail-left, .ribbon-tail-right {
+            width: 22px;
+            height: 70px;
+            background: var(--ribbon-pink);
+            position: absolute;
+            top: 15px;
+            border-radius: 4px;
+        }
+
+        .ribbon-tail-left {
+            left: -12px;
+            transform: rotate(25deg);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);
+        }
+
+        .ribbon-tail-right {
+            right: -12px;
+            transform: rotate(-25deg);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);
+        }
+
+        .flower {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform-origin: bottom center;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+        }
+
+        .flower:hover {
+            transform: scale(1.12) !important;
+            filter: brightness(1.2) drop-shadow(0 0 18px rgba(255, 255, 255, 0.9));
+        }
+
+        .flower__line {
+            width: 8px;
+            height: 55vmin;
+            background: var(--stem-green);
+            box-shadow: 0 0 10px rgba(56, 142, 60, 0.4);
+            border-radius: 6px;
+            transform-origin: bottom center;
+            position: relative;
+        }
+
+        /* Leaves */
+        .flower__leaf {
+            position: absolute;
+            width: 26px;
+            height: 52px;
+            background: linear-gradient(135deg, #2e7d32, #4caf50);
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+            opacity: 0;
+            transform: scale(0);
+            transition: all 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .flower__leaf--left {
+            top: 40%;
+            left: -20px;
+            transform-origin: bottom right;
+            border-radius: 100px 0 100px 0;
+        }
+
+        .flower__leaf--right {
+            top: 55%;
+            right: -20px;
+            transform-origin: bottom left;
+            border-radius: 0 100px 0 100px;
+        }
+
+        /* Flower Heads */
+        .flower__head {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flower__center {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background: radial-gradient(circle, #ffffff 10%, #fff176 50%, #fbc02d 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 20px #fff176, 0 0 35px #fbc02d;
+            z-index: 10;
+            transform: scale(0);
+            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .flower__petal {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: translate(-50%, 0) scale(0);
+            opacity: 0;
+            transition: all 1.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /* --- Flower Types & Shapes --- */
+
+        /* Type A: Classic 6-Petal Tulip/Rose */
+        .type-rose .flower__petal {
+            width: 44px;
+            height: 85px;
+            border-radius: 50% 50% 20% 20%;
+        }
+
+        /* Type B: Cute Daisy/Cosmos (8 petals) */
+        .type-daisy .flower__petal {
+            width: 26px;
+            height: 75px;
+            border-radius: 50% 50% 40% 40%;
+        }
+
+        /* Type C: Rounded Cute Blossom (5 petals) */
+        .type-blossom .flower__petal {
+            width: 50px;
+            height: 70px;
+            border-radius: 60% 60% 30% 30%;
+        }
+
+        /* --- Blooming Trigger Active States --- */
+        body.bloomed .flower__petal {
+            opacity: 0.95;
+        }
+
+        body.bloomed .flower__center {
+            transform: scale(1);
+        }
+
+        body.bloomed .flower__leaf {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+
+        /* 1. Far Left Pink Rose */
+        .f--1 { left: 16%; animation: sway1 5.2s ease-in-out infinite alternate; z-index: 5; }
+        .f--1 .flower__line { height: 50vmin; }
+        .f--1 .flower__petal { background: var(--pink-petal); box-shadow: var(--glow-pink); }
+
+        /* 2. Left Outer Blue Daisy */
+        .f--2 { left: 24%; animation: sway2 4.6s ease-in-out infinite alternate; z-index: 8; }
+        .f--2 .flower__line { height: 62vmin; }
+        .f--2 .flower__petal { background: var(--blue-petal); box-shadow: var(--glow-blue); }
+
+        /* 3. Left Mid Peach Blossom */
+        .f--3 { left: 31%; animation: sway3 5.0s ease-in-out infinite alternate; z-index: 12; }
+        .f--3 .flower__line { height: 72vmin; }
+        .f--3 .flower__petal { background: var(--peach-petal); box-shadow: var(--glow-yellow); }
+
+        /* 4. Left Inner Purple Tulip */
+        .f--4 { left: 38%; animation: sway4 4.2s ease-in-out infinite alternate; z-index: 10; }
+        .f--4 .flower__line { height: 80vmin; }
+        .f--4 .flower__petal { background: var(--purple-petal); box-shadow: var(--glow-purple); }
+
+        /* 5. Center-Left High White Rose */
+        .f--5 { left: 44%; animation: sway5 4.8s ease-in-out infinite alternate; z-index: 15; }
+        .f--5 .flower__line { height: 88vmin; }
+        .f--5 .flower__petal { background: var(--white-petal); box-shadow: var(--glow-white); }
+
+        /* 6. Central Tallest Gold Daisy */
+        .f--6 { left: 50%; animation: swayCenter 4.0s ease-in-out infinite alternate; z-index: 18; }
+        .f--6 .flower__line { height: 92vmin; }
+        .f--6 .flower__petal { background: var(--yellow-petal); box-shadow: var(--glow-yellow); }
+
+        /* 7. Center-Right High Lavender Blossom */
+        .f--7 { left: 56%; animation: sway7 4.9s ease-in-out infinite alternate; z-index: 15; }
+        .f--7 .flower__line { height: 86vmin; }
+        .f--7 .flower__petal { background: var(--lavender-petal); box-shadow: var(--glow-purple); }
+
+        /* 8. Right Inner Rose Gold */
+        .f--8 { left: 63%; animation: sway8 4.3s ease-in-out infinite alternate; z-index: 11; }
+        .f--8 .flower__line { height: 78vmin; }
+        .f--8 .flower__petal { background: var(--rose-petal); box-shadow: var(--glow-pink); }
+
+        /* 9. Right Mid Blue Blossom */
+        .f--9 { left: 70%; animation: sway9 5.1s ease-in-out infinite alternate; z-index: 13; }
+        .f--9 .flower__line { height: 68vmin; }
+        .f--9 .flower__petal { background: var(--blue-petal); box-shadow: var(--glow-blue); }
+
+        /* 10. Right Outer Pink Daisy */
+        .f--10 { left: 78%; animation: sway10 4.5s ease-in-out infinite alternate; z-index: 7; }
+        .f--10 .flower__line { height: 58vmin; }
+        .f--10 .flower__petal { background: var(--pink-petal); box-shadow: var(--glow-pink); }
+
+        /* 11. Far Right Lavender Rose */
+        .f--11 { left: 84%; animation: sway11 5.3s ease-in-out infinite alternate; z-index: 4; }
+        .f--11 .flower__line { height: 48vmin; }
+        .f--11 .flower__petal { background: var(--lavender-petal); box-shadow: var(--glow-purple); }
+
+        /* 12. Front Center Low Accent (Peach) */
+        .f--12 { left: 47%; animation: sway12 3.8s ease-in-out infinite alternate; z-index: 19; }
+        .f--12 .flower__line { height: 56vmin; }
+        .f--12 .flower__petal { background: var(--peach-petal); box-shadow: var(--glow-yellow); }
+
+        /* 13. Front Right Low Accent (White Daisy) */
+        .f--13 { left: 54%; animation: sway13 4.1s ease-in-out infinite alternate; z-index: 19; }
+        .f--13 .flower__line { height: 54vmin; }
+        .f--13 .flower__petal { background: var(--white-petal); box-shadow: var(--glow-white); }
+
+        /* 14. Low Center Tiny Purple Rose */
+        .f--14 { left: 50%; animation: sway14 3.6s ease-in-out infinite alternate; z-index: 22; }
+        .f--14 .flower__line { height: 44vmin; }
+        .f--14 .flower__petal { background: var(--purple-petal); box-shadow: var(--glow-purple); }
+
+        @keyframes sway1 { 0% { transform: rotate(-30deg); } 100% { transform: rotate(-24deg); } }
+        @keyframes sway2 { 0% { transform: rotate(-22deg); } 100% { transform: rotate(-16deg); } }
+        @keyframes sway3 { 0% { transform: rotate(-16deg); } 100% { transform: rotate(-10deg); } }
+        @keyframes sway4 { 0% { transform: rotate(-10deg); } 100% { transform: rotate(-4deg); } }
+        @keyframes sway5 { 0% { transform: rotate(-5deg); } 100% { transform: rotate(0deg); } }
+        @keyframes swayCenter { 0% { transform: rotate(-3deg); } 100% { transform: rotate(3deg); } }
+        @keyframes sway7 { 0% { transform: rotate(0deg); } 100% { transform: rotate(5deg); } }
+        @keyframes sway8 { 0% { transform: rotate(4deg); } 100% { transform: rotate(10deg); } }
+        @keyframes sway9 { 0% { transform: rotate(10deg); } 100% { transform: rotate(16deg); } }
+        @keyframes sway10 { 0% { transform: rotate(16deg); } 100% { transform: rotate(22deg); } }
+        @keyframes sway11 { 0% { transform: rotate(24deg); } 100% { transform: rotate(30deg); } }
+        @keyframes sway12 { 0% { transform: rotate(-6deg); } 100% { transform: rotate(-1deg); } }
+        @keyframes sway13 { 0% { transform: rotate(1deg); } 100% { transform: rotate(6deg); } }
+        @keyframes sway14 { 0% { transform: rotate(-2deg); } 100% { transform: rotate(2deg); } }
+
+        /* Responsive Mobile Layout Adjustments */
+        @media (max-width: 768px) {
+            .f--1 { left: 8%; }
+            .f--11 { left: 92%; }
+            .bouquet-wrapper-paper { width: 260px; height: 230px; }
+            .start-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Audio Element -->
+    <audio id="bg-music" src="f.mp3" loop preload="auto"></audio>
+
+    <!-- Start Cover Screen -->
+    <div class="start-overlay" id="startOverlay">
+        <div class="start-card">
+            <i class="fa-solid fa-seedling" style="font-size: 2.8rem; color: #ff758c;"></i>
+            <h1 class="start-title">A Gift For You</h1>
+            <button class="start-btn" id="startBtn">Open Bouquet</button>
+        </div>
+    </div>
+
+    <!-- Controls Bar -->
+    <div class="controls-container">
+        <button class="control-btn" id="musicToggleBtn" title="Mute/Unmute Music">
+            <i class="fa-solid fa-volume-high" id="musicIcon"></i>
+        </button>
+        <button class="control-btn" id="audioSettingsBtn" title="Audio Settings">
+            <i class="fa-solid fa-gear"></i>
+        </button>
+    </div>
+
+    <!-- Audio Modal -->
+    <div class="audio-modal" id="audioModal">
+        <label for="audioUrlInput">Custom MP3 Audio URL:</label>
+        <input type="text" id="audioUrlInput" placeholder="https://example.com/music.mp3">
+        <button id="applyAudioBtn">Play Custom Track</button>
+    </div>
+
+    <!-- Ambient Sky & Canvas Fireflies -->
+    <div class="night-sky">
+        <div class="ambient-glow"></div>
+        <canvas id="firefliesCanvas"></canvas>
+    </div>
+
+    <div class="bouquet-container" id="bouquetContainer">
+
+        <!-- Cute Bouquet Wrapping Paper & Silk Bow -->
+        <div class="bouquet-wrapper-paper">
+            <div class="paper-left"></div>
+            <div class="paper-right"></div>
+            <div class="ribbon-bow">
+                <div class="ribbon-loop-left"></div>
+                <div class="ribbon-loop-right"></div>
+                <div class="ribbon-center"></div>
+                <div class="ribbon-tail-left"></div>
+                <div class="ribbon-tail-right"></div>
+            </div>
+        </div>
+
+        <!-- Flowers HTML markup (14 flowers) generated with dynamic petal setups -->
+        <!-- Flowers will be populated by JavaScript with full petal geometry -->
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const bouquetContainer = document.getElementById("bouquetContainer");
+            const startBtn = document.getElementById("startBtn");
+            const startOverlay = document.getElementById("startOverlay");
+            const bgMusic = document.getElementById("bg-music");
+            const musicToggleBtn = document.getElementById("musicToggleBtn");
+            const musicIcon = document.getElementById("musicIcon");
+            const audioSettingsBtn = document.getElementById("audioSettingsBtn");
+            const audioModal = document.getElementById("audioModal");
+            const applyAudioBtn = document.getElementById("applyAudioBtn");
+            const audioUrlInput = document.getElementById("audioUrlInput");
+
+            // Flower Configuration Matrix (14 distinct cute flowers)
+            const flowersData = [
+                { id: 1, type: 'type-rose', petals: 6, delay: 0.1 },
+                { id: 2, type: 'type-daisy', petals: 8, delay: 0.25 },
+                { id: 3, type: 'type-blossom', petals: 5, delay: 0.4 },
+                { id: 4, type: 'type-rose', petals: 6, delay: 0.2 },
+                { id: 5, type: 'type-daisy', petals: 8, delay: 0.5 },
+                { id: 6, type: 'type-blossom', petals: 6, delay: 0.1 },
+                { id: 7, type: 'type-rose', petals: 6, delay: 0.3 },
+                { id: 8, type: 'type-daisy', petals: 8, delay: 0.45 },
+                { id: 9, type: 'type-blossom', petals: 5, delay: 0.2 },
+                { id: 10, type: 'type-daisy', petals: 8, delay: 0.35 },
+                { id: 11, type: 'type-rose', petals: 6, delay: 0.5 },
+                { id: 12, type: 'type-blossom', petals: 5, delay: 0.15 },
+                { id: 13, type: 'type-daisy', petals: 8, delay: 0.3 },
+                { id: 14, type: 'type-rose', petals: 6, delay: 0.4 }
+            ];
+
+            // Render Flowers dynamically with correct petal rotation rules
+            flowersData.forEach(data => {
+                const flowerDiv = document.createElement('div');
+                flowerDiv.className = `flower f--${data.id} ${data.type}`;
+
+                let petalsHTML = '';
+                const angleStep = 360 / data.petals;
+
+                for (let i = 0; i < data.petals; i++) {
+                    const angle = i * angleStep;
+                    // Stagger petal transition delays for natural blooming
+                    const petalDelay = data.delay + (i * 0.12);
+                    petalsHTML += `<div class="flower__petal" style="transform: translate(-50%, 0) scale(0) rotate(${angle}deg); transition-delay: ${petalDelay}s;"></div>`;
+                }
+
+                flowerDiv.innerHTML = `
+                    <div class="flower__line">
+                        <div class="flower__leaf flower__leaf--left" style="transition-delay: ${data.delay + 0.6}s;"></div>
+                        <div class="flower__leaf flower__leaf--right" style="transition-delay: ${data.delay + 0.8}s;"></div>
+                    </div>
+                    <div class="flower__head">
+                        <div class="flower__center" style="transition-delay: ${data.delay + 0.4}s;"></div>
+                        <div class="flower__petals">
+                            ${petalsHTML}
+                        </div>
+                    </div>
+                `;
+
+                // Add subtle click bounce effect on flower
+                flowerDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    flowerDiv.style.transform = 'scale(1.25) rotate(0deg)';
+                    setTimeout(() => {
+                        flowerDiv.style.transform = '';
+                    }, 400);
+                });
+
+                bouquetContainer.appendChild(flowerDiv);
+            });
+
+            startBtn.addEventListener("click", () => {
+                startOverlay.classList.add("hidden");
+
+                setTimeout(() => {
+                    document.body.classList.add("bloomed");
+                    
+                    // Trigger bloomed petals rotation styles
+                    document.querySelectorAll('.flower').forEach(flower => {
+                        const petals = flower.querySelectorAll('.flower__petal');
+                        const count = petals.length;
+                        const angleStep = 360 / count;
+                        petals.forEach((petal, idx) => {
+                            const angle = idx * angleStep;
+                            petal.style.transform = `translate(-50%, 0) scale(1) rotate(${angle}deg)`;
+                        });
+                    });
+                }, 300);
+
+                playAudio();
+            });
+
+            function playAudio() {
+                bgMusic.play().then(() => {
+                    musicIcon.className = "fa-solid fa-volume-high";
+                }).catch(err => {
+                    console.warn("Audio autoplay blocked:", err);
+                    musicIcon.className = "fa-solid fa-volume-xmark";
+                });
+            }
+
+            musicToggleBtn.addEventListener("click", () => {
+                if (bgMusic.paused) {
+                    bgMusic.play();
+                    musicIcon.className = "fa-solid fa-volume-high";
+                } else {
+                    bgMusic.pause();
+                    musicIcon.className = "fa-solid fa-volume-xmark";
+                }
+            });
+
+            audioSettingsBtn.addEventListener("click", () => {
+                audioModal.classList.toggle("active");
+            });
+
+            applyAudioBtn.addEventListener("click", () => {
+                const url = audioUrlInput.value.trim();
+                if (url) {
+                    bgMusic.src = url;
+                    bgMusic.load();
+                    playAudio();
+                    audioModal.classList.remove("active");
+                }
+            });
+
+            const canvas = document.getElementById("firefliesCanvas");
+            const ctx = canvas.getContext("2d");
+
+            let width = (canvas.width = window.innerWidth);
+            let height = (canvas.height = window.innerHeight);
+
+            window.addEventListener("resize", () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const fireflies = [];
+            const count = 70;
+
+            class Firefly {
+                constructor() {
+                    this.reset();
+                }
+
+                reset() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.radius = Math.random() * 2.2 + 1;
+                    this.alpha = Math.random();
+                    this.speedAlpha = (Math.random() * 0.015 + 0.005) * (Math.random() < 0.5 ? 1 : -1);
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    const colors = ["#ff9a9e", "#89f7fe", "#fddb92", "#a18cd1", "#ffffff"];
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                }
+
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.alpha += this.speedAlpha;
+
+                    if (this.alpha >= 1 || this.alpha <= 0) {
+                        this.speedAlpha = -this.speedAlpha;
+                    }
+
+                    if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+                        this.reset();
+                    }
+                }
+
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = Math.max(0, Math.min(1, this.alpha));
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.shadowColor = this.color;
+                    ctx.shadowBlur = 10;
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+
+            for (let i = 0; i < count; i++) {
+                fireflies.push(new Firefly());
+            }
+
+            function animateFireflies() {
+                ctx.clearRect(0, 0, width, height);
+                fireflies.forEach(f => {
+                    f.update();
+                    f.draw();
+                });
+                requestAnimationFrame(animateFireflies);
+            }
+
+            animateFireflies();
+        });
+    </script>
+</body>
+</html>
