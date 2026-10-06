@@ -1,635 +1,352 @@
-
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>CSS Text Portrait Effects</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miming Museum Gallery</title>
+    <!-- Tailwind CSS for utility styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Museum Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #e5ded2;
+            overflow-x: hidden;
+            margin: 0;
+            user-select: none;
+        }
+
+        .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Dotted textured museum wall background */
+        .museum-wall-bg {
+            background-color: #eee3d3;
+            background-image: 
+                radial-gradient(#baa892 0.8px, transparent 0.8px),
+                radial-gradient(ellipse at 50% 30%, rgba(255, 253, 245, 0.7) 0%, rgba(230, 218, 200, 0.4) 60%, rgba(190, 175, 155, 0.5) 100%);
+            background-size: 18px 18px, 100% 100%;
+            background-position: 0 0, 0 0;
+        }
+
+        /* Framed artwork styling with warm depth */
+        .art-frame-box {
+            background: #8B5A2B;
+            border-radius: 4px;
+            box-shadow: 
+                0 18px 25px -5px rgba(0, 0, 0, 0.25),
+                0 8px 10px -6px rgba(0, 0, 0, 0.2),
+                inset 0 0 0 4px #523417,
+                inset 0 0 0 10px #c69956,
+                inset 0 0 0 14px #3b220d;
+            transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Hover animation for paintings */
+        .art-link-group:hover .art-frame-box {
+            transform: translateY(-8px) scale(1.025);
+            box-shadow: 
+                0 25px 35px -5px rgba(0, 0, 0, 0.35),
+                0 0 20px 2px rgba(212, 160, 23, 0.35),
+                inset 0 0 0 4px #5c3817,
+                inset 0 0 0 10px #e2b36a,
+                inset 0 0 0 14px #42260f;
+        }
+
+        .canvas-inset-shadow {
+            box-shadow: inset 2px 2px 8px rgba(0,0,0,0.45);
+        }
+
+        /* Floor baseboard styling */
+        .museum-floor-trim {
+            background: linear-gradient(to bottom, #bd834b 0%, #9e6430 20%, #613711 100%);
+            box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.35);
+            border-top: 6px solid #4a2808;
+        }
+
+        /* Star shimmer effect */
+        @keyframes sparkleAnim {
+            0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.25) rotate(15deg); }
+        }
+        .star-sparkle {
+            animation: sparkleAnim 2.5s infinite ease-in-out;
+        }
+    </style>
 </head>
-<style>
-      body{
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       height: 100vw;
-       background-color: #262626;
-       padding: 10px;
-       margin: 0;
-      }
-      p{
-       font-size: 5px;
-        line-height: 7px;
-        background:url(love.jpg);
-        background-position: center;
-        background-repeat: no-repeat;
-        -webkit-background-clip:text;
-        background-attachment: fixed;
-        -webkit-text-fill-color:rgba(255,255,255,0);
-      }
-</style>
-<body>
-    <p>
-     Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang ibaAking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang ibaAking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang ibaAking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang ibaAking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang ibaAking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa ibaAking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba
-Akin ka na, wala nang ibaAking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang ibaAking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang ibaAking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang ibaAking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang ibaAking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang ibaAking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba
+<body class="min-h-screen flex flex-col justify-between text-stone-800 antialiased museum-wall-bg relative">
+
+    <script>
+        /*********************************************************************
+         * 🔗 CONFIGURABLE LINKS & AUDIO URLS
+         * Update these variables or search for their usage to change targets!
+         *********************************************************************/
+        const SUNNY_GARDENER_LINK = "https://example.com/sunny-gardener";
+        const MOONLIT_CAT_LINK     = "https://example.com/moonlit-cat";
+        const GARDEN_CALICO_LINK   = "https://example.com/garden-calico";
+
+        // Background Music MP3 Link (Calm Lofi / Classical Ambient Track)
+        const BG_MUSIC_URL         = "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3";
+    </script>
+
+    <!-- Floating Audio Control & Prompt Bar -->
+    <header class="w-full px-6 py-4 flex justify-between items-center z-30">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">🏛️</span>
+            <div>
+                <h1 class="serif-font text-xl font-bold tracking-tight text-stone-800">Cat Museum Gallery</h1>
+                <p class="text-xs text-stone-500 uppercase tracking-widest">Main Exhibition • Click paintings to navigate</p>
+            </div>
+        </div>
+
+        <!-- Audio Control Floating Button -->
+        <button id="musicToggleBtn" class="flex items-center gap-2 bg-stone-900/80 hover:bg-stone-900 text-stone-100 px-4 py-2 rounded-full text-xs font-semibold backdrop-blur-md transition-all shadow-lg border border-stone-700/50">
+            <span id="musicIcon">🔇</span>
+            <span id="musicStatus">Music: Paused</span>
+        </button>
+    </header>
+
+    <!-- Initial Autoplay Overlay Prompt (Appears if browser blocks unmuted audio) -->
+    <div id="audioStartOverlay" class="fixed inset-0 z-40 bg-stone-900/30 backdrop-blur-[2px] flex items-center justify-center cursor-pointer transition-opacity duration-500">
+        <div class="bg-amber-50/95 border border-amber-200/80 shadow-2xl px-6 py-4 rounded-full flex items-center gap-3 text-stone-800 text-sm font-semibold hover:scale-105 transition-transform">
+            <span class="text-xl animate-bounce">🎵</span>
+            <span>Click anywhere ming🥺</span>
+        </div>
+    </div>
+
+    <!-- Hidden HTML5 Audio Element -->
+    <audio id="bgAudioPlayer" loop preload="auto"></audio>
+
+    <main class="flex-1 relative flex flex-col justify-between max-w-7xl mx-auto w-full px-4 sm:px-8 py-2">
+        
+        <!-- Three Clickable Framed Cat Paintings -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-12 pt-4 pb-12 items-center justify-items-center relative z-10">
+            
+            <!-- PAINTING 1: SUNNY GARDENER -->
+            <a id="paintingLink1" href="#" target="_blank" class="art-link-group flex flex-col items-center cursor-pointer group">
+                <div class="art-frame-box p-4 w-64 sm:w-72 lg:w-80 h-80 sm:h-96 lg:h-[410px] flex items-center justify-center">
+                    <div class="canvas-inset-shadow w-full h-full bg-[#ebd1ad] rounded overflow-hidden relative flex items-center justify-center">
+                        <svg viewBox="0 0 300 400" class="w-full h-full">
+                            <defs>
+                                <linearGradient id="bg1" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#f8e3c3"/>
+                                    <stop offset="100%" stop-color="#d1a97d"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="300" height="400" fill="url(#bg1)"/>
+                            <path d="M 230 80 C 230 75, 222 70, 217 77 C 212 70, 204 75, 204 80 C 204 90, 217 97, 217 102 C 217 97, 230 90, 230 80 Z" fill="#fffef5" opacity="0.85"/>
+
+                            <!-- Ginger Cat Body & Head -->
+                            <g transform="translate(0, 30)">
+                                <!-- Ears -->
+                                <polygon points="70,120 100,50 125,110" fill="#e07a38"/>
+                                <polygon points="80,115 100,65 118,108" fill="#eb9357"/>
+                                
+                                <polygon points="120,110 145,45 175,110" fill="#e07a38"/>
+                                <polygon points="128,108 145,60 165,108" fill="#eb9357"/>
+
+                                <polygon points="170,110 195,50 220,120" fill="#e07a38"/>
+                                <polygon points="178,108 195,65 212,115" fill="#eb9357"/>
+
+                                <!-- Head Egg Shape -->
+                                <ellipse cx="150" cy="190" rx="75" ry="95" fill="#e27c39"/>
+                                
+                                <circle cx="105" cy="205" r="14" fill="#ee9359" opacity="0.5"/>
+                                <circle cx="195" cy="205" r="14" fill="#ee9359" opacity="0.5"/>
+
+                                <!-- Eyes -->
+                                <circle cx="115" cy="180" r="16" fill="#88af36"/>
+                                <circle cx="115" cy="180" r="13" fill="#e0c83a"/>
+                                <circle cx="115" cy="180" r="7" fill="#2d2218"/>
+                                <circle cx="118" cy="176" r="3" fill="#ffffff"/>
+
+                                <circle cx="185" cy="180" r="16" fill="#88af36"/>
+                                <circle cx="185" cy="180" r="13" fill="#e0c83a"/>
+                                <circle cx="185" cy="180" r="7" fill="#2d2218"/>
+                                <circle cx="188" cy="176" r="3" fill="#ffffff"/>
+
+                                <!-- Nose & Whiskers -->
+                                <polygon points="150,200 144,208 156,208" fill="#d25858"/>
+                                <path d="M 150 208 L 150 214" stroke="#5a3014" stroke-width="2" stroke-linecap="round"/>
+                                
+                                <path d="M 90 200 L 50 195 M 90 208 L 45 210 M 90 215 L 52 225" stroke="#4a2c11" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M 210 200 L 250 195 M 210 208 L 255 210 M 210 215 L 248 225" stroke="#4a2c11" stroke-width="2" stroke-linecap="round"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                <!-- Title Plaque -->
+                <div class="mt-4 bg-[#6b5847] text-[#e8ded1] px-4 py-1.5 rounded shadow border border-[#8e755f]">
+                    <span class="tracking-widest text-xs font-bold uppercase block text-center">SUNNY GARDENER</span>
+                </div>
+            </a>
+
+            <!-- PAINTING 2: MOONLIT CAT -->
+            <a id="paintingLink2" href="#" target="_blank" class="art-link-group flex flex-col items-center cursor-pointer group">
+                <div class="art-frame-box p-4 w-64 sm:w-72 lg:w-80 h-80 sm:h-96 lg:h-[410px] flex items-center justify-center">
+                    <div class="canvas-inset-shadow w-full h-full bg-[#b2a5c4] rounded overflow-hidden relative flex items-center justify-center">
+                        <svg viewBox="0 0 300 400" class="w-full h-full">
+                            <defs>
+                                <linearGradient id="bg2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#bfb3d6"/>
+                                    <stop offset="100%" stop-color="#7a6c93"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="300" height="400" fill="url(#bg2)"/>
+
+                            <g class="star-sparkle" transform="translate(225, 95)">
+                                <path d="M 0 -12 L 3 -3 L 12 0 L 3 3 L 0 12 L -3 3 L -12 0 L -3 -3 Z" fill="#fff7be"/>
+                            </g>
+                            <g class="star-sparkle" transform="translate(60, 80)" style="animation-delay: 1s;">
+                                <path d="M 0 -7 L 2 -2 L 7 0 L 2 2 L 0 7 L -2 2 L -7 0 L -2 -2 Z" fill="#ffffff" opacity="0.8"/>
+                            </g>
+
+                            <!-- Black Cat Body & Head -->
+                            <g transform="translate(0, 30)">
+                                <polygon points="90,115 110,40 132,110" fill="#3c3843"/>
+                                <polygon points="128,105 150,35 172,105" fill="#3c3843"/>
+                                <polygon points="168,110 190,40 210,115" fill="#3c3843"/>
+
+                                <polygon points="98,110 110,55 125,108" fill="#585263"/>
+                                <polygon points="135,102 150,50 165,102" fill="#585263"/>
+                                <polygon points="175,108 190,55 202,110" fill="#585263"/>
+
+                                <ellipse cx="150" cy="190" rx="75" ry="92" fill="#3c3a42"/>
+
+                                <circle cx="100" cy="200" r="12" fill="#f48fb1" opacity="0.4"/>
+                                <circle cx="200" cy="200" r="12" fill="#f48fb1" opacity="0.4"/>
+
+                                <circle cx="115" cy="175" r="17" fill="#ffeb3b"/>
+                                <circle cx="115" cy="175" r="8" fill="#212121"/>
+                                <circle cx="119" cy="171" r="3.5" fill="#ffffff"/>
+
+                                <circle cx="185" cy="175" r="17" fill="#ffeb3b"/>
+                                <circle cx="185" cy="175" r="8" fill="#212121"/>
+                                <circle cx="189" cy="171" r="3.5" fill="#ffffff"/>
+
+                                <polygon points="150,195 143,203 157,203" fill="#f48fb1"/>
+
+                                <path d="M 85 195 L 40 190 M 85 203 L 35 205 M 85 210 L 42 220" stroke="#1d1b22" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M 215 195 L 260 190 M 215 203 L 265 205 M 215 210 L 258 220" stroke="#1d1b22" stroke-width="2.5" stroke-linecap="round"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                <!-- Title Plaque -->
+                <div class="mt-4 bg-[#6b5847] text-[#e8ded1] px-4 py-1.5 rounded shadow border border-[#8e755f]">
+                    <span class="tracking-widest text-xs font-bold uppercase block text-center">MOONLIT CAT</span>
+                </div>
+            </a>
+
+            <!-- PAINTING 3: GARDEN CALICO -->
+            <a id="paintingLink3" href="#" target="_blank" class="art-link-group flex flex-col items-center cursor-pointer group">
+                <div class="art-frame-box p-4 w-64 sm:w-72 lg:w-80 h-80 sm:h-96 lg:h-[410px] flex items-center justify-center">
+                    <div class="canvas-inset-shadow w-full h-full bg-[#cbd5bd] rounded overflow-hidden relative flex items-center justify-center">
+                        <svg viewBox="0 0 300 400" class="w-full h-full">
+                            <defs>
+                                <linearGradient id="bg3" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#e8edd8"/>
+                                    <stop offset="100%" stop-color="#9bb390"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="300" height="400" fill="url(#bg3)"/>
+
+                            <path d="M 235 75 C 235 70, 227 65, 222 72 C 217 65, 209 70, 209 75 C 209 85, 222 92, 222 97 C 222 92, 235 85, 235 75 Z" fill="#fffef5" opacity="0.9"/>
+
+                            <!-- Calico Cat Body & Head -->
+                            <g transform="translate(0, 30)">
+                                <polygon points="80,115 105,45 130,110" fill="#fcfbf7"/>
+                                <polygon points="125,110 150,40 175,110" fill="#ad5534"/>
+                                <polygon points="170,110 195,50 220,120" fill="#fcfbf7"/>
+
+                                <polygon points="90,110 105,60 120,108" fill="#f0d5ce"/>
+                                <polygon points="180,108 195,65 210,115" fill="#f0d5ce"/>
+
+                                <ellipse cx="150" cy="190" rx="75" ry="92" fill="#faf8f2"/>
+
+                                <path d="M 90 140 C 90 120, 110 105, 135 110 C 130 140, 105 160, 80 160 Z" fill="#ad5534" opacity="0.85"/>
+
+                                <circle cx="105" cy="205" r="13" fill="#f7a8b8" opacity="0.6"/>
+                                <circle cx="195" cy="205" r="13" fill="#f7a8b8" opacity="0.6"/>
+
+                                <circle cx="115" cy="180" r="15" fill="#9ec480"/>
+                                <circle cx="115" cy="180" r="11" fill="#ded752"/>
+                                <circle cx="115" cy="180" r="6" fill="#2d241e"/>
+                                <circle cx="118" cy="177" r="2.5" fill="#ffffff"/>
+
+                                <circle cx="185" cy="180" r="15" fill="#9ec480"/>
+                                <circle cx="185" cy="180" r="11" fill="#ded752"/>
+                                <circle cx="185" cy="180" r="6" fill="#2d241e"/>
+                                <circle cx="188" cy="177" r="2.5" fill="#ffffff"/>
+
+                                <polygon points="150,198 143,205 157,205" fill="#e88b8b"/>
+                                <path d="M 150 205 L 150 210" stroke="#5a3014" stroke-width="2" stroke-linecap="round"/>
+
+                                <path d="M 88 198 L 45 195 M 88 206 L 40 208 M 88 213 L 48 220" stroke="#4a3728" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M 212 198 L 255 195 M 212 206 L 260 208 M 212 213 L 252 220" stroke="#4a3728" stroke-width="2" stroke-linecap="round"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                <!-- Title Plaque -->
+                <div class="mt-4 bg-[#6b5847] text-[#e8ded1] px-4 py-1.5 rounded shadow border border-[#8e755f]">
+                    <span class="tracking-widest text-xs font-bold uppercase block text-center">GARDEN CALICO</span>
+                </div>
+            </a>
+
+        </div>
+
+        <div class="relative w-full flex justify-between items-end min-h-[220px] pointer-events-none">
+            
+            <!-- Girl Artwork Standing in Front -->
+            <div class="z-20 -mb-2 pl-2 sm:pl-10 pointer-events-auto">
+                <svg width="220" height="340" viewBox="0 0 220 340" class="drop-shadow-xl max-w-[170px] sm:max-w-[220px]">
+                    <g>
+                        <!-- Shoes -->
+                        <ellipse cx="75" cy="325" rx="32" ry="12" fill="#1e2029"/>
+                        <ellipse cx="130" cy="328" rx="28" ry="10" fill="#181920"/>
+
+                        <!-- Legs -->
+                        <rect x="68" y="260" width="22" height="68" rx="10" fill="#2d3748"/>
+                        <rect x="120" y="260" width="20" height="70" rx="9" fill="#1a202c"/>
+
+                        <!-- Blue Dress -->
+                        <path d="M 95 120 L 35 270 L 165 270 L 125 120 Z" fill="#2563eb"/>
+                        <path d="M 85 125 L 48 265 L 85 265 L 105 125 Z" fill="#60a5fa" opacity="0.4"/>
+
+                        <!-- Arm -->
+                        <path d="M 140 160 C 160 200, 160 230, 150 260 C 145 270, 130 270, 135 255 C 145 230, 145 200, 130 160 Z" fill="#2563eb"/>
+                        <ellipse cx="148" cy="265" rx="10" ry="14" fill="#e2a882"/>
+
+                        <!-- Long Dark Hair -->
+                        <path d="M 45 95 C 30 170, 40 240, 155 255 C 175 230, 160 150, 150 95 C 140 30, 60 30, 45 95 Z" fill="#2d2226"/>
+                        <ellipse cx="98" cy="90" rx="55" ry="60" fill="#2d2226"/>
+                        <path d="M 50 110 C 50 180, 80 230, 140 248 C 158 210, 145 130, 140 100 Z" fill="#423338" opacity="0.6"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Visitor's Note Block -->
+            <div class="p-4 sm:p-6 mb-6 mr-2 sm:mr-8 pointer-events-auto max-w-xs text-right">
+                <h3 class="serif-font font-bold text-stone-900 text-lg sm:text-xl mb-1">Visitor's note</h3>
+                <p class="serif-font italic text-stone-700 text-sm sm:text-base leading-snug">
+                    Some paintings ask to be looked at twice.
+                </p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Museum Floor Base Trim -->
+    <div class="museum-floor-trim h-8 w-full z-10"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Assign Links to Paintings
+            document.getElementById("paintingLink1").href = SUNNY_GARDENER_LINK;
+            document.getElementById("paintingLink2").href = MOONLIT_CAT_LINK;
+            document.getElementById("paintingLink3").href = GARDEN_CALICO_LINK;
+
+            // 2. Audio S
