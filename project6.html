@@ -1,34 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<html>
-  <head>
-    <title>CSS Text Portrait Effects</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style type="text/css">
-      body{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0px;
-      background-color: #262626;
-      }
-      p{
-      font-size: 10px;
-      line-height: 8px;
-   background:url("love.jpg");
-   background-repeat: no-repeat;
-      background-size: 719px 906px;
-      background-position: center;
-      -webkit-background-clip:text;
-      background-attachment: fixed;
-      -webkit-text-fill-color:rgba(255,255,255,0);
-      }
-    </style>
-  </head>
-  <body>
-    <p>
-    "Aking sinta, ano ba'ng mayro'n sa iyo?
+<title>Automatic Text Portrait</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background: #262626;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        width: min(719px, 100vw);
+        text-align: center;
+    }
+
+    canvas {
+        display: block;
+        width: 100%;
+        height: auto;
+
+        margin: 0 auto;
+
+        background: #262626;
+    }
+
+    .controls {
+        padding: 15px;
+        background: #1c1c1c;
+    }
+
+    textarea {
+        width: 100%;
+        min-height: 120px;
+
+        padding: 10px;
+
+        resize: vertical;
+
+        background: #333;
+        color: white;
+
+        border: 1px solid #555;
+        border-radius: 6px;
+
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    button {
+        margin-top: 10px;
+
+        padding: 10px 18px;
+
+        border: none;
+        border-radius: 6px;
+
+        background: #ffffff;
+        color: #222;
+
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    button:hover {
+        background: #ddd;
+    }
+
+    .info {
+        margin-top: 8px;
+
+        color: #aaa;
+        font-size: 12px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <canvas id="portrait"></canvas>
+
+    <div class="controls">
+
+        <textarea id="textInput">
+Aking sinta, ano ba'ng mayro'n sa iyo?
 'Pag nakikita ka na, bumabagal ang mundo
 'Pag ngumingiti ka, para bang may iba
 'Pag tumitingin sa 'kin, mapupungay mong mga mata
@@ -54,285 +124,371 @@ Andito 'ko hanggang sa 'ting pagtanda
 Mamahalin kita basta't 'pag nahulog
 Nakahawak ako, 'wag ka lang bibitaw
 Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang ibaDo Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang ibaI Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba
-You and I
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba
-  Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba   Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Kahit ang likod mo'y kubang-kuba na
-Kahit ang ulo mo'y puro uban na
-Isasayaw ka hanggang sa pikit na ang ating mga mata (ha, ha, ha)
-Wala naman na 'kong hiling pa
-Basta't kasama ka, habang-buhay na kuntento ako
-Basta't ikaw lang kasama, ikaw kasama ko
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba
-      </p>
-  </body>
-</html>
+
+        </textarea>
+
+        <button onclick="generatePortrait()">
+            Generate Portrait
+        </button>
+
+        <div class="info">
+            Text automatically adjusted to the image.
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const canvas = document.getElementById("portrait");
+const ctx = canvas.getContext("2d");
+
+const image = new Image();
+
+image.src = "love.jpg";
+
+image.onload = function () {
+
+    generatePortrait();
+
+};
+
+
+function generatePortrait() {
+
+    const text = document
+        .getElementById("textInput")
+        .value
+        .trim();
+
+    if (!text) {
+        return;
+    }
+
+
+    /*
+        ------------------------------------------------
+        IMAGE SIZE
+        ------------------------------------------------
+    */
+
+    const WIDTH = image.naturalWidth;
+    const HEIGHT = image.naturalHeight;
+
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
+
+
+    /*
+        ------------------------------------------------
+        CLEAR CANVAS
+        ------------------------------------------------
+    */
+
+    ctx.clearRect(
+        0,
+        0,
+        WIDTH,
+        HEIGHT
+    );
+
+
+    /*
+        ------------------------------------------------
+        BACKGROUND
+        ------------------------------------------------
+    */
+
+    ctx.fillStyle = "#262626";
+
+    ctx.fillRect(
+        0,
+        0,
+        WIDTH,
+        HEIGHT
+    );
+
+
+    /*
+        ------------------------------------------------
+        AUTOMATIC FONT CALCULATION
+        ------------------------------------------------
+
+        The font is calculated from the image width.
+
+        For a 719px image:
+
+        font ≈ 7-10px
+
+    */
+
+    let fontSize = Math.max(
+        6,
+        Math.min(
+            11,
+            WIDTH / 75
+        )
+    );
+
+
+    /*
+        LINE HEIGHT
+    */
+
+    let lineHeight = fontSize * 0.85;
+
+
+    /*
+        ------------------------------------------------
+        TEXT SETTINGS
+        ------------------------------------------------
+    */
+
+    ctx.font =
+        "bold " +
+        fontSize +
+        "px Arial";
+
+    ctx.textBaseline = "top";
+
+    ctx.textAlign = "left";
+
+
+    /*
+        ------------------------------------------------
+        CREATE WORD ARRAY
+        ------------------------------------------------
+    */
+
+    const words = text
+        .replace(/\s+/g, " ")
+        .split(" ");
+
+
+    /*
+        ------------------------------------------------
+        CREATE LINES
+        ------------------------------------------------
+    */
+
+    const lines = [];
+
+    let currentLine = "";
+
+    for (let i = 0; i < words.length; i++) {
+
+        const testLine =
+            currentLine +
+            (currentLine ? " " : "") +
+            words[i];
+
+        const width =
+            ctx.measureText(testLine).width;
+
+
+        if (width >= WIDTH) {
+
+            if (currentLine) {
+                lines.push(currentLine);
+            }
+
+            currentLine = words[i];
+
+        } else {
+
+            currentLine = testLine;
+
+        }
+
+    }
+
+
+    if (currentLine) {
+        lines.push(currentLine);
+    }
+
+
+    /*
+        ------------------------------------------------
+        CALCULATE HOW MANY LINES WE NEED
+        ------------------------------------------------
+    */
+
+    const requiredLines =
+        Math.ceil(
+            HEIGHT / lineHeight
+        );
+
+
+    /*
+        ------------------------------------------------
+        REPEAT TEXT AUTOMATICALLY
+        ------------------------------------------------
+    */
+
+    const finalLines = [];
+
+    let lineIndex = 0;
+
+    while (
+        finalLines.length <
+        requiredLines
+    ) {
+
+        finalLines.push(
+            lines[lineIndex % lines.length]
+        );
+
+        lineIndex++;
+
+    }
+
+
+    /*
+        ------------------------------------------------
+        CENTER TEXT VERTICALLY
+        ------------------------------------------------
+    */
+
+    const totalTextHeight =
+        finalLines.length *
+        lineHeight;
+
+    let startY =
+        (HEIGHT - totalTextHeight) / 2;
+
+
+    /*
+        ------------------------------------------------
+        DRAW TEXT MASK
+        ------------------------------------------------
+    */
+
+    const textCanvas =
+        document.createElement("canvas");
+
+    textCanvas.width = WIDTH;
+    textCanvas.height = HEIGHT;
+
+    const textCtx =
+        textCanvas.getContext("2d");
+
+
+    textCtx.clearRect(
+        0,
+        0,
+        WIDTH,
+        HEIGHT
+    );
+
+
+    textCtx.font =
+        "bold " +
+        fontSize +
+        "px Arial";
+
+    textCtx.textBaseline = "top";
+
+    textCtx.fillStyle =
+        "#ffffff";
+
+
+    /*
+        ------------------------------------------------
+        DRAW ALL TEXT
+        ------------------------------------------------
+    */
+
+    for (
+        let i = 0;
+        i < finalLines.length;
+        i++
+    ) {
+
+        const line =
+            finalLines[i];
+
+        /*
+            Slight horizontal spacing
+            improves portrait detail.
+        */
+
+        const y =
+            startY +
+            i * lineHeight;
+
+
+        textCtx.fillText(
+            line,
+            0,
+            y
+        );
+
+    }
+
+
+    /*
+        ------------------------------------------------
+        DRAW IMAGE
+        ------------------------------------------------
+    */
+
+    ctx.drawImage(
+        image,
+        0,
+        0,
+        WIDTH,
+        HEIGHT
+    );
+
+
+    /*
+        ------------------------------------------------
+        MASK IMAGE WITH TEXT
+        ------------------------------------------------
+
+        Only areas containing text remain visible.
+    */
+
+    ctx.globalCompositeOperation =
+        "destination-in";
+
+
+    ctx.drawImage(
+        textCanvas,
+        0,
+        0
+    );
+
+
+    /*
+        ------------------------------------------------
+        RESET COMPOSITE MODE
+        ------------------------------------------------
+    */
+
+    ctx.globalCompositeOperation =
+        "source-over";
+
+}
+
+
+/*
+    ------------------------------------------------
+    REDRAW WHEN TEXT CHANGES
+    ------------------------------------------------
+*/
+
+document
+    .getElementById("textInput")
+    .addEventListener(
+        "input",
+        generatePortrait
+    );
+
+</script>
+
+</body>
+  </html>
