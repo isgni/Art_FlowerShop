@@ -1,494 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Automatic Text Portrait</title>
-
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        margin: 0;
-        min-height: 100vh;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        background: #262626;
-        font-family: Arial, sans-serif;
-    }
-
-    .container {
-        width: min(719px, 100vw);
-        text-align: center;
-    }
-
-    canvas {
-        display: block;
-        width: 100%;
-        height: auto;
-
-        margin: 0 auto;
-
-        background: #262626;
-    }
-
-    .controls {
-        padding: 15px;
-        background: #1c1c1c;
-    }
-
-    textarea {
-        width: 100%;
-        min-height: 120px;
-
-        padding: 10px;
-
-        resize: vertical;
-
-        background: #333;
-        color: white;
-
-        border: 1px solid #555;
-        border-radius: 6px;
-
-        font-size: 14px;
-        line-height: 1.4;
-    }
-
-    button {
-        margin-top: 10px;
-
-        padding: 10px 18px;
-
-        border: none;
-        border-radius: 6px;
-
-        background: #ffffff;
-        color: #222;
-
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    button:hover {
-        background: #ddd;
-    }
-
-    .info {
-        margin-top: 8px;
-
-        color: #aaa;
-        font-size: 12px;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Portrait Generator</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 { margin-bottom: 20px; }
+        #canvas-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 4 / 3;
+            background-color: #000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+        #download-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            background-color: #424242;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        #download-btn:hover { background-color: #616161; }
+        #source-img { display: none; }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
-
-    <canvas id="portrait"></canvas>
-
-    <div class="controls">
-
-        <textarea id="textInput">
-Aking sinta, ano ba'ng mayro'n sa iyo?
-'Pag nakikita ka na, bumabagal ang mundo
-'Pag ngumingiti ka, para bang may iba
-'Pag tumitingin sa 'kin, mapupungay mong mga mata
-Wala akong takas sa nakakalunod mong ganda, ha
-Halika nga (ha, ha, ha)
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-Wala nang ibang nakagawa sa 'kin nang ganito
-Kundi ikaw, nag-iisang diyosa ng buhay ko
-'Wag ka nang matakot, 'wag kang mangamba
-Andito ako 'pag ika'y mag-isa
-Wala akong takas sa nakakalunod mong ganda, ha
-
-Tingnan mo lang ang aking mga mata
-'Wag kang titingin na sa iba
-Akin ka na, wala nang iba (ha, ha, ha)
-Andito 'ko hanggang sa 'ting pagtanda
-Mamahalin kita basta't 'pag nahulog
-Nakahawak ako, 'wag ka lang bibitaw
-Habang-buhay na ako'y iyo
-
-        </textarea>
-
-        <button onclick="generatePortrait()">
-            Generate Portrait
-        </button>
-
-        <div class="info">
-            Text automatically adjusted to the image.
-        </div>
-
+    <h1>Text Portrait Generator</h1>
+    <div id="canvas-container">
+        <canvas id="output-canvas"></canvas>
     </div>
+    <button id="download-btn">Download Image</button>
+    <img id="source-img" src="love.jpg" alt="Source Image">
 
-</div>
+    <script>
+        const sourceImg = document.getElementById('source-img');
+        const canvas = document.getElementById('output-canvas');
+        const ctx = canvas.getContext('2d', { alpha: false });
+        const downloadBtn = document.getElementById('download-btn');
 
+        // The 'text data' for the portrait, including the song lyrics and decorative elements
+        const rawText = `[00:01.93]Lalala...
+[00:03.90]La, la, la, la
+[00:05.93]I hear voices singing songs in the street
+[00:08.15]And I know that we won't be going home for so long, for so long
+[00:11.80]But I know that I won't be on my own, yeah
+[00:15.73]I love this feeling and
+[00:18.12]Right now
+[00:19.38]I wish you were here with me (Oh-ooh)
+[00:22.65]'Cause right now
+[00:23.70]Everything is new to me (Oh-ooh)
+[00:26.12]You know I can't fight the feeling
+[00:28.13]And every night I feel it
+[00:29.86]Right now
+[00:31.05]I wish you were here with me (Oh-ooh)
+[00:34.22]Late night spaces
+[00:36.22]With all our friends, you and me, yeah
+[00:38.13]Love these faces
+[00:40.01]Just like how it used to be
+[00:42.17]And we won't be going home
+[00:43.53]For so long, for so long
+[00:45.50]But I know, I won't be on my own
+[00:47.50]On my own, I'm feeling like
+[00:49.38]Right now
+[00:51.00]I wish you were here with me (Oh-ooh)
+[00:54.15]'Cause right now
+[00:55.25]Everything is new to me (Oh-ooh)
+[00:57.45]You know I can't fight the feeling
+[00:59.45]And every night I feel it
+[01:01.15]Right now
+[01:02.30]I wish you were here with me (Oh-ooh)
+[01:05.70]And I could do this forever (Woah-oh-oh, woah-oh-oh)
+[01:09.40]And let's go crazy together (Woah-oh-oh, woah-oh-oh)
+[01:13.20]Lights go down, and
+[01:15.20]I hear voices singing songs in the street...
+<My Portrait>
+<My Portrait>
+<My Portrait>
+...`;
+        const textArray = rawText.split('');
+        let textIndex = 0;
 
-<script>
-
-const canvas = document.getElementById("portrait");
-const ctx = canvas.getContext("2d");
-
-const image = new Image();
-
-image.src = "love.jpg";
-
-image.onload = function () {
-
-    generatePortrait();
-
-};
-
-
-function generatePortrait() {
-
-    const text = document
-        .getElementById("textInput")
-        .value
-        .trim();
-
-    if (!text) {
-        return;
-    }
-
-
-    /*
-        ------------------------------------------------
-        IMAGE SIZE
-        ------------------------------------------------
-    */
-
-    const WIDTH = image.naturalWidth;
-    const HEIGHT = image.naturalHeight;
-
-    canvas.width = WIDTH;
-    canvas.height = HEIGHT;
-
-
-    /*
-        ------------------------------------------------
-        CLEAR CANVAS
-        ------------------------------------------------
-    */
-
-    ctx.clearRect(
-        0,
-        0,
-        WIDTH,
-        HEIGHT
-    );
-
-
-    /*
-        ------------------------------------------------
-        BACKGROUND
-        ------------------------------------------------
-    */
-
-    ctx.fillStyle = "#262626";
-
-    ctx.fillRect(
-        0,
-        0,
-        WIDTH,
-        HEIGHT
-    );
-
-
-    /*
-        ------------------------------------------------
-        AUTOMATIC FONT CALCULATION
-        ------------------------------------------------
-
-        The font is calculated from the image width.
-
-        For a 719px image:
-
-        font ≈ 7-10px
-
-    */
-
-    let fontSize = Math.max(
-        6,
-        Math.min(
-            11,
-            WIDTH / 75
-        )
-    );
-
-
-    /*
-        LINE HEIGHT
-    */
-
-    let lineHeight = fontSize * 0.85;
-
-
-    /*
-        ------------------------------------------------
-        TEXT SETTINGS
-        ------------------------------------------------
-    */
-
-    ctx.font =
-        "bold " +
-        fontSize +
-        "px Arial";
-
-    ctx.textBaseline = "top";
-
-    ctx.textAlign = "left";
-
-
-    /*
-        ------------------------------------------------
-        CREATE WORD ARRAY
-        ------------------------------------------------
-    */
-
-    const words = text
-        .replace(/\s+/g, " ")
-        .split(" ");
-
-
-    /*
-        ------------------------------------------------
-        CREATE LINES
-        ------------------------------------------------
-    */
-
-    const lines = [];
-
-    let currentLine = "";
-
-    for (let i = 0; i < words.length; i++) {
-
-        const testLine =
-            currentLine +
-            (currentLine ? " " : "") +
-            words[i];
-
-        const width =
-            ctx.measureText(testLine).width;
-
-
-        if (width >= WIDTH) {
-
-            if (currentLine) {
-                lines.push(currentLine);
-            }
-
-            currentLine = words[i];
-
-        } else {
-
-            currentLine = testLine;
-
+        // When the image is loaded, start the generation process
+        sourceImg.onload = () => {
+            generateTextPortrait();
+        };
+        // For browsers that load the image before the script runs
+        if (sourceImg.complete) {
+            generateTextPortrait();
         }
 
-    }
+        function generateTextPortrait() {
+            const aspectRatio = sourceImg.naturalWidth / sourceImg.naturalHeight;
+            const targetHeight = 800; // Adjust for desired detail
+            const targetWidth = targetHeight * aspectRatio;
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
 
+            // Set background to black
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    if (currentLine) {
-        lines.push(currentLine);
-    }
+            // Draw image onto the canvas temporarily to get pixel data
+            ctx.drawImage(sourceImg, 0, 0, canvas.width, canvas.height);
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imgData.data;
 
+            // Clear the canvas again to start drawing the text
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    /*
-        ------------------------------------------------
-        CALCULATE HOW MANY LINES WE NEED
-        ------------------------------------------------
-    */
+            // Set font properties
+            const fontSize = 7; // Smaller font for more detail
+            ctx.font = `${fontSize}px 'Courier New', Courier, monospace`;
+            ctx.textBaseline = 'top';
 
-    const requiredLines =
-        Math.ceil(
-            HEIGHT / lineHeight
-        );
+            // Define the grid for drawing text
+            const rowHeight = fontSize * 0.9; 
+            const colWidth = fontSize * 0.6;
 
+            for (let y = 0; y < canvas.height; y += rowHeight) {
+                for (let x = 0; x < canvas.width; x += colWidth) {
+                    // Get the pixel color at this grid position
+                    const pixelX = Math.floor(x);
+                    const pixelY = Math.floor(y);
+                    const index = (pixelY * canvas.width + pixelX) * 4;
+                    const r = data[index];
+                    const g = data[index + 1];
+                    const b = data[index + 2];
+                    const avg = (r + g + b) / 3;
 
-    /*
-        ------------------------------------------------
-        REPEAT TEXT AUTOMATICALLY
-        ------------------------------------------------
-    */
+                    // Invert the lightness for the text effect:
+                    // Dark pixels in the source image will have a 'lightness' closer to 1 (visible text)
+                    // Light pixels in the source image will have a 'lightness' closer to 0 (invisible text)
+                    const lightness = 1 - (avg / 255);
+                    
+                    // Determine text opacity based on inverted lightness
+                    const alpha = Math.max(0, Math.min(1, lightness * 1.8));
+                    
+                    if (alpha > 0.1) {
+                        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                        const char = textArray[textIndex % textArray.length];
+                        ctx.fillText(char, x, y);
+                        textIndex++;
+                    }
+                }
+            }
+        }
 
-    const finalLines = [];
+        // Handle downloading of the generated image
+        downloadBtn.addEventListener('click', function() {
+            // Create a temporary link to trigger the download
+            const link = document.createElement('a');
+            link.download = 'text-portrait.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
 
-    let lineIndex = 0;
-
-    while (
-        finalLines.length <
-        requiredLines
-    ) {
-
-        finalLines.push(
-            lines[lineIndex % lines.length]
-        );
-
-        lineIndex++;
-
-    }
-
-
-    /*
-        ------------------------------------------------
-        CENTER TEXT VERTICALLY
-        ------------------------------------------------
-    */
-
-    const totalTextHeight =
-        finalLines.length *
-        lineHeight;
-
-    let startY =
-        (HEIGHT - totalTextHeight) / 2;
-
-
-    /*
-        ------------------------------------------------
-        DRAW TEXT MASK
-        ------------------------------------------------
-    */
-
-    const textCanvas =
-        document.createElement("canvas");
-
-    textCanvas.width = WIDTH;
-    textCanvas.height = HEIGHT;
-
-    const textCtx =
-        textCanvas.getContext("2d");
-
-
-    textCtx.clearRect(
-        0,
-        0,
-        WIDTH,
-        HEIGHT
-    );
-
-
-    textCtx.font =
-        "bold " +
-        fontSize +
-        "px Arial";
-
-    textCtx.textBaseline = "top";
-
-    textCtx.fillStyle =
-        "#ffffff";
-
-
-    /*
-        ------------------------------------------------
-        DRAW ALL TEXT
-        ------------------------------------------------
-    */
-
-    for (
-        let i = 0;
-        i < finalLines.length;
-        i++
-    ) {
-
-        const line =
-            finalLines[i];
-
-        /*
-            Slight horizontal spacing
-            improves portrait detail.
-        */
-
-        const y =
-            startY +
-            i * lineHeight;
-
-
-        textCtx.fillText(
-            line,
-            0,
-            y
-        );
-
-    }
-
-
-    /*
-        ------------------------------------------------
-        DRAW IMAGE
-        ------------------------------------------------
-    */
-
-    ctx.drawImage(
-        image,
-        0,
-        0,
-        WIDTH,
-        HEIGHT
-    );
-
-
-    /*
-        ------------------------------------------------
-        MASK IMAGE WITH TEXT
-        ------------------------------------------------
-
-        Only areas containing text remain visible.
-    */
-
-    ctx.globalCompositeOperation =
-        "destination-in";
-
-
-    ctx.drawImage(
-        textCanvas,
-        0,
-        0
-    );
-
-
-    /*
-        ------------------------------------------------
-        RESET COMPOSITE MODE
-        ------------------------------------------------
-    */
-
-    ctx.globalCompositeOperation =
-        "source-over";
-
-}
-
-
-/*
-    ------------------------------------------------
-    REDRAW WHEN TEXT CHANGES
-    ------------------------------------------------
-*/
-
-document
-    .getElementById("textInput")
-    .addEventListener(
-        "input",
-        generatePortrait
-    );
-
-</script>
-
+    </script>
 </body>
-  </html>
+</html>
