@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Little Surprise for Lovelyn</title>
+    <style>
+        /* ==========================================
+           CSS RESET & BASE STYLES
+           ================================---------- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --pastel-pink: #ffb7b2;
+            --pastel-cream: #fff9f5;
+            --pastel-lavender: #e2d9f3;
+            --pastel-peach: #ffdac1;
+            --deep-rose: #d9536e;
+            --text-dark: #4a4044;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --shadow: 0 10px 30px rgba(217, 83, 110, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, var(--pastel-cream), var(--pastel-pink), var(--pastel-lavender));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ==========================================
+           BACKGROUND ANIMATIONS & PARTICLES
+           ================================---------- */
+        .background-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: rgba(217, 83, 110, 0.3);
+            animation: floatHearts 6s ease-in-out infinite;
+            font-size: 20px;
+            user-select: none;
+        }
+
+        @keyframes floatHearts {
+            0% { transform: translateY(105vh) scale(0.8) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2) rotate(360deg); opacity: 0; }
+        }
+
+        .falling-petal {
+            position: absolute;
+            background: #ff99aa;
+            border-radius: 150% 0 150% 0;
+            animation: fallingPetals 8s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes fallingPetals {
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(105vh) translateX(100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* ==========================================
+           MUSIC CONTROL BUTTON
+           ================================---------- */
+        #music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            border: 2px solid var(--pastel-pink);
+            border-radius: 50px;
+            padding: 8px 16px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--deep-rose);
+            transition: all 0.3s ease;
+        }
+
+        #music-toggle:hover {
+            transform: scale(1.05);
+            background: var(--pastel-pink);
+            color: white;
+        }
+
+        /* ==========================================
+           APP CONTAINER & STAGES
+           ================================---------- */
+        .app-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 700px;
+            margin: 20px;
+            padding: 30px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stage {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .stage.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography & Common Elements */
+        h1 {
+            font-size: 2.2rem;
+            color: var(--deep-rose);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        p.subtitle {
+            font-size: 1.1rem;
+            color: #6d5b61;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--deep-rose), #ff758c);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(217, 83, 110, 0.3);
+            transition: all 0.3s ease;
+            margin: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(217, 83, 110, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--deep-rose);
+            border: 2px solid var(--pastel-pink);
+        }
+
+        .btn-secondary:hover {
+            background: var(--pastel-pink);
+            color: white;
+        }
+
+        /* ==========================================
+           STAGE ONE: PUZZLE GAME
+           ================================---------- */
+        .puzzle-stats {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 360px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #6d5b61;
+            font-size: 0.95rem;
+        }
+
+        .puzzle-board {
+            width: 330px;
+            height: 330px;
+            background: #fff;
+            border: 4px solid var(--pastel-pink);
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 2px;
+            padding: 2px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .puzzle-piece {
+            background-size: 330px 330px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            background-color: #fce4ec;
+        }
+
+        .puzzle-piece:hover {
+            transform: scale(0.98);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .puzzle-piece.correct-pos::after {
+            content: '✓';
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            background: rgba(46, 204, 113, 0.85);
+            color: white;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hint highlight effect */
+        .puzzle-piece.hint-highlight {
+            animation: hintGlow 1s ease-in-out infinite alternate;
+            z-index: 5;
+        }
+
+        @keyframes hintGlow {
+            from {
+                box-shadow: inset 0 0 0 3px #f1c40f, 0 0 10px #f1c40f;
+            }
+            to {
+                box-shadow: inset 0 0 0 4px #e67e22, 0 0 20px #f39c12;
+            }
+        }
+
+        .puzzle-controls {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* ==========================================
+           STAGE TWO: COURTING PROPOSAL
+           ================================---------- */
+        .proposal-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .character-illustration {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: bounceCat 2s ease-in-out infinite;
+        }
+
+        @keyframes bounceCat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .proposal-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 18px;
+            border: 2px solid var(--pastel-lavender);
+            margin-bottom: 25px;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+        }
+
+        .proposal-card p {
+            margin-bottom: 14px;
+            line-height: 1.6;
+            color: #55484c;
+            font-size: 1.05rem;
+        }
+
+        .proposal-card p:last-child {
+            margin-bottom: 0;
+            font-weight: 600;
+            color: var(--deep-rose);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-height: 70px;
+            width: 100%;
+        }
+
+        #btn-yes {
+            font-size: 1.1rem;
+            padding: 14px 32px;
+            z-index: 5;
+        }
+
+        #btn-no {
+            background: #e0e0e0;
+            color: #666;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.15s ease-out;
+            position: absolute;
+            z-index: 10;
+        }
+
+        .crying-popup {
+            position: absolute;
+            top: -60px;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--deep-rose);
+            border: 1px solid var(--pastel-pink);
+            animation: fadeInOut 1.5s ease forwards;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(10px); }
+            20% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+
+        /* ==========================================
+           STAGE THREE: APPRECIATION LETTER
+           ================================---------- */
+        .letter-paper {
+            background: #fffdf9;
+            padding: 35px 30px;
+            border-radius: 12px;
+            border: 1px solid #f0e6df;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            width: 100%;
+            text-align: left;
+            max-height: 450px;
+            overflow-y: auto;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .letter-paper::-webkit-scrollbar {
+            width: 6px;
+        }
+        .letter-paper::-webkit-scrollbar-thumb {
+            background: var(--pastel-pink);
+            border-radius: 10px;
+        }
+
+        .letter-paper p {
+            margin-bottom: 16px;
+            line-height: 1.7;
+            color: #55484c;
+            font-size: 1.05rem;
+        }
+
+        .letter-footer {
+            font-style: italic;
+            margin-top: 20px;
+            color: var(--deep-rose);
+            font-weight: 600;
+        }
+
+        .letter-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .site-footer {
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: #8c7b81;
+            font-style: italic;
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .app-container {
+                padding: 20px 15px;
+                margin: 10px;
+                width: calc(100% - 20px);
+            }
+            h1 { font-size: 1.7rem; }
+            .puzzle-board { width: 280px; height: 280px; }
+            .puzzle-piece { background-size: 280px 280px !important; }
+            .button-group { flex-direction: column; min-height: 120px; }
+            #btn-no { position: relative; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+       ASSET CONFIGURATION & MUSIC SYSTEM
+       ================================---------- -->
+    <script>
+        /*
+          ========================================================================
+          ASSET CONFIGURATION SECTION
+          ========================================================================
+          Instructions:
+          - Replace "lovelyn-picture.jpg" with your desired picture filename or URL.
+          - Replace the audio filenames below with your own music files (.mp3 format recommended).
+          - Place your files in the same folder as this index.html file.
+          ========================================================================
+        */
+        const CONFIG = {
+            puzzleImage: "lovelyn-picture.jpg", // Replace with your picture path
+            puzzleMusic: "puzzle-music.mp3",       // Stage 1 background music path
+            proposalMusic: "proposal-music.mp3",   // Stage 2 background music path
+            letterMusic: "letter-music.mp3"        // Stage 3 background music path
+        };
+    </script>
+
+    <!-- Background Music Audio Elements -->
+    <audio id="audio-puzzle" loop preload="auto">
+        <source src="" type="audio/mpeg">
+    </audio>
+    <audio id="audio-proposal" loop preload="auto">
+        <source src="" type="audio/mpeg">
+    </audio>
+    <audio id="audio-letter" loop preload="auto">
+        <source src="" type="audio/mpeg">
+    </audio>
+
+    <!-- Floating Background Effects Container -->
+    <div class="background-effects" id="bg-effects"></div>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Music Toggle Button -->
+    <button id="music-toggle" onclick="toggleBackgroundMusic()" title="Toggle Background Music">
+        <span id="music-icon">🎵</span> <span id="music-text">Play Music</span>
+    </button>
+
+    <!-- Main App Container -->
+    <div class="app-container">
+
+        <!-- ==========================================
+           STAGE ONE: WELCOME & PUZZLE GAME
+           ================================---------- -->
+        <div id="stage-one" class="stage active">
+            <div style="font-size: 3.5rem; margin-bottom: 10px;">💌✨</div>
+            <h1>A Little Surprise for Lovelyn</h1>
+            <p class="subtitle">Before you discover my little secret, let's play a tiny game!</p>
+            
+            <div id="welcome-action">
+                <button class="btn" onclick="startPuzzleGame()">Start the Puzzle 🧩</button>
+            </div>
+
+            <div id="puzzle-container" style="display: none; width: 100%; flex-direction: column; align-items: center;">
+                <div class="puzzle-stats">
+                    <span id="move-counter">Moves: 0</span>
+                    <span id="puzzle-status">Arrange the 3x3 pieces!</span>
+                </div>
+
+                <div class="puzzle-board" id="puzzle-board"></div>
+
+                <div class="puzzle-controls">
+                    <button class="btn btn-secondary" onclick="giveHintStep()">Hint / Next Move 💡</button>
+                    <button class="btn btn-secondary" onclick="shufflePuzzle()">Shuffle 🔀</button>
+                    <button class="btn btn-secondary" onclick="resetPuzzle()">Restart 🔄</button>
+                </div>
+            </div>
+
+            <div id="puzzle-win-section" style="display: none; margin-top: 20px;">
+                <p style="font-weight: 600; color: var(--deep-rose); margin-bottom: 15px; font-size: 1.1rem;">
+                    You did it, Lovelyn! Every little piece found its place. Now, there's something special I want to ask you...
+                </p>
+                <button class="btn" onclick="transitionToStageTwo()">Discover Your Surprise ✨</button>
+            </div>
+        </div>
+
+        <!-- ==========================================
+           STAGE TWO: THE COURTING PROPOSAL
+           ================================---------- -->
+        <div id="stage-two" class="stage">
+            <div class="proposal-container">
+                <div class="character-illustration" id="proposal-cat">🐱💗</div>
+                <h1>Dear Lovelyn,</h1>
+                
+                <div class="proposal-card">
+                    <p>There's something I've been wanting to ask you from the bottom of my heart.</p>
+                    <p>You have become someone truly special to me, and I would love the opportunity to know you more deeply, create beautiful memories with you, and show you through my actions how sincere my feelings are.</p>
+                    <p>I don't want to rush anything. I want to take things one step at a time, with honesty, respect, patience, and a heart that genuinely cares about you.</p>
+                    <p>So, Lovelyn, may I finally court you?</p>
+                </div>
+
+                <div class="button-group" id="proposal-button-group">
+                    <button class="btn" id="btn-yes" onclick="acceptProposal()">Yes, You May! 💗</button>
+                    <button id="btn-no" onmouseover="dodgeNoButton()" ontouchstart="dodgeNoButton(event)" onclick="dodgeNoButton()">No</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+           STAGE THREE: APPRECIATION LETTER
+           ================================---------- -->
+        <div id="stage-three" class="stage">
+            <div style="font-size: 3rem; margin-bottom: 5px;">🌹✨</div>
+            <h1>To My Dear Lovelyn</h1>
+            
+            <div class="letter-paper">
+                <p>Thank you for giving me the opportunity to court you. You may think that your answer was just a simple 'yes,' but to me, it means so much more. It gives me the opportunity to show you, little by little, the sincerity of my heart.</p>
+                
+                <p>I want you to know that my intentions toward you are genuine. I am not here just to make sweet promises or say beautiful words. I want my actions to show that I respect you, value you, and genuinely care about your happiness.</p>
+                
+                <p>I know that building something meaningful takes time, patience, understanding, and effort. I don't expect everything to be perfect, and I don't want to rush you. I want us to have the freedom to get to know each other better, communicate honestly, and grow together at a pace that feels right for both of us.</p>
+                
+                <p>Lovelyn, you are someone I want to appreciate not only on happy days but also during difficult moments. I want to listen when you need someone to talk to, encourage you when things become challenging, and celebrate even the little victories that make you smile.</p>
+                
+                <p>I cannot promise that every day will be perfect, but I can promise to do my best to be honest with you, respect your boundaries, communicate openly, and let my actions reflect my intentions.</p>
+                
+                <p>Most importantly, I want you to feel comfortable being yourself around me. Your thoughts, feelings, dreams, and decisions matter. I want whatever we build to be founded on mutual respect, genuine affection, trust, and understanding.</p>
+                
+                <p>Thank you for opening this little door and allowing me to take this step toward getting to know you better. I look forward to the simple conversations, the laughter, the memories, and the opportunity to discover more about the wonderful person you are.</p>
+                
+                <p>This is only the beginning, Lovelyn. I hope that, with time, sincerity, patience, and God's guidance, we can discover where this journey leads us.</p>
+                
+                <div class="letter-footer">
+                    With a sincere heart and warm appreciation,<br>
+                    Someone who genuinely cares about you. 💗
+                </div>
+            </div>
+
+            <div class="letter-actions">
+                <button class="btn btn-secondary" onclick="restartFromBeginning()">Back to the Beginning 💌</button>
+                <button class="btn btn-secondary" onclick="replayCelebration()">Play Our Special Moment ✨</button>
+            </div>
+
+            <div class="site-footer">
+                Made with sincerity, patience, and a little bit of courage. 💗
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+       JAVASCRIPT APPLICATION LOGIC
+       ================================---------- -->
+    <script>
+        /* --- BACKGROUND PARTICLES GENERATOR --- */
+        function initBackgroundEffects() {
+            const container = document.getElementById('bg-effects');
+            const heartSymbols = ['💗', '💖', '✨', '🌸', '🌷', '⭐'];
+            
+            for (let i = 0; i < 18; i++) {
+                const span = document.createElement('div');
+                span.className = 'floating-heart';
+                span.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                span.style.left = `${Math.random() * 100}vw`;
+                span.style.animationDuration = `${5 + Math.random() * 6}s`;
+                span.style.animationDelay = `${Math.random() * 5}s`;
+                span.style.fontSize = `${16 + Math.random() * 14}px`;
+                container.appendChild(span);
+            }
+
+            for (let i = 0; i < 12; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'falling-petal';
+                petal.style.left = `${Math.random() * 100}vw`;
+                petal.style.width = `${10 + Math.random() * 10}px`;
+                petal.style.height = `${15 + Math.random() * 15}px`;
+                petal.style.animationDuration = `${7 + Math.random() * 5}s`;
+                petal.style.animationDelay = `${Math.random() * 6}s`;
+                container.appendChild(petal);
+            }
+        }
+
+        /* --- AUDIO SYSTEM IMPLEMENTATION --- */
+        let isMusicPlaying = false;
+        let activeStageTrack = 'puzzle';
+
+        function initAudioSources() {
+            document.querySelector('#audio-puzzle source').src = CONFIG.puzzleMusic;
+            document.querySelector('#audio-proposal source').src = CONFIG.proposalMusic;
+            document.querySelector('#audio-letter source').src = CONFIG.letterMusic;
+            
+            document.getElementById('audio-puzzle').load();
+            document.getElementById('audio-proposal').load();
+            document.getElementById('audio-letter').load();
+        }
+
+        function switchTrack(trackName) {
+            ['puzzle', 'proposal', 'letter'].forEach(name => {
+                const audio = document.getElementById(`audio-${name}`);
+                audio.pause();
+                audio.currentTime = 0;
+            });
+
+            activeStageTrack = trackName;
+            if (isMusicPlaying) {
+                const activeAudio = document.getElementById(`audio-${trackName}`);
+                activeAudio.play().catch(e => console.log("Audio playback prevented by browser policy:", e));
+            }
+        }
+
+        function toggleBackgroundMusic() {
+            const audio = document.getElementById(`audio-${activeStageTrack}`);
+            const musicIcon = document.getElementById('music-icon');
+            const musicText = document.getElementById('music-text');
+
+            if (isMusicPlaying) {
+                audio.pause();
+                isMusicPlaying = false;
+                musicIcon.innerText = '🔇';
+                musicText.innerText = 'Play Music';
+            } else {
+                audio.play().then(() => {
+                    isMusicPlaying = true;
+                    musicIcon.innerText = '🎵';
+                    musicText.innerText = 'Pause Music';
+                }).catch(e => {
+                    console.log("Playback error:", e);
+                    alert("Please add valid audio files in the configuration section to enable background music!");
+                });
+            }
+        }
+
+        function ensureAudioStarted() {
+            if (!isMusicPlaying) {
+                isMusicPlaying = true;
+                document.getElementById('music-icon').innerText = '🎵';
+                document.getElementById('music-text').innerText = 'Pause Music';
+                document.getElementById(`audio-${activeStageTrack}`).play().catch(e => console.log(e));
+            }
+        }
+
+        /* --- STAGE MANAGEMENT --- */
+        function switchStage(stageId) {
+            document.querySelectorAll('.stage').forEach(stage => stage.classList.remove('active'));
+            document.getElementById(stageId).classList.add('active');
+        }
+
+        /* --- STAGE ONE: PUZZLE GAME LOGIC --- */
+        const GRID_SIZE = 3;
+        let tiles = []; // stores current arrangement of tile indices (0 to 8)
+        let emptyIndex = 8; // empty tile location
+        let moveCount = 0;
+        let highlightedTileIndex = null;
+
+        function startPuzzleGame() {
+            ensureAudioStarted();
+            document.getElementById('welcome-action').style.display = 'none';
+            document.getElementById('puzzle-container').style.display = 'flex';
+            
+            initPuzzle();
+            switchTrack('puzzle');
+        }
+
+        function initPuzzle() {
+            tiles = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+            emptyIndex = 8;
+            moveCount = 0;
+            highlightedTileIndex = null;
+            updateMoveCounter();
+            shufflePuzzleArray();
+            renderPuzzleBoard();
+            document.getElementById('puzzle-status').innerText = 'Arrange the 3x3 pieces!';
+            document.getElementById('puzzle-win-section').style.display = 'none';
+        }
+
+        function shufflePuzzleArray() {
+            for (let i = 0; i < 100; i++) {
+                let validMoves = getValidAdjacentIndices(emptyIndex);
+                let randomMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+                tiles[emptyIndex] = tiles[randomMove];
+                tiles[randomMove] = 8;
+                emptyIndex = randomMove;
+            }
+            if (isPuzzleSolved()) {
+                shufflePuzzleArray();
+            }
+        }
+
+        function getValidAdjacentIndices(idx) {
+            let row = Math.floor(idx / GRID_SIZE);
+            let col = idx % GRID_SIZE;
+            let valid = [];
+            if (row > 0) valid.push(idx - GRID_SIZE);
+            if (row < GRID_SIZE - 1) valid.push(idx + GRID_SIZE);
+            if (col > 0) valid.push(idx - 1);
+            if (col < GRID_SIZE - 1) valid.push(idx + 1);
+            return valid;
+        }
+
+        function renderPuzzleBoard() {
+            const board = document.getElementById('puzzle-board');
+            board.innerHTML = '';
+
+            tiles.forEach((tileValue, currentPos) => {
+                const piece = document.createElement('div');
+                piece.className = 'puzzle-piece';
+                
+                if (tileValue === 8) {
+                    piece.style.background = '#fce4ec';
+                    piece.style.cursor = 'default';
+                } else {
+                    let correctRow = Math.floor(tileValue / GRID_SIZE);
+                    let correctCol = tileValue % GRID_SIZE;
+                    
+                    piece.style.backgroundImage = `url('${CONFIG.puzzleImage}')`;
+                    
+                    // Dynamic piece scale based on viewport width
+                    const boardWidth = window.innerWidth <= 480 ? 280 : 330;
+                    const pieceSize = boardWidth / 3;
+                    piece.style.backgroundSize = `${boardWidth}px ${boardWidth}px`;
+                    piece.style.backgroundPosition = `-${correctCol * pieceSize}px -${correctRow * pieceSize}px`;
+
+                    if (tileValue === currentPos) {
+                        piece.classList.add('correct-pos');
+                    }
+
+                    if (currentPos === highlightedTileIndex) {
+                        piece.classList.add('hint-highlight');
+                    }
+
+                    piece.addEventListener('click', () => handleTileClick(currentPos));
+                }
+                board.appendChild(piece);
+            });
+        }
+
+        function handleTileClick(pos) {
+            let validMoves = getValidAdjacentIndices(emptyIndex);
+            if (validMoves.includes(pos)) {
+                highlightedTileIndex = null; // Clear hint highlight on user click
+                tiles[emptyIndex] = tiles[pos];
+                tiles[pos] = 8;
+                emptyIndex = pos;
+                moveCount++;
+                updateMoveCounter();
+                renderPuzzleBoard();
+
+                if (isPuzzleSolved()) {
+                    triggerPuzzleWin();
+                }
+            }
+        }
+
+        /* --- HINT ENGINE LOGIC ---
+           Evaluates Manhattan distances for all valid adjacent moves
+           and selects the move that gets tiles closer to their correct positions.
+        */
+        function giveHintStep() {
+            if (isPuzzleSolved()) return;
+
+            let validMoves = getValidAdjacentIndices(emptyIndex);
+            let bestMove = -1;
+            let bestScore = Infinity;
+
+            // Find adjacent tile that belongs in correct spot or reduces Manhattan distance
+            validMoves.forEach(pos => {
+                let tileVal = tiles[pos];
+                
+                // Priority 1: Direct placement into correct spot
+                if (tileVal === emptyIndex) {
+                    bestMove = pos;
+                    bestScore = -100;
+                    return;
+                }
+
+                // Distance calculation
+                let currentDistance = getManhattanDistance(pos, tileVal);
+                let targetDistance = getManhattanDistance(emptyIndex, tileVal);
+                let score = targetDistance - currentDistance;
+
+                if (score < bestScore) {
+                    bestScore = score;
+                    bestMove = pos;
+                }
+            });
+
+            if (bestMove === -1) {
+                bestMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+            }
+
+            // Highlight hint piece brief moment, then auto perform move
+            highlightedTileIndex = bestMove;
+            renderPuzzleBoard();
+            document.getElementById('puzzle-status').innerText = 'Glowing tile is the next best move! ✨';
+
+            setTimeout(() => {
+                if (highlightedTileIndex === bestMove) {
+                    handleTileClick(bestMove);
+                }
+            }, 600);
+        }
+
+        function getManhattanDistance(pos, val) {
+            let r1 = Math.floor(pos / GRID_SIZE), c1 = pos % GRID_SIZE;
+            let r2 = Math.floor(val / GRID_SIZE), c2 = val % GRID_SIZE;
+            return Math.abs(r1 - r2) + Math.abs(c1 - c2);
+        }
+
+        function isPuzzleSolved() {
+            for (let i = 0; i < tiles.length; i++) {
+                if (tiles[i] !== i) return false;
+            }
+            return true;
+        }
+
+        function updateMoveCounter() {
+            document.getElementById('move-counter').innerText = `Moves: ${moveCount}`;
+        }
+
+        function shufflePuzzle() {
+            highlightedTileIndex = null;
+            shufflePuzzleArray();
+            moveCount = 0;
+            updateMoveCounter();
+            renderPuzzleBoard();
+            document.getElementById('puzzle-status').innerText = 'Shuffled! Keep going!';
+        }
+
+        function resetPuzzle() {
+            initPuzzle();
+        }
+
+        function triggerPuzzleWin() {
+            document.getElementById('puzzle-status').innerText = 'Puzzle Completed! 🎉';
+            document.getElementById('puzzle-win-section').style.display = 'block';
+            launchConfetti();
+        }
+
+        function transitionToStageTwo() {
+            switchStage('stage-two');
+            switchTrack('proposal');
+            launchConfetti();
+        }
+
+        /* --- STAGE TWO: PROPOSAL & PLAYFUL NO BUTTON --- */
+        const cryingMessages = [
+            "Aww, are you sure? 🥺",
+            "The little kitty is crying! 😿",
+            "Give my heart a chance? 💗",
+            "Please don't say no! 😭",
+            "Think about it again? ✨"
+        ];
+
+        function dodgeNoButton(e) {
+            if (e) e.preventDefault();
+            const btnNo = document.getElementById('btn-no');
+            const container = document.getElementById('stage-two');
+            
+            const maxX = container.clientWidth - btnNo.offsetWidth - 20;
+            const maxY = 220;
+            
+            const randomX = Math.max(10, Math.floor(Math.random() * maxX));
+            const randomY = Math.floor(Math.random() * maxY) - 100;
+
+            btnNo.style.position = 'absolute';
+            btnNo.style.left = `${randomX}px`;
+            btnNo.style.top = `${randomY}px`;
+
+            showCryingCatReaction();
+        }
+
+        function showCryingCatReaction() {
+            const cat = document.getElementById('proposal-cat');
+            cat.innerText = '😿💧';
+            setTimeout(() => {
+                cat.innerText = '🐱💗';
+            }, 1200);
+
+            const group = document.getElementById('proposal-button-group');
+            const existingPopup = group.querySelector('.crying-popup');
+            if (existingPopup) existingPopup.remove();
+
+            const popup = document.createElement('div');
+            popup.className = 'crying-popup';
+            popup.innerText = cryingMessages[Math.floor(Math.random() * cryingMessages.length)];
+            group.appendChild(popup);
+
+            setTimeout(() => popup.remove(), 1500);
+        }
+
+        function acceptProposal() {
+            switchStage('stage-three');
+            switchTrack('letter');
+            launchConfetti();
+        }
+
+        /* --- STAGE THREE: APPRECIATION LETTER ACTIONS --- */
+        function restartFromBeginning() {
+            switchStage('stage-one');
+            switchTrack('puzzle');
+            initPuzzle();
+            document.getElementById('welcome-action').style.display = 'block';
+            document.getElementById('puzzle-container').style.display = 'none';
+        }
+
+        function replayCelebration() {
+            launchConfetti();
+            const cat = document.createElement('div');
+            cat.className = 'crying-popup';
+            cat.style.top = '20px';
+            cat.style.left = '50%';
+            cat.style.transform = 'translateX(-50%)';
+            cat.innerText = 'You said Yes! 💕';
+            document.body.appendChild(cat);
+            setTimeout(() => cat.remove(), 2000);
+        }
+
+        /* --- CONFETTI ANIMATION ENGINE --- */
+        function launchConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let particles = [];
+            const colors = ['#ffb7b2', '#ffdac1', '#e2d9f3', '#d9536e', '#ff99aa', '#ffffff'];
+
+            for (let i = 0; i < 120; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * 14,
+                    vy: (Math.random() - 0.7) * 14,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    rotation: Math.random() * 360,
+                    rotationSpeed: (Math.random() - 0.5) * 10,
+                    alpha: 1,
+                    decay: Math.random() * 0.015 + 0.01
+                });
+            }
+
+            function updateConfetti() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.3; // gravity
+                    p.rotation += p.rotationSpeed;
+                    p.alpha -= p.decay;
+
+                    if (p.alpha > 0) {
+                        alive = true;
+                        ctx.save();
+                        ctx.translate(p.x, p.y);
+                        ctx.rotate((p.rotation * Math.PI) / 180);
+                        ctx.globalAlpha = p.alpha;
+                        ctx.fillStyle = p.color;
+                        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+                        ctx.restore();
+                    }
+                });
+
+                if (alive) {
+                    requestAnimationFrame(updateConfetti);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+
+            updateConfetti();
+        }
+
+        /* --- INITIALIZATION ON LOAD --- */
+        window.addEventListener('DOMContentLoaded', () => {
+            initBackgroundEffects();
+            initAudioSources();
+        });
+    </script>
+</body>
+</html>
